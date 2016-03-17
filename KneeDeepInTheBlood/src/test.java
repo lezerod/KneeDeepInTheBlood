@@ -3,9 +3,7 @@ public class test
 {
 	public static void main(String[] args)
 	{
-		System.out.println("LetÂ´s Roll!");
-		//test
-		//diesisttest2
+		System.out.println("Let´s Roll!");
 	}
 
 }
