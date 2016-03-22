@@ -23,7 +23,7 @@ public class gameWorld
 	public gameWorld() 
 	{
 		objects = new ArrayList<GameObject>();
-		spawnTime = of;
+		spawnTime = 2;
 		spawnPause = 1.0f;
 		positionRandomizer = new Random();
 		lifes = 3;

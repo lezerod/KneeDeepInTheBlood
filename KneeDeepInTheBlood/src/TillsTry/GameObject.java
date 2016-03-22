@@ -17,7 +17,7 @@ public class GameObject
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.visibleTime = of;
+		this.visibleTime = 0;
 		this.isClicked = false;
 		this.isRemovable = false;
 	}
