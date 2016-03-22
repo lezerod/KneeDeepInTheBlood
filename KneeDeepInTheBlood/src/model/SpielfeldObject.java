@@ -3,7 +3,25 @@ package model;
 public abstract class SpielfeldObject extends Gameobject
 {
 	private Position positon = new Position(0, 0);
+	private int width = 0;
+	private int height = 0;
 	
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
 	public Position getPositon() {
 		return positon;
 	}
@@ -18,8 +36,14 @@ public abstract class SpielfeldObject extends Gameobject
 		// TODO Auto-generated constructor stub
 	}
 
-	public SpielfeldObject(int id, String bezeichner, Position positon) {
+	public SpielfeldObject(int id, String bezeichner, Position positon,
+			int width, int height) {
 		super(id, bezeichner);
 		this.positon = positon;
+		this.width = width;
+		this.height = height;
 	}
+
+	
+
 }

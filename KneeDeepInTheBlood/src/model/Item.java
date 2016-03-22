@@ -11,14 +11,10 @@ public class Item extends SpielfeldObject
 	public void setEffekt(Effekt effekt) {
 		this.effekt = effekt;
 	}
-	
-	private Item(int id, String bezeichner, Position positon) {
-	super(id, bezeichner, positon);
-	// TODO Auto-generated constructor stub
-	}
 
-	public Item(int id, String bezeichner, Position positon, Effekt effekt) {
-		super(id, bezeichner, positon);
+	public Item(int id, String bezeichner, Position positon, int width,
+			int height, Effekt effekt) {
+		super(id, bezeichner, positon, width, height);
 		this.effekt = effekt;
 	}
 }

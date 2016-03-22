@@ -32,14 +32,9 @@ public abstract class MovableObject extends SpielfeldObject
 		this.health = health;
 	}
 
-	private MovableObject(int id, String bezeichner, Position positon) {
-		super(id, bezeichner, positon);
-		// TODO Auto-generated constructor stub
-	}
-
 	public MovableObject(int id, String bezeichner, Position positon,
-			int winkel, int speed, int health) {
-		super(id, bezeichner, positon);
+			int width, int height, int winkel, int speed, int health) {
+		super(id, bezeichner, positon, width, height);
 		this.winkel = winkel;
 		this.speed = speed;
 		this.health = health;
