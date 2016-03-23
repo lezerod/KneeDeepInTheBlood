@@ -1,6 +1,6 @@
 package model;
 
-public class HeldenFahrzeug extends LivingObect
+public class HeldenFahrzeug extends LivingObject
 {
 	public HeldenFahrzeug(int id, String bezeichner, Position positon,
 			int width, int height, int winkel, int speed, int health,

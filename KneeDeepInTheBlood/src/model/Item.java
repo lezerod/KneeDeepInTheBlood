@@ -2,7 +2,7 @@ package model;
 
 public class Item extends SpielfeldObject
 {
-	private Effekt effekt = new Effekt(0, null, null){};
+	private Effekt effekt = new Effekt(0, null){};
 
 	public Effekt getEffekt() {
 		return effekt;

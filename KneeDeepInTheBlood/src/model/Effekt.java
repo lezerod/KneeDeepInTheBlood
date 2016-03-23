@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Effekt extends Waffe
+public abstract class Effekt extends Gameobject
 {
 	private int value = 0;
 	
@@ -12,9 +12,9 @@ public abstract class Effekt extends Waffe
 		this.value = value;
 	}
 
-	public Effekt(int id, String bezeichner, Effekt effekt) 
+	public Effekt(int id, String bezeichner) 
 	{
-		super(id, bezeichner, effekt);
+		super(id, bezeichner);
 		// TODO Auto-generated constructor stub
 	}
 	

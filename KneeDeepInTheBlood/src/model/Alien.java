@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Alien extends LivingObect
+public abstract class Alien extends LivingObject
 {
 
 	public Alien(int id, String bezeichner, Position positon, int width,

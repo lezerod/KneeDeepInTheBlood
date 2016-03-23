@@ -1,6 +1,6 @@
 package model;
 
-public abstract class LivingObect extends MovableObject
+public abstract class LivingObject extends MovableObject
 {
 	private Waffe waffe = new Waffe(0, null, null);
 
@@ -12,7 +12,7 @@ public abstract class LivingObect extends MovableObject
 		this.waffe = waffe;
 	}
 
-	public LivingObect(int id, String bezeichner, Position positon, int width,
+	public LivingObject(int id, String bezeichner, Position positon, int width,
 			int height, int winkel, int speed, int health, Waffe waffe) {
 		super(id, bezeichner, positon, width, height, winkel, speed, health);
 		this.waffe = waffe;
