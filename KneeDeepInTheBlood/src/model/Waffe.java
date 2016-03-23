@@ -2,7 +2,7 @@ package model;
 
 public class Waffe extends Gameobject
 {
-	private Effekt effekt = new Effekt(0, null, null){};
+	private Effekt effekt = new Effekt(0, null){};
 
 	public Effekt getEffekt() {
 		return effekt;
