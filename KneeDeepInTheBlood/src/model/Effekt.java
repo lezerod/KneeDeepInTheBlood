@@ -16,6 +16,7 @@ public abstract class Effekt extends Gameobject
 	{
 		super(id, bezeichner);
 		// TODO Auto-generated constructor stub
+		//try
 	}
 	
 	
