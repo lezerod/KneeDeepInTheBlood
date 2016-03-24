@@ -20,6 +20,7 @@ public abstract class Effekt extends Gameobject
 		//we will
 		//you will see
 		//try me
+		//dance
 	}
 	
 	
