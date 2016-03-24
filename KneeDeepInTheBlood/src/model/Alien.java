@@ -7,6 +7,7 @@ public abstract class Alien extends LivingObject
 			int height, int winkel, int speed, int health, Waffe waffe) {
 		super(id, bezeichner, positon, width, height, winkel, speed, health, waffe);
 		// TODO Auto-generated constructor stub
+		//test
 	}
 	
 
