@@ -2,10 +2,17 @@ package model;
 
 public class HeldenFahrzeug extends LivingObject
 {
-	public HeldenFahrzeug(int id, String bezeichner, Position positon,
-			int width, int height, int winkel, int speed, int health,
-			Waffe waffe) {
-		super(id, bezeichner, positon, width, height, winkel, speed, health, waffe);
+
+	public HeldenFahrzeug() {
+		super("Who's been sleeping in my brain?’,", new Position(0, 0), 5, 5, 0, 10, 100, new Waffe(1, "Standart", new Effekt("damage", 25, false) {
+		}),false);
 		// TODO Auto-generated constructor stub
 	}
+	
+
+
+	
+	
+	
 }
+

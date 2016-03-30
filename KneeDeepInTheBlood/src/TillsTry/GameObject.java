@@ -1,5 +1,7 @@
 package TillsTry;
-
+/*
+ * nicht relevant
+ */
 public class GameObject 
 {
 	public static final float VISIBLE_DURATION = 1.3f;

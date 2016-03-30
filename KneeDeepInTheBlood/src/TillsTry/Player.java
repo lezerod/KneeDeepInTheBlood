@@ -1,5 +1,7 @@
 package TillsTry;
-
+/*
+ * nicht relevant
+ */
 public class Player 
 {
 	int x;

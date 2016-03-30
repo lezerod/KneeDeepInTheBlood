@@ -2,7 +2,7 @@ package model;
 
 public class Item extends SpielfeldObject
 {
-	private Effekt effekt = new Effekt(0, null){};
+	private Effekt effekt = new Effekt(null, 0, false){};
 
 	public Effekt getEffekt() {
 		return effekt;
@@ -12,9 +12,9 @@ public class Item extends SpielfeldObject
 		this.effekt = effekt;
 	}
 
-	public Item(int id, String bezeichner, Position positon, int width,
+	public Item(String bezeichner, Position positon, int width,
 			int height, Effekt effekt) {
-		super(id, bezeichner, positon, width, height);
+		super(bezeichner, positon, width, height);
 		this.effekt = effekt;
 	}
 }

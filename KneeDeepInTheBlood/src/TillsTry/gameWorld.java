@@ -1,5 +1,7 @@
 package TillsTry;
-
+/*
+ * nicht relevant
+ */
 import java.util.ArrayList;
 import java.util.Random;
 

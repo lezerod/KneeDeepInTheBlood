@@ -30,19 +30,20 @@ public abstract class SpielfeldObject extends Gameobject
 		this.positon = positon;
 	}
 
-	private SpielfeldObject(int id, String bezeichner) 
+	private SpielfeldObject(String bezeichner) 
 	{
-		super(id, bezeichner);
+		super(bezeichner);
 		// TODO Auto-generated constructor stub
 	}
 
-	public SpielfeldObject(int id, String bezeichner, Position positon,
-			int width, int height) {
-		super(id, bezeichner);
+	public SpielfeldObject(String bezeichner, Position positon, int width,
+			int height) {
+		super(bezeichner);
 		this.positon = positon;
 		this.width = width;
 		this.height = height;
 	}
+
 
 	
 

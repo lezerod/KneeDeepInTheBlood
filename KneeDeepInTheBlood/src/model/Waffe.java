@@ -2,7 +2,7 @@ package model;
 
 public class Waffe extends Gameobject
 {
-	private Effekt effekt = new Effekt(0, null){};
+	private Effekt effekt = new Effekt(null, 0, false){};
 
 	public Effekt getEffekt() {
 		return effekt;
@@ -13,15 +13,9 @@ public class Waffe extends Gameobject
 		this.effekt = effekt;
 	}
 	
-	private Waffe(int id, String bezeichner) 
-	{
-		super(id, bezeichner);
-		// TODO Auto-generated constructor stub
-	}
-	
 	public Waffe(int id, String bezeichner, Effekt effekt) 
 	{
-		super(id, bezeichner);
+		super(bezeichner);
 		this.effekt = effekt;
 	}
 }

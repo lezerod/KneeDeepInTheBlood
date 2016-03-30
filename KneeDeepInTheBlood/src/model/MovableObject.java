@@ -2,6 +2,14 @@ package model;
 
 public abstract class MovableObject extends SpielfeldObject
 {
+	public MovableObject(String bezeichner, Position positon, int width,
+			int height, int winkel, int speed, int health) {
+		super(bezeichner, positon, width, height);
+		this.winkel = winkel;
+		this.speed = speed;
+		this.health = health;
+	}
+
 	private int winkel = 0;
 	private int speed = 0;
 	private int health = 0;
@@ -32,11 +40,5 @@ public abstract class MovableObject extends SpielfeldObject
 		this.health = health;
 	}
 
-	public MovableObject(int id, String bezeichner, Position positon,
-			int width, int height, int winkel, int speed, int health) {
-		super(id, bezeichner, positon, width, height);
-		this.winkel = winkel;
-		this.speed = speed;
-		this.health = health;
-	}
+
 }

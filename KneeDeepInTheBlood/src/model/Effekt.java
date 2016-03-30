@@ -3,7 +3,16 @@ package model;
 public abstract class Effekt extends Gameobject
 {
 	private int value = 0;
+	private boolean spezialwaffe = false;
 	
+	public boolean isSpezialwaffe() {
+		return spezialwaffe;
+	}
+
+	public void setSpezialwaffe(boolean spezialwaffe) {
+		this.spezialwaffe = spezialwaffe;
+	}
+
 	public int getValue() {
 		return value;
 	}
@@ -12,22 +21,22 @@ public abstract class Effekt extends Gameobject
 		this.value = value;
 	}
 
-	public Effekt(int id, String bezeichner) 
-	{
-		super(id, bezeichner);
-		// TODO Auto-generated constructor stub
-		//see you
-		//we will
-		//you will see
-		//try me
-		//dance
-		//try me
-		//we will see
-		//try me
-		//Let´s Roll out Autobots!
+	public Effekt(String bezeichner, int value, boolean spezialwaffe) {
+		super(bezeichner);
+		this.value = value;
+		this.spezialwaffe = spezialwaffe;
 	}
+
+
+
 	
 	
 	
 
+
 }
+	
+	
+	
+
+
