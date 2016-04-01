@@ -6,9 +6,9 @@ public class TestKampf
 {
 	public static void main(String[] args)
 	{
-		HeldenFahrzeug h1 = new HeldenFahrzeug();
-		AlienNichtImmun a1 = new AlienNichtImmun();
-		AlienImmun a2 = new AlienImmun();
+		HeldenFahrzeug h1 = new HeldenFahrzeug(new Position(4, 4));
+		AlienNichtImmun a1 = new AlienNichtImmun(new Position(3, 1));
+		AlienImmun a2 = new AlienImmun(new Position(0, 0));
 		
 	    while(a1.getHealth() != 0)
 	    {
@@ -18,6 +18,7 @@ public class TestKampf
 		System.out.println("Enemy: " + a1.getHealth() + " HP");
 	    }
 	    GameHelper.fight(h1, a2);
+	    GameHelper.overlap(h1, a1);
 		
 
 	}

@@ -2,7 +2,7 @@ package model;
 
 public abstract class Gameobject 
 {
-	private String bezeichner = null;
+	public String bezeichner = null;
 	
 	public String getBezeichner() {
 		return bezeichner;
