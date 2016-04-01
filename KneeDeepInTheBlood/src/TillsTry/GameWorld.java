@@ -5,7 +5,7 @@ package TillsTry;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class gameWorld 
+public class GameWorld 
 {
 	public static final int WORLD_X = 640;
 	public static final int WORLD_Y = 480;
@@ -22,7 +22,7 @@ public class gameWorld
 	public int lifes;
 	public int score;
 	
-	public gameWorld() 
+	public GameWorld() 
 	{
 		objects = new ArrayList<GameObject>();
 		spawnTime = 2;
