@@ -15,8 +15,6 @@ public class GameHelper
 			verteidiger.setHealth(verteidiger.getHealth() - angreifer.getWaffe().getEffekt().getValue());
 				
 		}
-	
-
 }
 	
 	public static boolean overlap(SpielfeldObject s1, SpielfeldObject s2)
@@ -32,4 +30,5 @@ public class GameHelper
 		System.out.println("All okay!");
 		return false;
 	}
-	}
+	
+}

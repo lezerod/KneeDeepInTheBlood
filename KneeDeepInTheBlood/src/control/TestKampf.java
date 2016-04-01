@@ -19,10 +19,5 @@ public class TestKampf
 	    }
 	    GameHelper.fight(h1, a2);
 	    GameHelper.overlap(h1, a1);
-		
-
 	}
-	
-	
-
 }

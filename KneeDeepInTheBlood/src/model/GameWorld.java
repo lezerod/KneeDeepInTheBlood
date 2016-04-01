@@ -5,24 +5,87 @@ import java.util.Random;
 
 public class GameWorld 
 {
-	public final int Wolrd_X = 640;
-	public final int World_Y = 480;
+	private final int Wolrd_X;
+	private final int World_Y;
 	
-	public ArrayList<Gameobject>objects;
+	private ArrayList<SpielfeldObject>objects;
 	
-	private int spawnTime = 0;
-	private int spawnPause = 0;
-	private Random positionRandomizer;
+	private final int spawnTime;
+	private final int spawnPause;
 	
-	public int lifes = 0;
-	public int score = 0;
+	private int lifes = 0;
+	private int score = 0;
 	
+	
+	
+	public ArrayList<SpielfeldObject> getObjects() {
+		return objects;
+	}
+
+
+
+	public void setObjects(ArrayList<SpielfeldObject> objects) {
+		this.objects = objects;
+	}
+
+
+
+	public int getLifes() {
+		return lifes;
+	}
+
+
+
+	public void setLifes(int lifes) {
+		this.lifes = lifes;
+	}
+
+
+
+	public int getScore() {
+		return score;
+	}
+
+
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+
+
+	public int getWolrd_X() {
+		return Wolrd_X;
+	}
+
+
+
+	public int getWorld_Y() {
+		return World_Y;
+	}
+
+
+
+	public int getSpawnTime() {
+		return spawnTime;
+	}
+
+
+
+	public int getSpawnPause() {
+		return spawnPause;
+	}
+
+	
+	
+
 	public GameWorld()
 	{
-		objects = new ArrayList<Gameobject>();
+		Wolrd_X = 640;
+		World_Y = 480;
+		objects = new ArrayList<SpielfeldObject>();
 		spawnTime = 2;
 		spawnPause = 1;
-		positionRandomizer = new Random();
 		lifes = 3;
 		score = 0;
 	}
