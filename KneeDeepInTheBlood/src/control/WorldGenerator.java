@@ -6,7 +6,7 @@ import model.*;
 
 public class WorldGenerator 
 {
-	GameWorld world = new GameWorld();
+	static GameWorld world = new GameWorld();
 
 	
 	public void positionRandomizer(SpielfeldObject s1)
@@ -32,7 +32,6 @@ public class WorldGenerator
 	
 	public static void main(String[] args)
 	{
-		GameWorld world = new GameWorld();
 		AlienNichtImmun a1 = new AlienNichtImmun(new Position(0, 0));
 		HeldenFahrzeug h1 = new HeldenFahrzeug(new Position(0, 0));
 		new WorldGenerator().positionRandomizer(a1);
@@ -40,10 +39,6 @@ public class WorldGenerator
 		ArrayList<SpielfeldObject> tmp = world.getObjects();
 		h1.getPositon().print();
 		a1.getPositon().print();
-		for(SpielfeldObject s2 : tmp)
-		{
-			System.out.println(s2.getPositon().getX());
-		}
 	}
 	
 }
