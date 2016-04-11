@@ -1,7 +1,7 @@
 package model;
 
 public abstract class SpielfeldObject extends Gameobject
-{
+	{
 	private Position positon = new Position(0, 0);
 	private int width = 0;
 	private int height = 0;
@@ -44,11 +44,6 @@ public abstract class SpielfeldObject extends Gameobject
 		this.width = width;
 		this.height = height;
 	}
-		
-
-	
-	
-
 }
 	
 	
