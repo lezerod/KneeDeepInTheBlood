@@ -6,7 +6,6 @@ import model.*;
 
 public class WorldGenerator 
 {
-	
 	public void positionRandomizer(SpielfeldObject s1, GameWorld world)
 	{
 		Random rand = new Random();

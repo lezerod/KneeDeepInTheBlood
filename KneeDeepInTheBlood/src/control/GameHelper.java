@@ -1,7 +1,6 @@
 package control;
 import model.*;
 
-
 public class GameHelper 
 {
 	public static void fight(LivingObject angreifer, LivingObject verteidiger )

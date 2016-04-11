@@ -1,7 +1,6 @@
 package control;
 
 import java.util.ArrayList;
-
 import model.AlienNichtImmun;
 import model.GameWorld;
 import model.HeldenFahrzeug;
