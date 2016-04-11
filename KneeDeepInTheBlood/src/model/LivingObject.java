@@ -2,8 +2,6 @@ package model;
 
 public abstract class LivingObject extends MovableObject
 {
-
-
 	public LivingObject(String bezeichner, Position positon, int width,
 			int height, int winkel, int speed, int health, Waffe waffe,
 			boolean immun) {

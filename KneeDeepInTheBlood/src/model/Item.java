@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * Diese Klasse 
+ * @author til
+ *
+ */
 public class Item extends SpielfeldObject
 {
 	private Effekt effekt = new Effekt(bezeichner, 0){};

@@ -4,7 +4,7 @@ package model;
  * @author til
  *
  */
-public abstract class Effekt extends Gameobject
+public class Effekt extends Gameobject
 {
 	private int value = 0;
 

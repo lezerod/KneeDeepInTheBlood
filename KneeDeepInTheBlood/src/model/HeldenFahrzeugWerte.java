@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * In diesem Interface werden die Werte von dem {@link HeldenFahrzeug} festgelegt.
+ * @author til
+ *
+ */
 public interface HeldenFahrzeugWerte 
 {
 	String bezeichner = "HeldenFahrZeug";
