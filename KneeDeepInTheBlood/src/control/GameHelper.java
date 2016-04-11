@@ -1,14 +1,14 @@
 package control;
 import model.*;
 /**
- * Diese Klasse enthaelt Methoden die während des Spielablaufes abgerufen werden.
+ * Diese Klasse enthaelt Methoden die waehrend des Spielablaufes abgerufen werden.
  * @author til
  */
 
 public class GameHelper 
 {
 	/**
-	 * Diese Methode ist ein einfacher Test um zwei {@link LivingObject} gegeneinander Kämpfen zu lassen und zu prüfen pb eine Speziawaffe nötig ist.
+	 * Diese Methode ist ein einfacher Test um zwei {@link LivingObject} gegeneinander Kaempfen zu lassen und zu prüfen ob eine Speziawaffe nötig ist.
 	 * @param angreifer
 	 * @param verteidiger
 	 */

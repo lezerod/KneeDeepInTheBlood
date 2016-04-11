@@ -5,8 +5,8 @@ import java.util.Objects;
 import java.util.Random;
 /**
  * Mit dieser Klasse laesst sich das Grundgeruest der Gameworld erzeugen. Sie besitzt die Integer World_X und Y um die Groeﬂe des Spielfeldes einzustellen.
- * Auﬂerdem besitzt einen integer namens life um die Leben des Spielers festzustellen und den Integer score um die Punkte zu z‰hlebn die der Spieler sammelt 
- * w‰hrend des Spielens. In der ArrayListe {@link Objects} werden die erstellten Objekte gespeichert die auf dem Spielfeld liegen. Im Konstruktor werden
+ * Auﬂerdem besitzt einen integer namens life um die Leben des Spielers festzustellen und den Integer score um die Punkte zu zaehlebn die der Spieler sammelt 
+ * waehrend des Spielens. In der ArrayListe {@link Objects} werden die erstellten Objekte gespeichert die auf dem Spielfeld liegen. Im Konstruktor werden
  * den Variablen Werte zugewiesen.
  * @author til
  *

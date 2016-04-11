@@ -4,16 +4,16 @@ import java.util.Random;
 
 import model.*;
 /**
- * Innerhalb dieser Klasse wird das Spielfeld generiert und die Objekte erhalten einen zufälligen Standort auf der Karte.
+ * Innerhalb dieser Klasse wird das Spielfeld generiert und die Objekte erhalten einen zufaelligen Standort auf der Karte.
  * @author til
  *
  */
 public class WorldGenerator 
 {
 	/**
-	 * Die Methode generiert zunächst zufaellig für ein {@link SpielfeldObject} die Positionskoordinaten. Danach wird globale ArrayListe in eine temporaere 
+	 * Die Methode generiert zunaechst zufaellig fuer ein {@link SpielfeldObject} die Positionskoordinaten. Danach wird globale ArrayListe in eine temporaere 
 	 * ArrayListe reingeladen. Diese wird in einer Schleife durchlaufen und kontrolliert ob sich das neue Objekt mit einem aus der ArrayListe ueberlappt.
-	 * Dies wird mit der Methode overlap geprüft.Ist dies der Fall wird die Methode positionRandomizer nochmal aufgerufen. Wenn die Schleife ohne Fehler durchlaeuft 
+	 * Dies wird mit der Methode overlap geprueft.Ist dies der Fall wird die Methode positionRandomizer nochmal aufgerufen. Wenn die Schleife ohne Fehler durchlaeuft 
 	 * wird das Objekt der temporaeren ArrayListe hinzugefuegt und diese wird die neue globale ArrayListe. 
 	 * @param s1
 	 * @param world

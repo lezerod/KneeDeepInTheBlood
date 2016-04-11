@@ -1,6 +1,6 @@
 package model;
 /**
- * Diese Klasse erbt von der Abstrakten Klasse Alien. Die Werte erhält die Klasse von dem Interface {@link AlienImmunWerte}.
+ * Diese Klasse erbt von der Abstrakten Klasse Alien. Die Werte erhaelt die Klasse von dem Interface {@link AlienImmunWerte}.
  * @author til
  *
  */
