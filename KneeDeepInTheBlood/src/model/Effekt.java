@@ -1,6 +1,6 @@
 package model;
 /**
- * Dies ist eine Abstrakte Klasse welche von {@link Gameobject} erbt. Sie besitzt eine setter und getter Methode um auf den Integer Value zuzugreifen.
+ * Dies ist eine Klasse welche von {@link Gameobject} erbt. Sie besitzt eine setter und getter Methode um auf den Integer Value zuzugreifen.
  * @author til
  *
  */

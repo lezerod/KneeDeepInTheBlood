@@ -1,6 +1,6 @@
 package model;
 /**
- * Diese Klasse 
+ * Diese Klasse erbt von {@link SpielfeldObject}. 
  * @author til
  *
  */

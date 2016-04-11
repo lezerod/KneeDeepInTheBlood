@@ -6,7 +6,13 @@ import model.GameWorld;
 import model.HeldenFahrzeug;
 import model.Position;
 import model.SpielfeldObject;
-
+/**
+ * Innerhalb diese Test wird zunächst eine {@link GameWorld} erstellt. Auf dieser wird nun ein {@link AlienNichtImmun} und ein {@link HeldenFahrzeug} platziert.
+ * Die Position wird per print Methode ausgegeben die sich in {@link Position} befindet.
+ * Daraufhin kämpfen die beiden Objekte gegeneinander.
+ * @author til
+ *
+ */
 public class Test 
 {
 	static GameWorld world = new GameWorld();
@@ -17,7 +23,6 @@ public class Test
 		HeldenFahrzeug h1 = new HeldenFahrzeug();
 		new WorldGenerator().positionRandomizer(a1, world);
 		new WorldGenerator().positionRandomizer(h1, world);
-		ArrayList<SpielfeldObject> tmp = world.getObjects();
 		h1.getPositon().print();
 		a1.getPositon().print();
 	

@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * Diese Klasse erbt von {@link Gameobject}.
+ * @author til
+ *
+ */
 public class Waffe extends Gameobject
 {
 	private Effekt effekt = new Effekt(null, 0){};

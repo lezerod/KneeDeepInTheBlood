@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * Diese Klasse erbt von {@link MovableObject}.
+ * @author til
+ *
+ */
 public abstract class LivingObject extends MovableObject
 {
 	public LivingObject(String bezeichner, Position positon, int width,

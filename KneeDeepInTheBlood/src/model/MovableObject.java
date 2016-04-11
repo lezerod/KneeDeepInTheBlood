@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * Diese Klasse erbt von {@link SpielfeldObject}.
+ * @author til
+ *
+ */
 public abstract class MovableObject extends SpielfeldObject
 {
 	public MovableObject(String bezeichner, Position positon, int width,

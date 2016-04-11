@@ -1,5 +1,10 @@
 package model;
-
+/**
+ * In dieser Klasse wird die Position von Objekten festgelegt.
+ * Sie besitzt eine print Methode um die Position der Objekte auszugeben.
+ * @author til
+ *
+ */
 public class Position 
 {
 	private int x = 0;

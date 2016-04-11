@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * Diese Klasse erbt von {@link Gameobject}.
+ * @author til
+ *
+ */
 public abstract class SpielfeldObject extends Gameobject
 	{
 	private Position positon = new Position(0, 0);

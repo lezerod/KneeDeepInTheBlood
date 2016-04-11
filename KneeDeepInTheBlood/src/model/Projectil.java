@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * Diese Klasse erbt von {@link MovableObject}.
+ * @author til
+ *
+ */
 public class Projectil extends MovableObject
 {
 
