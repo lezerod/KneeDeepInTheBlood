@@ -6,13 +6,13 @@ package model;
  */
 public interface HeldenFahrzeugWerte 
 {
-	String bezeichner = "HeldenFahrZeug";
-	Position position = new Position(0, 0);
-	int width = 5;
-	int height = 5;
-	int winkel = 0;
-	int speed = 0;
-	int health = 100;
+	final static String bezeichner = "HeldenFahrZeug";
+	final static Position positionbeispawn = new Position(0, 0);
+	final static int widthbeispawn = 5;
+	final static int heightbeispawn = 5;
+	final static int winkelbeispawn = 0;
+	final static int speedbeispawn = 0;
+	final static int healthbeispawn = 100;
 	Waffe waffe = new Waffe("AlienBlaster", new Effekt("Damage", 5){});
 	boolean immun = false;
 }

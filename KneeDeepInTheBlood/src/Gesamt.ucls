@@ -174,7 +174,7 @@
   </class>  
   <interface id="20" language="java" name="model.AlienImmunWerte" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/AlienImmunWerte.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="133" x="467" y="1838"/>    
+    <position height="225" width="133" x="451" y="1779"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

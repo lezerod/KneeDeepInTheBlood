@@ -8,7 +8,7 @@ public class HeldenFahrzeug extends LivingObject implements HeldenFahrzeugWerte
 {
 
 	public HeldenFahrzeug() {
-		super(model.HeldenFahrzeugWerte.bezeichner, model.HeldenFahrzeugWerte.position, width, height, winkel, speed, health, waffe, immun);
+		super(model.HeldenFahrzeugWerte.bezeichner, model.HeldenFahrzeugWerte.positionbeispawn, widthbeispawn, heightbeispawn, winkelbeispawn, speedbeispawn, healthbeispawn, waffe, immun);
 		// TODO Auto-generated constructor stub
 	}
 	

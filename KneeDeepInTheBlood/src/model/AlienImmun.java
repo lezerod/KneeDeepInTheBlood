@@ -8,7 +8,7 @@ public class AlienImmun extends Alien implements AlienImmunWerte
 {
 
 	public AlienImmun() {
-		super(model.AlienImmunWerte.bezeichner, model.AlienImmunWerte.position, width, height, winkelbeispawn, speedbeispawn, healthbeispawn, waffe, immun);
+		super(model.AlienImmunWerte.bezeichner, model.AlienImmunWerte.positionbeispawn, width, height, winkelbeispawn, speedbeispawn, healthbeispawn, waffe, immun);
 		// TODO Auto-generated constructor stub
 	}
 	

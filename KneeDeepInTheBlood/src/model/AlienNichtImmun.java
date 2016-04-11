@@ -9,7 +9,7 @@ public class AlienNichtImmun extends Alien implements AlienNichtImmunWerte
 
 	public AlienNichtImmun() 
 	{	
-		super(model.AlienNichtImmunWerte.bezeichner, model.AlienNichtImmunWerte.position, width, height, winkelbeispawn, speedbeispawn, healthbeispawn, waffe, immun);
+		super(model.AlienNichtImmunWerte.bezeichner, model.AlienNichtImmunWerte.positionbeispawn, width, height, winkelbeispawn, speedbeispawn, healthbeispawn, waffe, immun);
 		// TODO Auto-generated constructor stub
 	}
 }

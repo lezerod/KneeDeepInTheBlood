@@ -7,7 +7,7 @@ package model;
 public interface AlienNichtImmunWerte 
 {
 	final static String bezeichner = "AlienNichtImmun";
-	final static Position position = new Position(0, 0);
+	final static Position positionbeispawn = new Position(0, 0);
 	final static int width = 5;
 	final static int height = 5;
 	final static int winkelbeispawn = 0;
