@@ -1,7 +1,7 @@
 package control;
 import model.*;
 /**
- * Diese Klasse enthät Methoden die während des Spielablaufes abgerufen werden.
+ * Diese Klasse enthaelt Methoden die während des Spielablaufes abgerufen werden.
  * @author til
  */
 

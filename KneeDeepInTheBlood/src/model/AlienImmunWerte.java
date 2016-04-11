@@ -1,6 +1,6 @@
 package model;
 /**
- * In diesem Interface werden die Werte für das {@link AlienImmun} festgelegt.
+ * In diesem Interface werden die Werte fuer das {@link AlienImmun} festgelegt.
  * @author til
  *
  */

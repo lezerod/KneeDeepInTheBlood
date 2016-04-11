@@ -1,6 +1,6 @@
 package model;
 /**
- * Dies ist eine Abstrakte Klasse welcher über die getter und setter Methode den String von außen verändern lässt.
+ * Dies ist eine Abstrakte Klasse welcher ueber die getter und setter Methode den String von außen veraendern laesst.
  * @author til
  *
  */

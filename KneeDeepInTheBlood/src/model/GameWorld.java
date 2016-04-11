@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 /**
- * Mit dieser Klasse lässt sich das Grundgerüst der Gameworld erzeugen. Sie besitzt die Integer World_X und Y um die Größe des Spielfeldes einzustellen.
+ * Mit dieser Klasse laesst sich das Grundgeruest der Gameworld erzeugen. Sie besitzt die Integer World_X und Y um die Groeße des Spielfeldes einzustellen.
  * Außerdem besitzt einen integer namens life um die Leben des Spielers festzustellen und den Integer score um die Punkte zu zählebn die der Spieler sammelt 
  * während des Spielens. In der ArrayListe {@link Objects} werden die erstellten Objekte gespeichert die auf dem Spielfeld liegen. Im Konstruktor werden
  * den Variablen Werte zugewiesen.

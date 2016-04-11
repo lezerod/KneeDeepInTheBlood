@@ -1,6 +1,6 @@
 package model;
 /**
- * Diese Klasse erbt von der Abstrakten Klasse {@link LivingObject} und erhält ihre Werte von dem Interface {@link HeldenFahrzeugWerte}.
+ * Diese Klasse erbt von der Abstrakten Klasse {@link LivingObject} und erhaelt ihre Werte von dem Interface {@link HeldenFahrzeugWerte}.
  * @author til
  *
  */

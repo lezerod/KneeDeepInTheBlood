@@ -11,10 +11,10 @@ import model.*;
 public class WorldGenerator 
 {
 	/**
-	 * Die Methode generiert zunächst zufällig für ein {@link SpielfeldObject} die Positionskoordinaten. Danach wird globale ArrayListe in eine temporäre 
-	 * ArrayListe reingeladen. Diese wird in einer Schleife durchlaufen und kontrolliert ob sich das neue Objekt mit einem aus der ArrayListe überlappt.
-	 * Dies wird mit der Methode overlap geprüft.Ist dies der Fall wird die Methode positionRandomizer nochmal aufgerufen. Wenn die Schleife ohne Fehler durchläuft 
-	 * wird das Objekt der temporären ArrayListe hinzugefügt und diese wird die neue globale ArrayListe. 
+	 * Die Methode generiert zunächst zufaellig für ein {@link SpielfeldObject} die Positionskoordinaten. Danach wird globale ArrayListe in eine temporaere 
+	 * ArrayListe reingeladen. Diese wird in einer Schleife durchlaufen und kontrolliert ob sich das neue Objekt mit einem aus der ArrayListe ueberlappt.
+	 * Dies wird mit der Methode overlap geprüft.Ist dies der Fall wird die Methode positionRandomizer nochmal aufgerufen. Wenn die Schleife ohne Fehler durchlaeuft 
+	 * wird das Objekt der temporaeren ArrayListe hinzugefuegt und diese wird die neue globale ArrayListe. 
 	 * @param s1
 	 * @param world
 	 */
