@@ -1,8 +1,17 @@
 package control;
 import model.*;
+/**
+ * Diese Klasse enthät Methoden die während des Spielablaufes abgerufen werden.
+ * @author til
+ */
 
 public class GameHelper 
 {
+	/**
+	 * Diese Methode ist ein einfacher Test um zwei Livingobject gegeneinander Kämpfen zu lassen und zu prüfen pb eine Speziawaffe nötig ist.
+	 * @param angreifer
+	 * @param verteidiger
+	 */
 	public static void fight(LivingObject angreifer, LivingObject verteidiger )
 	{
 		if(verteidiger.isImmun() && !angreifer.getWaffe().isSpezialwaffe())
@@ -15,7 +24,12 @@ public class GameHelper
 				
 		}
 }
-	
+	/**
+	 * Diese Methode überprpüft ob zwei Spielfeldobject sich überlappen und gibt einen Rückgabewert true zurück wenn dies der Fall ist.
+	 * @param s1
+	 * @param s2
+	 * @return
+	 */
 	public static boolean overlap(SpielfeldObject s1, SpielfeldObject s2)
 	{
 		if(s1.getPositon().getX() < s2.getPositon().getX() + s2.getWidth() &&

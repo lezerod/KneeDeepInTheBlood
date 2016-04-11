@@ -13,8 +13,8 @@ public class Test
 	
 	public static void main(String[] args)
 	{
-		AlienNichtImmun a1 = new AlienNichtImmun(new Position(0, 0));
-		HeldenFahrzeug h1 = new HeldenFahrzeug(new Position(0, 0));
+		AlienNichtImmun a1 = new AlienNichtImmun();
+		HeldenFahrzeug h1 = new HeldenFahrzeug();
 		new WorldGenerator().positionRandomizer(a1, world);
 		new WorldGenerator().positionRandomizer(h1, world);
 		ArrayList<SpielfeldObject> tmp = world.getObjects();

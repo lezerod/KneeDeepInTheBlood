@@ -12,7 +12,7 @@ public abstract class LivingObject extends MovableObject
 		this.immun = immun;
 	}
 
-	private Waffe waffe = new Waffe(0, null, null);
+	private Waffe waffe = new Waffe(null, null);
 	private boolean immun = false;
 
 	public Waffe getWaffe() {

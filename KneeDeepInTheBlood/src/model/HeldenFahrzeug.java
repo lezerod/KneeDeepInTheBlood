@@ -1,18 +1,13 @@
 package model;
 
-public class HeldenFahrzeug extends LivingObject
+public class HeldenFahrzeug extends LivingObject implements HeldenFahrzeugWerte
 {
 
-	public HeldenFahrzeug(Position position) {
-		super("Who's been sleeping in my brain?’,", position, 4, 4, 0, 10, 100, new Waffe(1, "Standart", new Effekt("damage", 25) {
-		}),false);
+	public HeldenFahrzeug() {
+		super(model.HeldenFahrzeugWerte.bezeichner, model.HeldenFahrzeugWerte.position, width, height, winkel, speed, health, waffe, immun);
 		// TODO Auto-generated constructor stub
 	}
 	
 
-
-	
-	
-	
 }
 

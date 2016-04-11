@@ -1,13 +1,14 @@
 package model;
 
-public class AlienImmun extends Alien 
+public class AlienImmun extends Alien implements AlienImmunWerte
 {
 
-	public AlienImmun(Position position) {
-		super("AlienImmun", position, 9, 9, 0, 15, 20, new Waffe(1, "SmackerBalls'", new Effekt("Damage", 5) {
-		}), true);
-		
+	public AlienImmun() {
+		super(model.AlienImmunWerte.bezeichner, model.AlienImmunWerte.position, width, height, winkel, speed, health, waffe, immun);
 		// TODO Auto-generated constructor stub
 	}
+	
+
+
 
 }

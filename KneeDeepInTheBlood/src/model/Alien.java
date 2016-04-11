@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * 
+ * @author til
+ *
+ */
 public abstract class Alien extends LivingObject
 {
 

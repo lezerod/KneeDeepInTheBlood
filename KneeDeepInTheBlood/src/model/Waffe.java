@@ -23,7 +23,7 @@ public class Waffe extends Gameobject
 		this.effekt = effekt;
 	}
 	
-	public Waffe(int id, String bezeichner, Effekt effekt) 
+	public Waffe(String bezeichner, Effekt effekt) 
 	{
 		super(bezeichner);
 		this.effekt = effekt;
