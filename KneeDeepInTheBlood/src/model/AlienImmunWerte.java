@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * In diesem Interface werden die Werte für das {@link AlienImmun} festgelegt.
+ * @author til
+ *
+ */
 public interface AlienImmunWerte 
 {
 	String bezeichner = "AlienImmun";

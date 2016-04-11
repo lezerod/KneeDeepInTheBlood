@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * Dies ist eine Abstrakte Klasse welche von {@link Gameobject} erbt. Sie besitzt eine setter und getter Methode um auf den Integer Value zuzugreifen.
+ * @author til
+ *
+ */
 public abstract class Effekt extends Gameobject
 {
 	private int value = 0;

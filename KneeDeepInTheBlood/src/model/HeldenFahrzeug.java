@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * Diese Klasse erbt von der Abstrakten Klasse {@link LivingObject} und erhält ihre Werte von {@link HeldenFahrzeugWerte}.
+ * @author til
+ *
+ */
 public class HeldenFahrzeug extends LivingObject implements HeldenFahrzeugWerte
 {
 

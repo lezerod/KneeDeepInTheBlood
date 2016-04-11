@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * Diese Klasse erbt von der Abstrakten Klasse {@link Alien}. Die Werte erhält sie von dem Interface {@link AlienNichtImmunWerte}
+ * @author til
+ *
+ */
 public class AlienNichtImmun extends Alien implements AlienNichtImmunWerte
 {
 

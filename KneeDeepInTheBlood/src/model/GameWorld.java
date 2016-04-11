@@ -1,17 +1,22 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
-
+/**
+ * Mit dieser Klasse lässt sich das Grundgerüst der Gameworld erzeugen. Sie besitzt die Integer World_X und Y um die Größe des Spielfeldes einzustellen.
+ * Außerdem besitzt einen integer namens life um die Leben des Spielers festzustellen und den Integer score um die Punkte zu zählebn die der Spieler sammelt 
+ * während des Spielens. In der ArrayListe {@link Objects} werden die erstellten Objekte gespeichert die auf dem Spielfeld liegen. Im Konstruktor werden
+ * den Variablen Werte zugewiesen.
+ * @author til
+ *
+ */
 public class GameWorld 
 {
 	private final int Wolrd_X;
 	private final int World_Y;
 	
 	private ArrayList<SpielfeldObject>objects;
-	
-	private final int spawnTime;
-	private final int spawnPause;
 	
 	private int lifes = 0;
 	private int score = 0;
@@ -63,29 +68,11 @@ public class GameWorld
 	public int getWorld_Y() {
 		return World_Y;
 	}
-
-
-
-	public int getSpawnTime() {
-		return spawnTime;
-	}
-
-
-
-	public int getSpawnPause() {
-		return spawnPause;
-	}
-
-	
-	
-
 	public GameWorld()
 	{
 		Wolrd_X = 640;
 		World_Y = 480;
 		objects = new ArrayList<SpielfeldObject>();
-		spawnTime = 2;
-		spawnPause = 1;
 		lifes = 3;
 		score = 0;
 	}

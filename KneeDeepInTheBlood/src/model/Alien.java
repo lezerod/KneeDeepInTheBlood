@@ -1,6 +1,6 @@
 package model;
 /**
- * 
+ * Dies ist eine Abstrakte Klasse, welche von {@link LivingObject} erbt.
  * @author til
  *
  */
@@ -12,18 +12,4 @@ public abstract class Alien extends LivingObject
 		super(bezeichner, positon, width, height, winkel, speed, health, waffe, immun);
 		// TODO Auto-generated constructor stub
 	}
-
-	
-	
-
-
-	
-	
-	/*public Alien() {
-		super(1, "StandartAlien", new Position(0, 0), 7, 6, 0, 15, 20, new Waffe(1, "Alien Blaster", new Effekt(1, "Damage", 5) {
-		}));
-		// TODO Auto-generated constructor stub
-	}*/
-
-	
 }
