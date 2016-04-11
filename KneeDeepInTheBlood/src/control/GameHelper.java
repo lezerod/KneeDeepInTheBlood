@@ -8,7 +8,7 @@ import model.*;
 public class GameHelper 
 {
 	/**
-	 * Diese Methode ist ein einfacher Test um zwei {@link LivingObject} gegeneinander Kaempfen zu lassen und zu prüfen ob eine Speziawaffe nötig ist.
+	 * Diese Methode ist ein einfacher Test um zwei {@link LivingObject} gegeneinander Kaempfen zu lassen und zu pruefen ob eine Speziawaffe noetig ist.
 	 * @param angreifer
 	 * @param verteidiger
 	 */
@@ -25,7 +25,7 @@ public class GameHelper
 		}
 }
 	/**
-	 * Diese Methode überprpüft ob zwei {@link SpielfeldObject} sich überlappen und gibt einen Rückgabewert true zurück wenn dies der Fall ist.
+	 * Diese Methode ueberprpüft ob zwei {@link SpielfeldObject} sich ueberlappen und gibt einen Rückgabewert true zurück wenn dies der Fall ist.
 	 * @param s1
 	 * @param s2
 	 * @return

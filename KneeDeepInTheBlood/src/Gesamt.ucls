@@ -55,16 +55,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="7" language="java" name="model.AlienImmunWerte" project="KneeDeepInTheBlood" 
-    file="/KneeDeepInTheBlood/src/model/AlienImmunWerte.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="126" x="410" y="1802"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <interface id="8" language="java" name="model.AlienNichtImmunWerte" project="KneeDeepInTheBlood" 
+  <interface id="7" language="java" name="model.AlienNichtImmunWerte" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/AlienNichtImmunWerte.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="225" width="155" x="215" y="1802"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -73,7 +64,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="9" language="java" name="model.LivingObject" project="KneeDeepInTheBlood" 
+  <class id="8" language="java" name="model.LivingObject" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/LivingObject.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="171" width="305" x="291" y="1115"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -82,7 +73,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="model.Projectil" project="KneeDeepInTheBlood" 
+  <class id="9" language="java" name="model.Projectil" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/Projectil.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="81" width="209" x="42" y="1115"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -91,7 +82,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="model.MovableObject" project="KneeDeepInTheBlood" 
+  <class id="10" language="java" name="model.MovableObject" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/MovableObject.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="261" width="243" x="97" y="814"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -100,7 +91,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="model.Position" project="KneeDeepInTheBlood" 
+  <class id="11" language="java" name="model.Position" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/Position.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="207" width="96" x="380" y="814"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -109,7 +100,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="model.SpielfeldObject" project="KneeDeepInTheBlood" 
+  <class id="12" language="java" name="model.SpielfeldObject" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/SpielfeldObject.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="243" width="202" x="380" y="531"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -118,7 +109,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="model.Waffe" project="KneeDeepInTheBlood" 
+  <class id="13" language="java" name="model.Waffe" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/Waffe.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="171" width="175" x="542" y="1326"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -127,7 +118,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="model.Gameobject" project="KneeDeepInTheBlood" 
+  <class id="14" language="java" name="model.Gameobject" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/Gameobject.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="135" width="155" x="717" y="194"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -136,7 +127,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="model.AlienNichtImmun" project="KneeDeepInTheBlood" 
+  <class id="15" language="java" name="model.AlienNichtImmun" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/AlienNichtImmun.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="81" width="120" x="232" y="1537"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -145,7 +136,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="17" language="java" name="model.HeldenFahrzeugWerte" project="KneeDeepInTheBlood" 
+  <interface id="16" language="java" name="model.HeldenFahrzeugWerte" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/HeldenFahrzeugWerte.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="225" width="150" x="42" y="1537"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -154,7 +145,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="18" language="java" name="control.WorldGenerator" project="KneeDeepInTheBlood" 
+  <class id="17" language="java" name="control.WorldGenerator" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/control/WorldGenerator.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="282" x="292" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -163,7 +154,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="19" language="java" name="model.Alien" project="KneeDeepInTheBlood" 
+  <class id="18" language="java" name="model.Alien" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/Alien.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="81" width="270" x="232" y="1326"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -172,7 +163,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="model.GameWorld" project="KneeDeepInTheBlood" 
+  <class id="19" language="java" name="model.GameWorld" project="KneeDeepInTheBlood" 
     file="/KneeDeepInTheBlood/src/model/GameWorld.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="297" width="238" x="259" y="194"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -181,117 +172,126 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <realization id="21">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="7"/>  
-  </realization>  
-  <generalization id="22">    
+  <interface id="20" language="java" name="model.AlienImmunWerte" project="KneeDeepInTheBlood" 
+    file="/KneeDeepInTheBlood/src/model/AlienImmunWerte.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="133" x="467" y="1838"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <generalization id="21">    
     <bendpoint x="726" y="1115"/>    
     <bendpoint x="726" y="814"/>    
     <bendpoint x="726" y="531"/>    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="15"/>  
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="14"/>  
   </generalization>  
-  <generalization id="23">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="19"/>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="18"/>  
   </generalization>  
-  <association id="24">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="25" name="effekt"/>      
-      <multiplicity id="26" minimum="0" maximum="1"/>    
+  <association id="23">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="24" name="effekt"/>      
+      <multiplicity id="25" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="27">    
+  <generalization id="26">    
     <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="13"/>  
+    <end type="TARGET" refId="12"/>  
   </generalization>  
-  <generalization id="28">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="15"/>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="14"/>  
   </generalization>  
-  <realization id="29">    
+  <realization id="28">    
     <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="17"/>  
+    <end type="TARGET" refId="16"/>  
   </realization>  
-  <association id="30">    
+  <association id="29">    
     <bendpoint x="747" y="1115"/>    
     <bendpoint x="747" y="1326"/>    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="31" name="effekt"/>      
-      <multiplicity id="32" minimum="0" maximum="1"/>    
+      <attribute id="30" name="effekt"/>      
+      <multiplicity id="31" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="33">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="13"/>  
+  <generalization id="32">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="12"/>  
   </generalization>  
-  <association id="34">    
+  <association id="33">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="35" name="world"/>      
-      <multiplicity id="36" minimum="0" maximum="1"/>    
+      <attribute id="34" name="world"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
+    <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="37">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="38" name="waffe"/>      
-      <multiplicity id="39" minimum="0" maximum="1"/>    
+  <association id="36">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="37" name="waffe"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
+    <end type="TARGET" refId="13" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="40">    
+  <generalization id="39">    
     <bendpoint x="768" y="1326"/>    
     <bendpoint x="768" y="1115"/>    
     <bendpoint x="768" y="814"/>    
     <bendpoint x="768" y="531"/>    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="15"/>  
+    <end type="TARGET" refId="14"/>  
   </generalization>  
-  <association id="41">    
-    <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="42" name="objects"/>      
-      <multiplicity id="43" minimum="0" maximum="2147483647"/>    
+  <association id="40">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="41" name="objects"/>      
+      <multiplicity id="42" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
+    <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="44">    
+  <generalization id="43">    
     <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="19"/>  
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <generalization id="44">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="10"/>  
   </generalization>  
   <generalization id="45">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="11"/>  
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
   </generalization>  
   <generalization id="46">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <generalization id="47">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <realization id="48">    
-    <end type="SOURCE" refId="16"/>    
+    <end type="SOURCE" refId="18"/>    
     <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <realization id="47">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <realization id="48">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="20"/>  
   </realization>  
   <generalization id="49">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="11"/>  
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="10"/>  
   </generalization>  
   <association id="50">    
-    <end type="SOURCE" refId="13" navigable="false">      
+    <end type="SOURCE" refId="12" navigable="false">      
       <attribute id="51" name="positon"/>      
       <multiplicity id="52" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
+    <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

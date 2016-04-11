@@ -6,13 +6,13 @@ package model;
  */
 public interface AlienNichtImmunWerte 
 {
-	String bezeichner = "AlienNichtImmun";
-	Position position = new Position(0, 0);
-	int width = 5;
-	int height = 5;
-	int winkel = 0;
-	int speed = 0;
-	int health = 100;
-	Waffe waffe = new Waffe("AlienBlaster", new Effekt("Damage", 5){});
-	boolean immun = false;
+	final static String bezeichner = "AlienNichtImmun";
+	final static Position position = new Position(0, 0);
+	final static int width = 5;
+	final static int height = 5;
+	final static int winkelbeispawn = 0;
+	final static int speedbeispawn = 0;
+	final static int healthbeispawn = 100;
+	final static Waffe waffe = new Waffe("AlienBlaster", new Effekt("Damage", 5){});
+	final static boolean immun = false;
 }

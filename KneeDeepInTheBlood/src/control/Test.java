@@ -25,7 +25,6 @@ public class Test
 		new WorldGenerator().positionRandomizer(h1, world);
 		h1.getPositon().print();
 		a1.getPositon().print();
-	
     while(a1.getHealth() != 0)
     {
 	GameHelper.fight(h1, a1);
