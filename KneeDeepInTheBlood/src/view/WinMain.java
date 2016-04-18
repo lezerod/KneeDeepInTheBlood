@@ -57,7 +57,7 @@ Pane root = new Pane();
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 	        public void handle(KeyEvent ke) {
 	            if (ke.getCode() == KeyCode.LEFT) {
-	            	rectangle.setLayoutX(rectangle.getLayoutX()-1);
+	            	rectangle.setLayoutX(rectangle.getLayoutX()-GameSettings.moveSpeed);
 	            }
 	        }
 	    });
