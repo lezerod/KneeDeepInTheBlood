@@ -66,7 +66,7 @@ Pane root = new Pane();
 	    });
 		
 		
-		//rectangle.getTransforms().add(new Rotate)
+		rectangle.getTransforms().add(new Rotate)
 		
 		primaryStage.setScene(scene);
 		
