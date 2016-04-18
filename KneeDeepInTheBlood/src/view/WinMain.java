@@ -59,6 +59,9 @@ Pane root = new Pane();
 	            if (ke.getCode() == KeyCode.LEFT) {
 	            	rectangle.setLayoutX(rectangle.getLayoutX()-GameSettings.moveSpeed);
 	            }
+	            if (ke.getCode() == KeyCode.RIGHT) {
+	            	rectangle.setLayoutX(rectangle.getLayoutX()+GameSettings.moveSpeed);
+	            }
 	        }
 	    });
 		
