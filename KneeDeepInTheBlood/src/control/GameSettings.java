@@ -15,4 +15,8 @@ public interface GameSettings {
 	public static final int heldenFahrzBreite = 80;
 	public static final int heldenFahrzHoehe = 80;
 	
+	public static final int lebensAnzeigeBreite = 200;
+	public static final int lebensAnzeigeHöhe = 30;
+	public static final int statusAbstand = 15;
+	
 }

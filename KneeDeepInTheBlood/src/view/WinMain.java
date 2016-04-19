@@ -4,6 +4,8 @@
  */
 package view;
 
+import java.util.List;
+
 import control.GameSettings;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -17,7 +19,9 @@ import javafx.stage.Stage;
 import model.Position;
 import model.SpielfeldObject;
 import javafx.scene.image.*;
+import javafx.scene.control.*;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -40,13 +44,14 @@ public class WinMain extends Application {
 
 	}
 
+	// Diese Variabeln dienen nur zum Testen !!
 	private int rotateTest = 0;
 	private Position positionTest = new Position(0, 0);
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		//Create a fullscreen application with a black background
+		//Create a Fullscreen application with a black background
 		Pane root = new Pane();
 		root.setStyle("-fx-background-color: black;");
 		primaryStage.setFullScreen(true);
@@ -65,6 +70,32 @@ public class WinMain extends Application {
 		worldBorder.setLayoutY(GameSettings.abstandWeltOben);
 		worldBorder.setStyle("-fx-stroke: green;-fx-stroke-width: 5;");
 		root.getChildren().add(worldBorder);
+		
+		//Status Anzeige:
+		
+		//Lebensanzeige
+		Label lblInfLeben = new Label();
+		lblInfLeben.setLayoutX(GameSettings.abstandWeltLinks);
+		lblInfLeben.setLayoutY(GameSettings.statusAbstand);
+		lblInfLeben.setText("Health");
+		lblInfLeben.setStyle("-fx-text-fill: white;");
+		root.getChildren().add(lblInfLeben);
+		
+		Rectangle recLebenVoll = new Rectangle();
+		recLebenVoll.setStyle("-fx-fill: RGB(50,50,50)");
+		recLebenVoll.setWidth(GameSettings.lebensAnzeigeBreite);
+		recLebenVoll.setHeight(GameSettings.lebensAnzeigeHöhe);
+		recLebenVoll.setLayoutX(GameSettings.abstandWeltLinks);
+		recLebenVoll.setLayoutY(GameSettings.abstandWeltOben - GameSettings.lebensAnzeigeHöhe - GameSettings.statusAbstand);
+		root.getChildren().add(recLebenVoll);
+		
+		Rectangle recLeben = new Rectangle();
+		recLeben.setStyle("-fx-fill: RED");
+		recLeben.setWidth(GameSettings.lebensAnzeigeBreite / 2);
+		recLeben.setHeight(GameSettings.lebensAnzeigeHöhe);
+		recLeben.setLayoutX(GameSettings.abstandWeltLinks);
+		recLeben.setLayoutY(GameSettings.abstandWeltOben - GameSettings.lebensAnzeigeHöhe - GameSettings.statusAbstand);
+		root.getChildren().add(recLeben);
 		
 		// Create the "Heldenfahrzeug" image
 		Image imgHeldenfahrzeug = new Image(getClass().getResource("images/julien_panzer.png").toExternalForm(), GameSettings.heldenFahrzBreite, GameSettings.heldenFahrzHoehe, true,
@@ -119,6 +150,21 @@ public class WinMain extends Application {
 
 		primaryStage.show();
 
+	}
+	
+	/**
+	 * Inizialisiert die View(erstellt Steuerelemte und passt diese an)
+	 */
+	private void initView() {
+		
+	}
+	
+	/**
+	 * Methode stellt die Schnittstelle zum Controller her. Sie updated die Anzeige
+	 * @param spielfeldObjekte Die Liste an Spielfeldobjekten, die auf dem Spielfeld sind
+	 */
+	public void update(List<SpielfeldObject> spielfeldObjekte) {
+		
 	}
 	
 	/**
