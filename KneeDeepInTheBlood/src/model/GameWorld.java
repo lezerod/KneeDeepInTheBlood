@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Random;
 /**
  * Mit dieser Klasse laesst sich das Grundgeruest der Gameworld erzeugen. Sie besitzt die Integer World_X und Y um die Groeﬂe des Spielfeldes einzustellen.
  * Auﬂerdem besitzt einen integer namens life um die Leben des Spielers festzustellen und den Integer score um die Punkte zu zaehlebn die der Spieler sammelt 

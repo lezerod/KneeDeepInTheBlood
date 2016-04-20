@@ -122,7 +122,10 @@ public class WinMain extends Application {
 					rotateTest+=GameSettings.winkelChangeSpeed;
 				}
 				if (ke.getCode() == KeyCode.UP) {
-					positionTest = updateHeldenFahrzeugPosition(rotateTest, GameSettings.moveSpeed, positionTest.getX(), positionTest.getY());
+					positionTest = updateHeldenFahrzeugPosition(rotateTest, GameSettings.moveSpeed, positionTest.getX(), positionTest.getY(), false);
+				}
+				if (ke.getCode() == KeyCode.DOWN) {
+					positionTest = updateHeldenFahrzeugPosition(rotateTest, GameSettings.moveSpeed, positionTest.getX(), positionTest.getY(), true);
 				}
 				
 				//Position prüfen
@@ -175,12 +178,21 @@ public class WinMain extends Application {
 	 * @param y Die Y-Koordinate
 	 * @return Die neu berechnete Position
 	 */
-	private Position updateHeldenFahrzeugPosition(int winkel, int speed, double x, double y) {
+	private Position updateHeldenFahrzeugPosition(int winkel, int speed, double x, double y, boolean negativ) {
 		double deltaX;
 		double deltaY;
 		deltaY = Math.cos(winkel * (Math.PI/180)) * speed;
 		deltaX = Math.sin(winkel * (Math.PI/180)) * speed;
-		return new Position(x + deltaX, y - deltaY);
+		if(negativ)
+		{
+			return new Position(x - deltaX, y + deltaY);
+		}
+		else
+		{
+			return new Position(x + deltaX, y - deltaY);
+		}
+		
+		
 	}
 	
 

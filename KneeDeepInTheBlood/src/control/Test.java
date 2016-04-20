@@ -1,11 +1,9 @@
 package control;
 
-import java.util.ArrayList;
 import model.AlienNichtImmun;
 import model.GameWorld;
 import model.HeldenFahrzeug;
 import model.Position;
-import model.SpielfeldObject;
 /**
  * Innerhalb diese Test wird zunaechst eine {@link GameWorld} erstellt. Auf dieser wird nun ein {@link AlienNichtImmun} und ein {@link HeldenFahrzeug} platziert.
  * Die Position wird per print Methode ausgegeben die sich in {@link Position} befindet.
