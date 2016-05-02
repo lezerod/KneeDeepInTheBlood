@@ -4,19 +4,16 @@ package model;
  * @author til
  *
  */
-public abstract class MovableObject extends SpielfeldObject
+public abstract class GameObject 
 {
-	public MovableObject(String bezeichner, Position positon, int width,
-			int height, int winkel, int speed, int health) {
-		super(bezeichner, positon, width, height);
-		this.winkel = winkel;
-		this.speed = speed;
-		this.health = health;
-	}
 
 	private int winkel = 0;
 	private int speed = 0;
 	private int health = 0;
+	private Position positon = new Position(0, 0);
+	private int width = 0;
+	private int height = 0;
+	private boolean setting;
 	
 	public void move(){}
 	
