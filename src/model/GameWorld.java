@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import controller.GameSettings;
+
 /**
  * In dieser Klasse befinden sich alle Objekte, die auf dem Spielfeld dargestellt werden
  *
@@ -13,14 +15,16 @@ public class GameWorld {
 	private final int width;
 	private final int height;
 
+	private int threadTicks;
+	
 	private HeldenFahrzeug heldenfahrzeug;
 	private ArrayList<GameObject> items;
 	private ArrayList<Alien> aliens;
 	private ArrayList<MoveableObject> projektile;
 	private ArrayList<MoveableObject> projektileFriendly;
-
-	private int score = 0;
-	private int leben = 3;
+	
+	private int leben;
+	private int aliensSlain;
 	
 	
 	public GameWorld(int breite, int höhe) {
@@ -31,6 +35,7 @@ public class GameWorld {
 		projektileFriendly = new ArrayList<MoveableObject>();
 		width = breite;
 		height = höhe;
+		leben = GameSettings.HELDENSTARTLEBEN;
 	}
 	
 	public ArrayList<MoveableObject> getProjektileFriendly() {
@@ -73,14 +78,6 @@ public class GameWorld {
 		this.projektile = projektile;
 	}
 
-	public int getScore() {
-		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
-	}
-
 
 	public int getWidth() {
 		return width;
@@ -90,8 +87,29 @@ public class GameWorld {
 		return height;
 	}
 
-//	public void spawnNew(){
-//		if(aliens.)
-//	}
+	public int getThreadTicks() {
+		return threadTicks;
+	}
+
+	public void setThreadTicks(int threadTicks) {
+		this.threadTicks = threadTicks;
+	}
+
+	public int getLeben() {
+		return leben;
+	}
+
+	public void setLeben(int leben) {
+		this.leben = leben;
+	}
+
+	public int getAliensSlain() {
+		return aliensSlain;
+	}
+
+	public void setAliensSlain(int aliensSlain) {
+		this.aliensSlain = aliensSlain;
+	}
+
 
 }

@@ -12,6 +12,10 @@ public class FireableObject extends MoveableObject {
 		this.lastShot = lastShot;
 	}
 	
+	/**
+	 * erhöht die variable, die die Anzahl der Loops seit dem letzten
+	 * Schuss speichert um 1.
+	 */
 	public void erhöheLastShot(){
 		lastShot++;
 	}

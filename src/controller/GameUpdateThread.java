@@ -1,7 +1,5 @@
 package controller;
 
-
-
 import controller.GameSettings;
 import javafx.event.Event;
 import javafx.scene.input.KeyCode;
@@ -61,7 +59,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		while (true) {
 		
 		try {
-			Thread.sleep(10);
+			Thread.sleep(GameSettings.THREADTICKTIME);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -116,8 +114,7 @@ public class GameUpdateThread extends Thread implements EventList {
 				aktAlien.setWinkel((float)(360*Math.random()));
 			}
 		
-			aktAlien.setX((float)(getNewPosX(aktAlien.getWinkel(), aktAlien.getSpeed(), aktAlien.getX(), aktAlien.getY(),false)));
-			aktAlien.setY((float)(getNewPosY(aktAlien.getWinkel(), aktAlien.getSpeed(), aktAlien.getX(), aktAlien.getY(),false)));
+			aktAlien.move(false);
 			
 			aktAlien.erhöheLastShot();
 			
@@ -151,8 +148,7 @@ public class GameUpdateThread extends Thread implements EventList {
 				for (int i = 0;i<gameWorld.getProjektile().size();i++) {
 					MoveableObject aktProjektil = gameWorld.getProjektile().get(i);
 				
-					aktProjektil.setX((float)(getNewPosX(aktProjektil.getWinkel(), aktProjektil.getSpeed(), aktProjektil.getX(), aktProjektil.getY(),false)));
-					aktProjektil.setY((float)(getNewPosY(aktProjektil.getWinkel(), aktProjektil.getSpeed(), aktProjektil.getX(), aktProjektil.getY(),false)));
+					aktProjektil.move(false);
 					
 					// prüfen, dass die Projektile nicht ausserhalb des Fensters sind:
 					 korrigierePosition(aktProjektil, true);
@@ -167,8 +163,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		for (int i = 0;i<gameWorld.getProjektileFriendly().size();i++) {
 			MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
 		
-			aktProjektil.setX((float)(getNewPosX(aktProjektil.getWinkel(), aktProjektil.getSpeed(), aktProjektil.getX(), aktProjektil.getY(),false)));
-			aktProjektil.setY((float)(getNewPosY(aktProjektil.getWinkel(), aktProjektil.getSpeed(), aktProjektil.getX(), aktProjektil.getY(),false)));
+			aktProjektil.move(false);
 			
 			//prüfen, dass die Projektile nicht ausserhalb des Fensters sind:
 			korrigierePosition(aktProjektil, true);
@@ -182,15 +177,13 @@ public class GameUpdateThread extends Thread implements EventList {
 	 */
 	private void updateHeldenFahrzeug() {
 		if (topPressed) {
-			gameWorld.getHeldenfahrzeug().setX((float)(getNewPosX(gameWorld.getHeldenfahrzeug().getWinkel(), gameWorld.getHeldenfahrzeug().getSpeed(), gameWorld.getHeldenfahrzeug().getX(), gameWorld.getHeldenfahrzeug().getY(),false)));
-			gameWorld.getHeldenfahrzeug().setY((float)(getNewPosY(gameWorld.getHeldenfahrzeug().getWinkel(), gameWorld.getHeldenfahrzeug().getSpeed(), gameWorld.getHeldenfahrzeug().getX(), gameWorld.getHeldenfahrzeug().getY(),false)));
+			gameWorld.getHeldenfahrzeug().move(false);
 		}
 		if (bottomPressed) {
-			gameWorld.getHeldenfahrzeug().setX((float)(getNewPosX(gameWorld.getHeldenfahrzeug().getWinkel(), gameWorld.getHeldenfahrzeug().getSpeed(), gameWorld.getHeldenfahrzeug().getX(), gameWorld.getHeldenfahrzeug().getY(),true)));
-			gameWorld.getHeldenfahrzeug().setY((float)(getNewPosY(gameWorld.getHeldenfahrzeug().getWinkel(), gameWorld.getHeldenfahrzeug().getSpeed(), gameWorld.getHeldenfahrzeug().getX(), gameWorld.getHeldenfahrzeug().getY(), true)));
+			gameWorld.getHeldenfahrzeug().move(true);
 		}
-		if (leftPressed) gameWorld.getHeldenfahrzeug().setWinkel(gameWorld.getHeldenfahrzeug().getWinkel()-GameSettings.WINKELCHANGESPEED);
-		if (rightPressed) gameWorld.getHeldenfahrzeug().setWinkel(gameWorld.getHeldenfahrzeug().getWinkel()+GameSettings.WINKELCHANGESPEED);
+		if (leftPressed) gameWorld.getHeldenfahrzeug().setWinkel(gameWorld.getHeldenfahrzeug().getWinkel()-GameSettings.HELDENWINKELCHANGESPEED);
+		if (rightPressed) gameWorld.getHeldenfahrzeug().setWinkel(gameWorld.getHeldenfahrzeug().getWinkel()+GameSettings.HELDENWINKELCHANGESPEED);
 		
 		gameWorld.getHeldenfahrzeug().erhöheLastShot();
 		
@@ -203,7 +196,7 @@ public class GameUpdateThread extends Thread implements EventList {
 			gameWorld.getHeldenfahrzeug().setLastShot(0);
 			}
 		
-		//prüfen, dass das Heldenfahrezeug nicht ausserhalb des Fensters sind:
+		//prüfen, dass das Heldenfahrezeug nicht ausserhalb des Fensters ist und ggf. position korrigieren:
 		korrigierePosition(gameWorld.getHeldenfahrzeug(), false);
 		
 	}
@@ -263,38 +256,6 @@ public class GameUpdateThread extends Thread implements EventList {
 			gameWorld.getProjektileFriendly().remove(gameObject);
 		}
 	}
-	
-	/**
-	 * Helper-Methode um die neue X-Position zu ermitteln
-	 * @param winkel aktueller Winkel
-	 * @param speed aktuelle Geschwindigkeit
-	 * @param x aktuelle X-Position
-	 * @param y aktuelle Y-Position
-	 * @param back true, wenn er rückwärts fährt
-	 * @return die neue X-Position
-	 */
-	private static double getNewPosX(float winkel, int speed, double x, double y, boolean back) {
-				double deltaX;
-				deltaX = Math.sin(winkel * (Math.PI/180)) * speed;
-				if (back)return (x - deltaX);
-				else return (x + deltaX);
-		 	}
-	
-	/**
-	 * Helper-Methode um die neue Y-Position zu ermitteln
-	 * @param winkel aktueller Winkel
-	 * @param speed aktuelle Geschwindigkeit
-	 * @param x aktuelle X-Position
-	 * @param y aktuelle Y-Position
-	 * @param back true, wenn er rückwärts fährt
-	 * @return die neue Y-Position
-	 */
-	private static double getNewPosY(float winkel, int speed, double x, double y, boolean back) {
-		double deltaY;
-		deltaY = Math.cos(winkel * (Math.PI/180)) * speed;
-		if (back)return (y + deltaY);
-		else return (y - deltaY);
- 	}
 	
 	/**
 	 * Funktion prüft, ob zwei Spielfeldobjekte kollidieren

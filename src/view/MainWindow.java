@@ -21,8 +21,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Alien;
 import model.GameWorld;
-
+import model.HeldenFahrzeug;
+import model.MoveableObject;
 
 public class MainWindow extends Application {
 
@@ -33,44 +35,74 @@ public class MainWindow extends Application {
 	private Scene sceneGame;
 	private Pane spielfeld = new Pane();
 
-	private ArrayList<ImageView> aliens = new ArrayList<ImageView>();
-	private ArrayList<ImageView> projektile = new ArrayList<ImageView>();
-	private ArrayList<ImageView> projektileFriendly = new ArrayList<ImageView>();
+	// kurzfristige Lösung
+	private ImageView heldenFahrzeugImgV = new ImageView();
+	private ArrayList<ImageView> aliensImgV = new ArrayList<ImageView>();
+	private ArrayList<ImageView> projektileImgV = new ArrayList<ImageView>();
+	private ArrayList<ImageView> projektileFriendlyImgV = new ArrayList<ImageView>();
 
+	/**
+	 * startet die GUI Anzeige
+	 */
 	public void show() {
-		this.launch();
+		launch();
 	}
 
+	/**
+	 * wird automatisch von launch aufgerufen
+	 */
 	@Override
 	public void start(Stage primStage) throws Exception {
 		this.primaryStage = primStage;
-		
+
 		initGameView();
-		primaryStage.setScene(sceneGame);
+		switchScene(sceneGame);
 
 		primaryStage.setTitle("Knee deep in the blood");
 		primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream(GameSettings.IMGALIENPFAD)));
 
 		primaryStage.show();
 
-		//Starten des GameUpdateThreads
+		// Starten des GameUpdateThreads
 		GameUpdateThread gameUpdateThread = new GameUpdateThread(new GameWorld(GameSettings.BREITE, GameSettings.HÖHE),
 				this);
 		gameUpdateThread.start();
 
-
 	}
 
-	public void registerEventListener(EventList e) {
-		listener.add(e);
+	/**
+	 * wechselt die Scene, die angezeigt wird
+	 * @param scene Die neue Scene
+	 */
+	private void switchScene(Scene scene) {
+		primaryStage.setScene(scene);
 	}
 	
+	/**
+	 * inizialisiert die View
+	 */
 	private void initGameView() {
+		
 		this.paneGame = new BorderPane();
 		this.sceneGame = new Scene(paneGame);
-		
+
 		registerEvents();
 
+		erzeugeSteuerelemente();
+
+	}
+
+	/**
+	 * erzeugt alle Steuerelemente
+	 */
+	private void erzeugeSteuerelemente() {
+		erzeugeSceneGame();
+	}
+	
+	/**
+	 * erzeugt alle Steuerelemente für SceneGame
+	 */
+	private void erzeugeSceneGame() {
 		// Create the Border Panes:
 		AnchorPane top = new AnchorPane();
 		top.setStyle("-fx-background-color: RGB(0,0,0);");
@@ -98,9 +130,7 @@ public class MainWindow extends Application {
 		center.setStyle("-fx-border-color: RGB(50,50,50);-fx-border-width: 1px;-fx-background-color: RGB(0,0,0);");
 		paneGame.setCenter(center);
 
-		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGBACKGROUNDPFAD).toExternalForm());// ,
-																													// GameSettings.BREITE,
-																													// GameSettings.HÖHE,true,true);
+		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGBACKGROUNDPFAD).toExternalForm());
 		ImageView imgVBackground = new ImageView();
 		imgVBackground.setImage(imgBackground);
 		imgVBackground.setLayoutX(1);
@@ -116,9 +146,11 @@ public class MainWindow extends Application {
 		center.getChildren().add(spielfeld);
 
 		erzeugeDynamischeSteuerelemente();
-
 	}
 	
+	/**
+	 * ! Vorrübergehende Lösung !
+	 */
 	private void erzeugeDynamischeSteuerelemente() {
 		for (int i = 0; i <= 9; i++) {
 			Image img = new Image(getClass().getResource(GameSettings.IMGALIENPFAD).toExternalForm(), 100, 100, true,
@@ -127,122 +159,157 @@ public class MainWindow extends Application {
 			imgView.setFitHeight(0);
 			imgView.setFitWidth(0);
 			imgView.setImage(img);
-			aliens.add(imgView);
+			aliensImgV.add(imgView);
 		}
-		
-		
+
 		for (int i = 0; i <= 99; i++) {
-			Image img = new Image(getClass().getResource(GameSettings.IMGPROJEKTILPFAD).toExternalForm(), 100, 100, true,
-					true);
+			Image img = new Image(getClass().getResource(GameSettings.IMGPROJEKTILPFAD).toExternalForm(), 100, 100,
+					true, true);
 			ImageView imgView = new ImageView();
 			imgView.setFitHeight(0);
 			imgView.setFitWidth(0);
 			imgView.setImage(img);
-			projektile.add(imgView);
+			projektileImgV.add(imgView);
 		}
-		
+
 		for (int i = 0; i <= 9; i++) {
-			Image img = new Image(getClass().getResource(GameSettings.IMGPROJEKTILFRIENDLYPFAD).toExternalForm(), 100, 100, true,
-					true);
+			Image img = new Image(getClass().getResource(GameSettings.IMGPROJEKTILFRIENDLYPFAD).toExternalForm(), 100,
+					100, true, true);
 			ImageView imgView = new ImageView();
 			imgView.setFitHeight(0);
 			imgView.setFitWidth(0);
 			imgView.setImage(img);
-			projektileFriendly.add(imgView);
+			projektileFriendlyImgV.add(imgView);
 		}
-	}
-	
-	private void registerEvents() {
-		sceneGame.setOnKeyPressed(
-			      new EventHandler<KeyEvent>()
-			      {
-			         @Override
-			         public void handle(KeyEvent keyEvent)
-			         {
-			            for (int i = 0;i<listener.size();i++) {
-			            	listener.get(i).raiseKeyDownEvent(keyEvent);
-			            }
-			         }
-			      }
-			);
-		
-		sceneGame.setOnKeyReleased(
-			      new EventHandler<KeyEvent>()
-			      {
-			         @Override
-			         public void handle(KeyEvent keyEvent)
-			         {
-			            for (int i = 0;i<listener.size();i++) {
-			            	listener.get(i).raiseKeyUpEvent(keyEvent);
-			            }
-			         }
-			      }
-			);
+
+		Image img = new Image(getClass().getResource(GameSettings.IMGHELDENFAHRZEUGPFAD).toExternalForm(), 100, 100,
+				true, true);
+		heldenFahrzeugImgV = new ImageView();
+		heldenFahrzeugImgV.setFitHeight(0);
+		heldenFahrzeugImgV.setFitWidth(0);
+		heldenFahrzeugImgV.setImage(img);
+
 	}
 
+	/**
+	 * leitet die Events an die Listener weiter
+	 */
+	private void registerEvents() {
+		sceneGame.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent keyEvent) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseKeyDownEvent(keyEvent);
+				}
+			}
+		});
+
+		sceneGame.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent keyEvent) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseKeyUpEvent(keyEvent);
+				}
+			}
+		});
+	}
+
+	/**
+	 * ermöglicht es dem Controller sich als listener zu registrieren
+	 */
+	public void registerEventListener(EventList e) {
+		listener.add(e);
+	}
+
+	/**
+	 * wird vom ControllerThread aufgerufen und updated die GUI gemäß der aktuellen GameWorld
+	 * @param gameWorld
+	 */
 	public void updateView(GameWorld gameWorld) {
 
 		Platform.runLater(new Runnable() {
 
 			@Override
 			public void run() {
+				
 				spielfeld.getChildren().clear();
-
-				for (int i = 0; i < gameWorld.getAliens().size(); i++) {
-
-					ImageView imgVAlien = aliens.get(i);
-					imgVAlien.setFitHeight(gameWorld.getAliens().get(i).getHeight());
-					imgVAlien.setFitWidth(gameWorld.getAliens().get(i).getWidth());
-					imgVAlien.setLayoutX(gameWorld.getAliens().get(i).getX());
-					imgVAlien.setLayoutY(gameWorld.getAliens().get(i).getY());
-
-					spielfeld.getChildren().add(imgVAlien);
-
-				}
 				
-				for (int i = 0; i < gameWorld.getProjektile().size(); i++) {
-
-					ImageView imgVProj = projektile.get(i);
-					imgVProj.setFitHeight(gameWorld.getProjektile().get(i).getHeight());
-					imgVProj.setFitWidth(gameWorld.getProjektile().get(i).getWidth());
-					imgVProj.setLayoutX(gameWorld.getProjektile().get(i).getX());
-					imgVProj.setLayoutY(gameWorld.getProjektile().get(i).getY());
-
-					
-					spielfeld.getChildren().add(imgVProj);
-
-				}
-				
-				for (int i = 0; i < gameWorld.getProjektileFriendly().size(); i++) {
-
-					ImageView imgVProj = projektileFriendly.get(i);
-					imgVProj.setFitHeight(gameWorld.getProjektile().get(i).getHeight());
-					imgVProj.setFitWidth(gameWorld.getProjektile().get(i).getWidth());
-					imgVProj.setLayoutX(gameWorld.getProjektile().get(i).getX());
-					imgVProj.setLayoutY(gameWorld.getProjektile().get(i).getY());
-
-					
-					spielfeld.getChildren().add(imgVProj);
-
-				}
-
-				// Heldenfahrzeug:
-				Image imgHeld = new Image(getClass().getResource(GameSettings.IMGHELDENFAHRZEUGPFAD).toExternalForm());
-				ImageView imgVHeld = new ImageView();
-				imgVHeld.setImage(imgHeld);
-				imgVHeld.setFitHeight(gameWorld.getHeldenfahrzeug().getHeight());
-				imgVHeld.setFitWidth(gameWorld.getHeldenfahrzeug().getWidth());
-				imgVHeld.setLayoutX(gameWorld.getHeldenfahrzeug().getX());
-				imgVHeld.setLayoutY(gameWorld.getHeldenfahrzeug().getY());
-
-				imgVHeld.setRotate(gameWorld.getHeldenfahrzeug().getWinkel());
-				
-				spielfeld.getChildren().add(imgVHeld);
+				updateHeldenFahrzeug(gameWorld.getHeldenfahrzeug());
+				updateAliens(gameWorld.getAliens());
+				updateProjektile(gameWorld.getProjektile(), gameWorld.getProjektileFriendly());
 
 			};
-
 		});
 
+	}
+
+	/**
+	 * updated das Heldenfahrzeug auf dem Spielfeld
+	 * @param heldenfahrzeug das Heldenfahrzeug
+	 */
+	private void updateHeldenFahrzeug(HeldenFahrzeug heldenfahrzeug) {
+		heldenFahrzeugImgV.setFitHeight(heldenfahrzeug.getHeight());
+		heldenFahrzeugImgV.setFitWidth(heldenfahrzeug.getWidth());
+		heldenFahrzeugImgV.setLayoutX(heldenfahrzeug.getX());
+		heldenFahrzeugImgV.setLayoutY(heldenfahrzeug.getY());
+		heldenFahrzeugImgV.setRotate(heldenfahrzeug.getWinkel());
+		spielfeld.getChildren().add(heldenFahrzeugImgV);
+	}
+
+	/**
+	 * updated die Aliens auf dem Spielfeld
+	 * @param aliens Liste der Aliens
+	 */
+	private void updateAliens(ArrayList<Alien> aliens) {
+		for (int i = 0; i < aliens.size(); i++) {
+			ImageView imgVAlien = aliensImgV.get(i);
+			imgVAlien.setFitHeight(aliens.get(i).getHeight());
+			imgVAlien.setFitWidth(aliens.get(i).getWidth());
+			imgVAlien.setLayoutX(aliens.get(i).getX());
+			imgVAlien.setLayoutY(aliens.get(i).getY());
+			spielfeld.getChildren().add(imgVAlien);
+		}
+	}
+
+	/**
+	 * updated die Projektile auf dem Spielfeld
+	 * @param enemyProjektile die Alienprojektile
+	 * @param friendlyProjektile die Heldenfahrzeugprojektile
+	 */
+	private void updateProjektile(ArrayList<MoveableObject> enemyProjektile,
+			ArrayList<MoveableObject> friendlyProjektile) {
+		updateEnemyProjektile(enemyProjektile);
+		updateFriendlyProjektile(friendlyProjektile);
+	}
+
+	/**
+	 * updated die freundlichen projektile
+	 * @param friendlyProjektile die Heldenfahrzeugprojektile
+	 */
+	private void updateFriendlyProjektile(ArrayList<MoveableObject> friendlyProjektile) {
+		for (int i = 0; i < friendlyProjektile.size(); i++) {
+			ImageView imgVProj = projektileFriendlyImgV.get(i);
+			imgVProj.setFitHeight(friendlyProjektile.get(i).getHeight());
+			imgVProj.setFitWidth(friendlyProjektile.get(i).getWidth());
+			imgVProj.setLayoutX(friendlyProjektile.get(i).getX());
+			imgVProj.setLayoutY(friendlyProjektile.get(i).getY());
+			spielfeld.getChildren().add(imgVProj);
+		}
+	}
+
+	/**
+	 * updated die feindlichen Projektile
+	 * @param enemyProjektile die Projektile der Aliens
+	 */
+	private void updateEnemyProjektile(ArrayList<MoveableObject> enemyProjektile) {
+		for (int i = 0; i < enemyProjektile.size(); i++) {
+			ImageView imgVProj = projektileImgV.get(i);
+			imgVProj.setFitHeight(enemyProjektile.get(i).getHeight());
+			imgVProj.setFitWidth(enemyProjektile.get(i).getWidth());
+			imgVProj.setLayoutX(enemyProjektile.get(i).getX());
+			imgVProj.setLayoutY(enemyProjektile.get(i).getY());
+			spielfeld.getChildren().add(imgVProj);
+		}
 	}
 
 }
