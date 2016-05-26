@@ -12,4 +12,8 @@ public class FireableObject extends MoveableObject {
 		this.lastShot = lastShot;
 	}
 	
+	public void erhöheLastShot(){
+		lastShot++;
+	}
+	
 }

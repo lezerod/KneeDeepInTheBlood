@@ -5,29 +5,23 @@
 
 package view;
 
-import javafx.scene.shape.Rectangle;
-import javafx.application.Application;
-
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 
 import controller.GameSettings;
 import controller.GameUpdateThread;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import model.Alien;
 import model.GameWorld;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.event.*;
-import javafx.scene.input.KeyEvent;
 
 
 public class MainWindow extends Application {
@@ -43,8 +37,6 @@ public class MainWindow extends Application {
 	private ArrayList<ImageView> projektile = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektileFriendly = new ArrayList<ImageView>();
 
-	private boolean hasInit = false;
-
 	public void show() {
 		this.launch();
 	}
@@ -52,15 +44,16 @@ public class MainWindow extends Application {
 	@Override
 	public void start(Stage primStage) throws Exception {
 		this.primaryStage = primStage;
+		
 		initGameView();
 		primaryStage.setScene(sceneGame);
 
-		this.hasInit = true;
 		primaryStage.setTitle("Knee deep in the blood");
 		primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream(GameSettings.IMGALIENPFAD)));
 
 		primaryStage.show();
 
+		//Starten des GameUpdateThreads
 		GameUpdateThread gameUpdateThread = new GameUpdateThread(new GameWorld(GameSettings.BREITE, GameSettings.HÖHE),
 				this);
 		gameUpdateThread.start();
@@ -71,36 +64,12 @@ public class MainWindow extends Application {
 	public void registerEventListener(EventList e) {
 		listener.add(e);
 	}
-
+	
 	private void initGameView() {
 		this.paneGame = new BorderPane();
 		this.sceneGame = new Scene(paneGame);
 		
-		sceneGame.setOnKeyPressed(
-			      new EventHandler<KeyEvent>()
-			      {
-			         @Override
-			         public void handle(KeyEvent keyEvent)
-			         {
-			            for (int i = 0;i<listener.size();i++) {
-			            	listener.get(i).raiseKeyDownEvent(keyEvent);
-			            }
-			         }
-			      }
-			);
-		
-		sceneGame.setOnKeyReleased(
-			      new EventHandler<KeyEvent>()
-			      {
-			         @Override
-			         public void handle(KeyEvent keyEvent)
-			         {
-			            for (int i = 0;i<listener.size();i++) {
-			            	listener.get(i).raiseKeyUpEvent(keyEvent);
-			            }
-			         }
-			      }
-			);
+		registerEvents();
 
 		// Create the Border Panes:
 		AnchorPane top = new AnchorPane();
@@ -146,6 +115,11 @@ public class MainWindow extends Application {
 		spielfeld.setLayoutY(1);
 		center.getChildren().add(spielfeld);
 
+		erzeugeDynamischeSteuerelemente();
+
+	}
+	
+	private void erzeugeDynamischeSteuerelemente() {
 		for (int i = 0; i <= 9; i++) {
 			Image img = new Image(getClass().getResource(GameSettings.IMGALIENPFAD).toExternalForm(), 100, 100, true,
 					true);
@@ -176,8 +150,34 @@ public class MainWindow extends Application {
 			imgView.setImage(img);
 			projektileFriendly.add(imgView);
 		}
+	}
+	
+	private void registerEvents() {
+		sceneGame.setOnKeyPressed(
+			      new EventHandler<KeyEvent>()
+			      {
+			         @Override
+			         public void handle(KeyEvent keyEvent)
+			         {
+			            for (int i = 0;i<listener.size();i++) {
+			            	listener.get(i).raiseKeyDownEvent(keyEvent);
+			            }
+			         }
+			      }
+			);
 		
-
+		sceneGame.setOnKeyReleased(
+			      new EventHandler<KeyEvent>()
+			      {
+			         @Override
+			         public void handle(KeyEvent keyEvent)
+			         {
+			            for (int i = 0;i<listener.size();i++) {
+			            	listener.get(i).raiseKeyUpEvent(keyEvent);
+			            }
+			         }
+			      }
+			);
 	}
 
 	public void updateView(GameWorld gameWorld) {
@@ -196,7 +196,6 @@ public class MainWindow extends Application {
 					imgVAlien.setLayoutX(gameWorld.getAliens().get(i).getX());
 					imgVAlien.setLayoutY(gameWorld.getAliens().get(i).getY());
 
-					
 					spielfeld.getChildren().add(imgVAlien);
 
 				}

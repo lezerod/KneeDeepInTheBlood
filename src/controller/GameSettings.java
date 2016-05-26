@@ -1,5 +1,10 @@
 package controller;
 
+/**
+ * In diesem Interface stehen alle Konstanten des Spiels
+ * @author Julien
+ *
+ */
 public interface GameSettings {
 
 	public static final int BREITE = 1000;

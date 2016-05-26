@@ -5,13 +5,18 @@ import model.GameWorld;
 import view.EventList;
 import view.MainWindow;
 
+/**
+ * Diese Klasse kontrolliert den Startvorgang des Spiels
+ * @author Julien
+ *
+ */
 public class GameController{
 
-	GameWorld gameWorld;
-	MainWindow view;
-
+	/**
+	 * Der Konstruktor erzeugt eine Instanz der View
+	 */
 	public GameController() {
-		view = new MainWindow();
+		MainWindow view = new MainWindow();
 		view.show();
 	}
 
