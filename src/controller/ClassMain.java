@@ -1,5 +1,7 @@
 package controller;
 
+import view.MainWindow;
+
 /**
  * Dieses Klasse beinhaltet nur die Main-Methode
  * @author Julien
@@ -13,7 +15,8 @@ public class ClassMain {
 	 * @param args Übergabeparameter
 	 */
 	public static void main(String[] args) {
-		new GameController();
+		MainWindow view = new MainWindow();
+		view.show();
 	}
 
 }

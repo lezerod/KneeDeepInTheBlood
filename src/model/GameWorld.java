@@ -26,6 +26,10 @@ public class GameWorld {
 	private int leben;
 	private int aliensSlain;
 	
+	private int minutesToWin;
+	
+	private int ticksSinceLastSpwan;
+	
 	
 	public GameWorld(int breite, int höhe) {
 		heldenfahrzeug = new HeldenFahrzeug(false);
@@ -109,6 +113,22 @@ public class GameWorld {
 
 	public void setAliensSlain(int aliensSlain) {
 		this.aliensSlain = aliensSlain;
+	}
+
+	public int getMinutesToWin() {
+		return minutesToWin;
+	}
+
+	public void setMinutesToWin(int minutesToWin) {
+		this.minutesToWin = minutesToWin;
+	}
+
+	public int getTicksSinceLastSpwan() {
+		return ticksSinceLastSpwan;
+	}
+
+	public void setTicksSinceLastSpwan(int ticksSinceLastSpwan) {
+		this.ticksSinceLastSpwan = ticksSinceLastSpwan;
 	}
 
 

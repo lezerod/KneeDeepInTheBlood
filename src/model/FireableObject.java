@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Diese Klasse beschreibt Objekte, die projektile schiessen können
+ * @author Julien
+ *
+ */
 public class FireableObject extends MoveableObject {
 
 	private int lastShot;
