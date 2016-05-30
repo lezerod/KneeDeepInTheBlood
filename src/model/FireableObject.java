@@ -1,7 +1,8 @@
 package model;
 
 /**
- * Diese Klasse beschreibt Objekte, die projektile schiessen können
+ * Diese Klasse beschreibt Objekte, die Projektile schiessen können
+ * 
  * @author Julien
  *
  */
@@ -16,13 +17,13 @@ public class FireableObject extends MoveableObject {
 	public void setLastShot(int lastShot) {
 		this.lastShot = lastShot;
 	}
-	
+
 	/**
-	 * erhöht die variable, die die Anzahl der Loops seit dem letzten
-	 * Schuss speichert um 1.
+	 * erhöht die variable, die die Anzahl der Loops seit dem letzten Schuss
+	 * speichert um 1.
 	 */
-	public void erhöheLastShot(){
+	public void erhöheLastShot() {
 		lastShot++;
 	}
-	
+
 }

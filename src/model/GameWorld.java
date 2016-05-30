@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import controller.GameSettings;
 
 /**
- * In dieser Klasse befinden sich alle Objekte, die auf dem Spielfeld dargestellt werden
+ * In dieser Klasse befinden sich alle Objekte, die auf dem Spielfeld
+ * dargestellt werden
  *
  * @author Julien, Till, Marco
  *
@@ -16,21 +17,20 @@ public class GameWorld {
 	private final int height;
 
 	private int threadTicks;
-	
+
 	private HeldenFahrzeug heldenfahrzeug;
 	private ArrayList<GameObject> items;
 	private ArrayList<Alien> aliens;
 	private ArrayList<MoveableObject> projektile;
 	private ArrayList<MoveableObject> projektileFriendly;
-	
+
 	private int leben;
 	private int aliensSlain;
-	
+
 	private int minutesToWin;
-	
+
 	private int ticksSinceLastSpwan;
-	
-	
+
 	public GameWorld(int breite, int höhe) {
 		heldenfahrzeug = new HeldenFahrzeug(false);
 		items = new ArrayList<GameObject>();
@@ -41,7 +41,7 @@ public class GameWorld {
 		height = höhe;
 		leben = GameSettings.HELDENSTARTLEBEN;
 	}
-	
+
 	public ArrayList<MoveableObject> getProjektileFriendly() {
 		return projektileFriendly;
 	}
@@ -81,7 +81,6 @@ public class GameWorld {
 	public void setProjektile(ArrayList<MoveableObject> projektile) {
 		this.projektile = projektile;
 	}
-
 
 	public int getWidth() {
 		return width;
@@ -130,6 +129,5 @@ public class GameWorld {
 	public void setTicksSinceLastSpwan(int ticksSinceLastSpwan) {
 		this.ticksSinceLastSpwan = ticksSinceLastSpwan;
 	}
-
 
 }

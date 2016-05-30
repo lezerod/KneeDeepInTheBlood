@@ -19,7 +19,8 @@ import javafx.scene.input.KeyEvent;
  * Diese Klasse stellt den Hauptthread des Spiels dar. Er updated die ganze Zeit
  * die GameWorld und ruft dann die update Methode in der View auf.
  * 
- * @author Julien
+ * @author Planung Struktur/Grundkonzept/Spielkonzept: Julien, Till, Marco;
+ *         Umsetzung: Julien
  *
  */
 public class GameUpdateThread extends Thread implements EventList {
@@ -77,23 +78,38 @@ public class GameUpdateThread extends Thread implements EventList {
 
 	}
 
+	/**
+	 * registriert diese Instanz als Listener
+	 */
 	private void init() {
 		// EventsListener eintragen
 		view.registerEventListener(this);
 	}
 
-	private void startNewGame() {
+	/**
+	 * diese Methode startet ein neues Spiel
+	 * 
+	 * @param schwierigkeitsgrad
+	 *            Easy, Middle oder hard
+	 */
+	private void startNewGame(int schwierigkeitsgrad) {
 		topPressed = false;
 		bottomPressed = false;
 		leftPressed = false;
 		rightPressed = false;
 		spacePressed = false;
-		gameWorld.setMinutesToWin(GameSettings.EASYLIFETIME);
+		if (schwierigkeitsgrad == 0)
+			gameWorld.setMinutesToWin(GameSettings.EASYLIFETIME);
+		else if (schwierigkeitsgrad == 1)
+			gameWorld.setMinutesToWin(GameSettings.MIDDLELIFETIME);
+		else if (schwierigkeitsgrad == 2)
+			gameWorld.setMinutesToWin(GameSettings.HARDLIFETIME);
+
 		createStartModel();
 		gameIsRunning = true;
 		view.switchScene(view.getSceneGame());
 	}
-	
+
 	/**
 	 * erzeugt den Startzustand des Models
 	 */
@@ -149,7 +165,7 @@ public class GameUpdateThread extends Thread implements EventList {
 					gameIsRunning = false;
 					alert.showAndWait();
 					if (alert.getResult() == ButtonType.YES) {
-						startNewGame();
+						view.switchScene(view.getSceneNewGame());
 					} else if (alert.getResult() == ButtonType.NO) {
 						view.switchScene(view.getSceneMainMenu());
 					}
@@ -164,13 +180,16 @@ public class GameUpdateThread extends Thread implements EventList {
 		updateAliens();
 		updateProjektile();
 		updateHeldenFahrzeug();
-		
+
 		checkCollisions();
-		
+
 		checkForNewSpawn();
-		gameWorld.setTicksSinceLastSpwan(gameWorld.getTicksSinceLastSpwan()+1);
+		gameWorld.setTicksSinceLastSpwan(gameWorld.getTicksSinceLastSpwan() + 1);
 	}
 
+	/**
+	 * diese Methode updated die Aliens auf dem Spielfeld
+	 */
 	private void updateAliens() {
 		for (int i = 0; i < gameWorld.getAliens().size(); i++) {
 			Alien aktAlien = gameWorld.getAliens().get(i);
@@ -273,16 +292,18 @@ public class GameUpdateThread extends Thread implements EventList {
 
 	}
 
+	/**
+	 * diese Methode überprüft alle möglichen Kollisionen und behandelt diese
+	 * ggf.
+	 */
 	private void checkCollisions() {
-		for (int i=0;i<gameWorld.getProjektile().size();i++) {
+		for (int i = 0; i < gameWorld.getProjektile().size(); i++) {
 			if (checkForCollision(gameWorld.getProjektile().get(i), gameWorld.getHeldenfahrzeug())) {
-				gameWorld.setLeben(gameWorld.getLeben()-1);
+				gameWorld.setLeben(gameWorld.getLeben() - 1);
 				gameWorld.getProjektile().remove(i);
 				i--;
 				if (gameWorld.getLeben() <= 0) {
-					
-					
-					
+
 					Platform.runLater(new Runnable() {
 
 						@Override
@@ -295,57 +316,59 @@ public class GameUpdateThread extends Thread implements EventList {
 							gameIsRunning = false;
 							alert.showAndWait();
 							if (alert.getResult() == ButtonType.YES) {
-								startNewGame();
+								view.switchScene(view.getSceneNewGame());
 							} else if (alert.getResult() == ButtonType.NO) {
 								view.switchScene(view.getSceneMainMenu());
 							}
 
 						};
 					});
-					
-					
-					
-					
+
 					return;
 				}
 				break;
 			}
 		}
-		
-		for (int i=0;i<gameWorld.getProjektileFriendly().size();i++) {
-			for (int j=0;j<gameWorld.getAliens().size();j++) {
-			
-				try { //TODO SCHLEIFENPROBLEM MUSS NOCH BEHOBEN WERDEN !!!!!!!!!!!!!!!!!!!! ! Nur Übergangslösung !
+
+		for (int i = 0; i < gameWorld.getProjektileFriendly().size(); i++) {
+			for (int j = 0; j < gameWorld.getAliens().size(); j++) {
+
+				try { // TODO SCHLEIFENPROBLEM MUSS NOCH BEHOBEN WERDEN
+						// !!!!!!!!!!!!!!!!!!!! ! Nur Übergangslösung !
 					MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
 					Alien aktAlien = gameWorld.getAliens().get(j);
-						if (checkForCollision(aktProjektil, aktAlien)) {
-							
-							gameWorld.getProjektileFriendly().remove(i);
-							gameWorld.getAliens().remove(j);
-							gameWorld.setAliensSlain(gameWorld.getAliensSlain()+1);
-							i--;
-							j--;
-						}
+					if (checkForCollision(aktProjektil, aktAlien)) {
+
+						gameWorld.getProjektileFriendly().remove(i);
+						gameWorld.getAliens().remove(j);
+						gameWorld.setAliensSlain(gameWorld.getAliensSlain() + 1);
+						i--;
+						j--;
+					}
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
-				
-				
+
 			}
 		}
-		
+
 	}
-	
+
+	/**
+	 * diese Methode überprüft, ob ein neues Alien spawnen soll und kann
+	 */
 	private void checkForNewSpawn() {
-		if ((gameWorld.getTicksSinceLastSpwan() > GameSettings.ALIENRESPAWNRATE) && gameWorld.getAliens().size() < GameSettings.ALIENMAXANZAHL) {
+		if ((gameWorld.getTicksSinceLastSpwan() > GameSettings.ALIENRESPAWNRATE)
+				&& gameWorld.getAliens().size() < GameSettings.ALIENMAXANZAHL) {
 			Alien newAlien = new Alien(false);
-			newAlien.setPosition((float)(Math.random() * GameSettings.BREITE),(float)( Math.random() * GameSettings.HÖHE), GameSettings.ALIENBREITE, GameSettings.ALIENHÖHE);
+			newAlien.setPosition((float) (Math.random() * GameSettings.BREITE),
+					(float) (Math.random() * GameSettings.HÖHE), GameSettings.ALIENBREITE, GameSettings.ALIENHÖHE);
 			newAlien.setSpeed(GameSettings.ALIENSPEED);
 			gameWorld.getAliens().add(newAlien);
 			gameWorld.setTicksSinceLastSpwan(0);
 		}
 	}
-	
+
 	/**
 	 * KeyDown-Event Behandlung
 	 */
@@ -457,7 +480,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		float height2 = gameObjectB.getHeight();
 		float width1 = gameObjectA.getWidth();
 		float width2 = gameObjectB.getWidth();
-
+		// Formel für die Kollisionsberechnung
 		return position1[0] < position2[0] + width2 && position2[0] < position1[0] + width1
 				&& position1[1] < position2[1] + height2 && position2[1] < position1[1] + height1;
 	}
@@ -465,10 +488,31 @@ public class GameUpdateThread extends Thread implements EventList {
 	@Override
 	public void raiseMenuClick(int menuIndex) {
 		if (menuIndex == 0) {
-			startNewGame();
+			view.switchScene(view.getSceneNewGame());
+		} else if (menuIndex == 2) {
+			view.switchScene(view.getSceneSettings());
 		} else if (menuIndex == 3) {
 			System.exit(0);
 		}
+	}
+
+	@Override
+	public void raiseNewGameClick(int menuIndex) {
+		if (menuIndex < 3) {
+			startNewGame(menuIndex);
+		} else if (menuIndex == 3) {
+			view.switchScene(view.getSceneMainMenu());
+		}
+	}
+
+	@Override
+	public void raiseSettingsClick(int menuIndex) {
+
+	}
+
+	@Override
+	public void raiseConnectClick(int menuIndex) {
+
 	}
 
 }

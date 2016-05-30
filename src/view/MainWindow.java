@@ -1,6 +1,9 @@
 /**
- * Diese Klasse stellt die GUI des Spiels dar
- * @author Julien Duchow
+ * Diese Klasse stellt die GUI des Spiels dar.
+ * 
+ * @author Planung der Verknüpfunf von View+Controller und Planung des Aufbaus der View:
+ *  Julien, Till, Marco; Umsetzung: Julien
+ * 
  */
 
 package view;
@@ -30,6 +33,7 @@ import model.Alien;
 import model.GameWorld;
 import model.HeldenFahrzeug;
 import model.MoveableObject;
+import javafx.scene.control.CheckBox;
 
 public class MainWindow extends Application {
 
@@ -39,16 +43,27 @@ public class MainWindow extends Application {
 
 	private BorderPane paneGame;
 	private Scene sceneGame;
-	
+
 	private Pane paneMainMenu;
 	private Scene sceneMainMenu;
-	
+
+	private Pane paneNewGame;
+	private Scene sceneNewGame;
+
+	private Pane paneSettings;
+	private Scene sceneSettings;
+
+	// noch nicht vollständig implementiert:
+	private Pane paneConnect;
+	private Scene sceneConnect;
+	// Ende noch nicht vollständig implementiert
+
 	private Pane spielfeld = new Pane();
 	private Label lblLeben;
 	private Label lblAliensSlain;
 	private Label lblTimeLeft;
-	
-	// kurzfristige Lösung
+
+	// zur Darstellung der Projektile, der Aliens und des Heldenfahrzeugs
 	private ImageView heldenFahrzeugImgV = new ImageView();
 	private ArrayList<ImageView> aliensImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektileImgV = new ArrayList<ImageView>();
@@ -85,22 +100,33 @@ public class MainWindow extends Application {
 
 	/**
 	 * wechselt die Scene, die angezeigt wird
-	 * @param scene Die neue Scene
+	 * 
+	 * @param scene
+	 *            die neue Scene
 	 */
 	public void switchScene(Scene scene) {
 		primaryStage.setScene(scene);
 	}
-	
+
 	/**
 	 * inizialisiert die View
 	 */
 	private void initGameView() {
-		
+
 		this.paneGame = new BorderPane();
 		this.sceneGame = new Scene(paneGame);
-		
+
 		this.paneMainMenu = new Pane();
-		this.sceneMainMenu = new Scene(paneMainMenu, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE) , GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
+		this.sceneMainMenu = new Scene(paneMainMenu, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
+				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
+
+		this.paneNewGame = new BorderPane();
+		this.sceneNewGame = new Scene(paneNewGame, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
+				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
+
+		this.paneSettings = new BorderPane();
+		this.sceneSettings = new Scene(paneSettings, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
+				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
 
 		registerEvents();
 
@@ -114,8 +140,10 @@ public class MainWindow extends Application {
 	private void erzeugeSteuerelemente() {
 		erzeugeSceneMainMenu();
 		erzeugeSceneGame();
+		erzeugeSceneNewGame();
+		erzeugeSceneSettings();
 	}
-	
+
 	/**
 	 * erzeugt alle Steuerelemente für SceneMainMenu
 	 */
@@ -123,7 +151,6 @@ public class MainWindow extends Application {
 		// Create the Border Panes:
 
 		paneMainMenu.setStyle("-fx-background-color: RGB(0,0,0);");
-
 
 		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGTITLEPFAD).toExternalForm());
 		ImageView imgVBackground = new ImageView();
@@ -134,7 +161,7 @@ public class MainWindow extends Application {
 		imgVBackground.setFitWidth(GameSettings.BREITE / 2);
 
 		paneMainMenu.getChildren().add(imgVBackground);
-		
+
 		Label lbl = new Label("Knee deep in the blood");
 		lbl.setLayoutX(60);
 		lbl.setLayoutY(80);
@@ -143,33 +170,32 @@ public class MainWindow extends Application {
 		lbl.setStyle("-fx-text-fill: rgb(150, 50, 50);");
 		lbl.setTextAlignment(TextAlignment.CENTER);
 		lbl.setAlignment(Pos.CENTER);
-		
-		
+
 		Pane menu = new Pane();
 		menu.getChildren().add(lbl);
 		paneMainMenu.getChildren().add(menu);
-		
-		//Title-Label
-		
+
+		// Title-Label
+
 		Label menLbl = new Label();
 		menLbl.setText("New Game");
 		menLbl.setLayoutX(60);
 		menLbl.setLayoutY(180);
 		menLbl.setPrefWidth(500);
 		menLbl = formatiereMenuLabel(menLbl);
-		//register Event
+		// register Event
 		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-	        @Override
-	        public void handle(MouseEvent event) {
-	        	for (int i=0;i<listener.size();i++) {
-	        		listener.get(i).raiseMenuClick(0);
-	        	}
-	        }
-	    });  
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseMenuClick(0);
+				}
+			}
+		});
 		menu.getChildren().add(menLbl);
-		
-		//Menu-Labels:
-		
+
+		// Menu-Labels:
+
 		menLbl = new Label();
 		menLbl.setText("Connect to game");
 		menLbl.setLayoutX(60);
@@ -177,15 +203,15 @@ public class MainWindow extends Application {
 		menLbl.setPrefWidth(500);
 		menLbl = formatiereMenuLabel(menLbl);
 		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-	        @Override
-	        public void handle(MouseEvent event) {
-	        	for (int i=0;i<listener.size();i++) {
-	        		listener.get(i).raiseMenuClick(1);
-	        	}
-	        }
-	    });
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseMenuClick(1);
+				}
+			}
+		});
 		menu.getChildren().add(menLbl);
-		
+
 		menLbl = new Label();
 		menLbl.setText("Settings");
 		menLbl.setLayoutX(60);
@@ -193,15 +219,15 @@ public class MainWindow extends Application {
 		menLbl.setPrefWidth(500);
 		menLbl = formatiereMenuLabel(menLbl);
 		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-	        @Override
-	        public void handle(MouseEvent event) {
-	        	for (int i=0;i<listener.size();i++) {
-	        		listener.get(i).raiseMenuClick(2);
-	        	}
-	        }
-	    });
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseMenuClick(2);
+				}
+			}
+		});
 		menu.getChildren().add(menLbl);
-		
+
 		menLbl = new Label();
 		menLbl.setText("Exit");
 		menLbl.setLayoutX(60);
@@ -209,18 +235,190 @@ public class MainWindow extends Application {
 		menLbl.setPrefWidth(500);
 		menLbl = formatiereMenuLabel(menLbl);
 		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-	        @Override
-	        public void handle(MouseEvent event) {
-	        	for (int i=0;i<listener.size();i++) {
-	        		listener.get(i).raiseMenuClick(3);
-	        	}
-	        }
-	    });  
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseMenuClick(3);
+				}
+			}
+		});
 		menu.getChildren().add(menLbl);
-		
-		
+
 	}
-	
+
+	/**
+	 * erzeugt die Steuerlemente der SceneNewGame
+	 */
+	private void erzeugeSceneNewGame() {
+
+		paneNewGame.setStyle("-fx-background-color: RGB(0,0,0);");
+
+		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGTITLEPFAD).toExternalForm());
+		ImageView imgVBackground = new ImageView();
+		imgVBackground.setImage(imgBackground);
+		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGRÖSSE);
+		imgVBackground.setLayoutY(20);
+		imgVBackground.setFitHeight(GameSettings.HÖHE - 20);
+		imgVBackground.setFitWidth(GameSettings.BREITE / 2);
+
+		paneNewGame.getChildren().add(imgVBackground);
+
+		Label lbl = new Label("New Game");
+		lbl.setLayoutX(60);
+		lbl.setLayoutY(80);
+		lbl.setPrefWidth(500);
+		lbl.setFont(new Font(45));
+		lbl.setStyle("-fx-text-fill: rgb(150, 50, 50);");
+		lbl.setTextAlignment(TextAlignment.CENTER);
+		lbl.setAlignment(Pos.CENTER);
+
+		Pane menu = new Pane();
+		menu.getChildren().add(lbl);
+		paneNewGame.getChildren().add(menu);
+
+		// Title-Label
+
+		Label menLbl = new Label();
+		menLbl.setText("Easy");
+		menLbl.setLayoutX(60);
+		menLbl.setLayoutY(180);
+		menLbl.setPrefWidth(500);
+		menLbl = formatiereMenuLabel(menLbl);
+		// register Event
+		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseNewGameClick(0);
+				}
+			}
+		});
+		menu.getChildren().add(menLbl);
+
+		// Menu-Labels:
+
+		menLbl = new Label();
+		menLbl.setText("Middle");
+		menLbl.setLayoutX(60);
+		menLbl.setLayoutY(240);
+		menLbl.setPrefWidth(500);
+		menLbl = formatiereMenuLabel(menLbl);
+		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseNewGameClick(1);
+				}
+			}
+		});
+		menu.getChildren().add(menLbl);
+
+		menLbl = new Label();
+		menLbl.setText("Hard");
+		menLbl.setLayoutX(60);
+		menLbl.setLayoutY(300);
+		menLbl.setPrefWidth(500);
+		menLbl = formatiereMenuLabel(menLbl);
+		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseNewGameClick(2);
+				}
+			}
+		});
+		menu.getChildren().add(menLbl);
+
+		menLbl = new Label();
+		menLbl.setText("back to Main Menu");
+		menLbl.setLayoutX(60);
+		menLbl.setLayoutY(400);
+		menLbl.setPrefWidth(500);
+		menLbl = formatiereMenuLabel(menLbl);
+		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseNewGameClick(3);
+				}
+			}
+		});
+		menu.getChildren().add(menLbl);
+
+	}
+
+	/**
+	 * erzeugt die Steuerlemente der SceneSettings
+	 */
+	private void erzeugeSceneSettings() {
+
+		paneSettings.setStyle("-fx-background-color: RGB(0,0,0);");
+
+		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGTITLEPFAD).toExternalForm());
+		ImageView imgVBackground = new ImageView();
+		imgVBackground.setImage(imgBackground);
+		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGRÖSSE);
+		imgVBackground.setLayoutY(20);
+		imgVBackground.setFitHeight(GameSettings.HÖHE - 20);
+		imgVBackground.setFitWidth(GameSettings.BREITE / 2);
+
+		paneSettings.getChildren().add(imgVBackground);
+
+		// Title-Label
+
+		Label lbl = new Label("Settings");
+		lbl.setLayoutX(60);
+		lbl.setLayoutY(80);
+		lbl.setPrefWidth(500);
+		lbl.setFont(new Font(45));
+		lbl.setStyle("-fx-text-fill: rgb(150, 50, 50);");
+		lbl.setTextAlignment(TextAlignment.CENTER);
+		lbl.setAlignment(Pos.CENTER);
+
+		Pane menu = new Pane();
+		menu.getChildren().add(lbl);
+		paneSettings.getChildren().add(menu);
+
+		CheckBox chk = new CheckBox();
+		chk.setText("Enable music");
+		chk.setStyle("-fx-text-fill: rgb(255, 255, 255);");
+		chk.setLayoutX(250);
+		chk.setLayoutY(180);
+		chk.setPrefWidth(150);
+		chk.setFont(new Font(18));
+		chk.setTextAlignment(TextAlignment.CENTER);
+		chk.setAlignment(Pos.CENTER);
+		menu.getChildren().add(chk);
+
+		chk = new CheckBox();
+		chk.setText("Fullscreen");
+		chk.setStyle("-fx-text-fill: rgb(255, 255, 255);");
+		chk.setLayoutX(250);
+		chk.setLayoutY(240);
+		chk.setPrefWidth(150);
+		chk.setFont(new Font(18));
+		chk.setTextAlignment(TextAlignment.CENTER);
+		chk.setAlignment(Pos.CENTER);
+		menu.getChildren().add(chk);
+
+		Label menLbl = new Label();
+		menLbl.setText("back to Main Menu");
+		menLbl.setLayoutX(60);
+		menLbl.setLayoutY(340);
+		menLbl.setPrefWidth(500);
+		menLbl = formatiereMenuLabel(menLbl);
+		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseNewGameClick(3);
+				}
+			}
+		});
+		menu.getChildren().add(menLbl);
+
+	}
+
 	/**
 	 * erzeugt alle Steuerelemente für SceneGame
 	 */
@@ -234,8 +432,8 @@ public class MainWindow extends Application {
 		lblLeben = new Label();
 		lblAliensSlain = new Label();
 		lblTimeLeft = new Label();
-		
-		//Die StatusLbl hinzufügen:
+
+		// Die StatusLbl hinzufügen:
 		lblLeben.setText("Lifes: 3");
 		lblLeben.setFont(new Font(30));
 		lblLeben.setStyle("-fx-text-fill: rgb(150, 150, 150);");
@@ -243,7 +441,7 @@ public class MainWindow extends Application {
 		lblLeben.setLayoutY(80);
 		lblLeben.setPrefWidth(GameSettings.BREITE);
 		top.getChildren().add(lblLeben);
-		
+
 		lblAliensSlain.setText("Aliens slain: 0");
 		lblAliensSlain.setFont(new Font(30));
 		lblAliensSlain.setStyle("-fx-text-fill: rgb(150, 150, 150);");
@@ -253,7 +451,7 @@ public class MainWindow extends Application {
 		lblAliensSlain.setAlignment(Pos.CENTER);
 		lblAliensSlain.setTextAlignment(TextAlignment.CENTER);
 		top.getChildren().add(lblAliensSlain);
-		
+
 		lblTimeLeft.setText("3:00");
 		lblTimeLeft.setFont(new Font(30));
 		lblTimeLeft.setStyle("-fx-text-fill: rgb(150, 150, 150);");
@@ -263,7 +461,7 @@ public class MainWindow extends Application {
 		lblTimeLeft.setAlignment(Pos.CENTER_RIGHT);
 		lblTimeLeft.setTextAlignment(TextAlignment.RIGHT);
 		top.getChildren().add(lblTimeLeft);
-		
+
 		AnchorPane left = new AnchorPane();
 		left.setStyle("-fx-background-color: RGB(0,0,0);");
 		paneGame.setLeft(left);
@@ -302,9 +500,12 @@ public class MainWindow extends Application {
 
 		erzeugeDynamischeSteuerelemente();
 	}
-	
+
 	/**
-	 * ! Vorrübergehende Lösung !
+	 * Diese Methode erzeugt eine Liste von ImageViews, die später zur
+	 * Darstellung des aktuellen Spielfeldes genutzt werden. Da die Bilder hier
+	 * schon geladen werden, spart man später diese Zeit und erhöht die
+	 * Framrate.
 	 */
 	private void erzeugeDynamischeSteuerelemente() {
 		for (int i = 0; i <= 9; i++) {
@@ -377,7 +578,9 @@ public class MainWindow extends Application {
 	}
 
 	/**
-	 * wird vom ControllerThread aufgerufen und updated die GUI gemäß der aktuellen GameWorld
+	 * wird vom ControllerThread aufgerufen und updated die GUI gemäß der
+	 * aktuellen GameWorld
+	 * 
 	 * @param gameWorld
 	 */
 	public void updateView(GameWorld gameWorld) {
@@ -386,11 +589,12 @@ public class MainWindow extends Application {
 
 			@Override
 			public void run() {
-				
-				updateStatusLbl(gameWorld.getLeben(), gameWorld.getAliensSlain(), gameWorld.getThreadTicks(), gameWorld.getMinutesToWin());
-				
+
+				updateStatusLbl(gameWorld.getLeben(), gameWorld.getAliensSlain(), gameWorld.getThreadTicks(),
+						gameWorld.getMinutesToWin());
+
 				spielfeld.getChildren().clear();
-				
+
 				updateHeldenFahrzeug(gameWorld.getHeldenfahrzeug());
 				updateAliens(gameWorld.getAliens());
 				updateProjektile(gameWorld.getProjektile(), gameWorld.getProjektileFriendly());
@@ -399,19 +603,34 @@ public class MainWindow extends Application {
 		});
 
 	}
-	
-	private void updateStatusLbl(int leben, int aliensSlain, int Ticks, int minutesToWin){
+
+	/**
+	 * diese Methode updated die 3 Label in dem Spiel die Auskunft über den
+	 * aktuellen Status geben
+	 * 
+	 * @param leben
+	 *            Das aktuelle eigene Leben
+	 * @param aliensSlain
+	 *            die Anzahl der getöteten Aliens
+	 * @param Ticks
+	 *            die Anzahl der Schleifen-Durchläufe (für die Berechnung der
+	 *            Zeit bis zum Sieg)
+	 * @param minutesToWin
+	 *            die Minuten die insgesamt überstanden werden müssen(abhängig
+	 *            vom Schwierigkeitsgrad)
+	 */
+	private void updateStatusLbl(int leben, int aliensSlain, int Ticks, int minutesToWin) {
 		lblLeben.setText("Lifes: " + leben);
 		lblAliensSlain.setText("Alien slain: " + aliensSlain);
-		//So jetzt die zeit berechen
+		// So jetzt die zeit berechen
 		int millis = Ticks * GameSettings.THREADTICKTIME;
 		int sekunden = millis / 1000;
-		int sekLeft = (minutesToWin*60) - sekunden;
-		//Sekundenzeit in schönen String wandeln:
+		int sekLeft = (minutesToWin * 60) - sekunden;
+		// Sekundenzeit in schönen String wandeln:
 		int minLeft = 0;
-		while (sekLeft>59) {
-			sekLeft-=60;
-			minLeft+=1;
+		while (sekLeft > 59) {
+			sekLeft -= 60;
+			minLeft += 1;
 		}
 		String sekString = Integer.toString(sekLeft);
 		if (sekString.length() == 1) {
@@ -422,7 +641,9 @@ public class MainWindow extends Application {
 
 	/**
 	 * updated das Heldenfahrzeug auf dem Spielfeld
-	 * @param heldenfahrzeug das Heldenfahrzeug
+	 * 
+	 * @param heldenfahrzeug
+	 *            das Heldenfahrzeug
 	 */
 	private void updateHeldenFahrzeug(HeldenFahrzeug heldenfahrzeug) {
 		heldenFahrzeugImgV.setFitHeight(heldenfahrzeug.getHeight());
@@ -435,7 +656,9 @@ public class MainWindow extends Application {
 
 	/**
 	 * updated die Aliens auf dem Spielfeld
-	 * @param aliens Liste der Aliens
+	 * 
+	 * @param aliens
+	 *            Liste der Aliens
 	 */
 	private void updateAliens(ArrayList<Alien> aliens) {
 		for (int i = 0; i < aliens.size(); i++) {
@@ -450,8 +673,11 @@ public class MainWindow extends Application {
 
 	/**
 	 * updated die Projektile auf dem Spielfeld
-	 * @param enemyProjektile die Alienprojektile
-	 * @param friendlyProjektile die Heldenfahrzeugprojektile
+	 * 
+	 * @param enemyProjektile
+	 *            die Alienprojektile
+	 * @param friendlyProjektile
+	 *            die Heldenfahrzeugprojektile
 	 */
 	private void updateProjektile(ArrayList<MoveableObject> enemyProjektile,
 			ArrayList<MoveableObject> friendlyProjektile) {
@@ -461,7 +687,9 @@ public class MainWindow extends Application {
 
 	/**
 	 * updated die freundlichen projektile
-	 * @param friendlyProjektile die Heldenfahrzeugprojektile
+	 * 
+	 * @param friendlyProjektile
+	 *            die Heldenfahrzeugprojektile
 	 */
 	private void updateFriendlyProjektile(ArrayList<MoveableObject> friendlyProjektile) {
 		for (int i = 0; i < friendlyProjektile.size(); i++) {
@@ -476,7 +704,9 @@ public class MainWindow extends Application {
 
 	/**
 	 * updated die feindlichen Projektile
-	 * @param enemyProjektile die Projektile der Aliens
+	 * 
+	 * @param enemyProjektile
+	 *            die Projektile der Aliens
 	 */
 	private void updateEnemyProjektile(ArrayList<MoveableObject> enemyProjektile) {
 		for (int i = 0; i < enemyProjektile.size(); i++) {
@@ -488,31 +718,33 @@ public class MainWindow extends Application {
 			spielfeld.getChildren().add(imgVProj);
 		}
 	}
-	
+
 	/**
 	 * formatiert den Label im "Menü-Style"
-	 * @param lbl der zu formatierende Label
+	 * 
+	 * @param lbl
+	 *            der zu formatierende Label
 	 * @return der formatierte Label
 	 */
-	private  Label formatiereMenuLabel(Label lbl) {
+	private Label formatiereMenuLabel(Label lbl) {
 		lbl.setFont(new Font(32));
 		lbl.setStyle("-fx-text-fill: rgb(255, 255, 255);");
 		lbl.setTextAlignment(TextAlignment.CENTER);
 		lbl.setAlignment(Pos.CENTER);
 		lbl.setOnMouseEntered(new EventHandler<MouseEvent>() {
-	        @Override
-	        public void handle(MouseEvent event) {
-	        	lbl.setStyle("-fx-text-fill: rgb(150, 50, 50);");
-	        	sceneMainMenu.setCursor(Cursor.HAND);
-	        }
-	    });  
+			@Override
+			public void handle(MouseEvent event) {
+				lbl.setStyle("-fx-text-fill: rgb(150, 50, 50);");
+				sceneMainMenu.setCursor(Cursor.HAND);
+			}
+		});
 		lbl.setOnMouseExited(new EventHandler<MouseEvent>() {
-	        @Override
-	        public void handle(MouseEvent event) {
-	        	lbl.setStyle("-fx-text-fill: rgb(255, 255, 255);");
-	        	sceneMainMenu.setCursor(Cursor.DEFAULT);
-	        }
-	    });  
+			@Override
+			public void handle(MouseEvent event) {
+				lbl.setStyle("-fx-text-fill: rgb(255, 255, 255);");
+				sceneMainMenu.setCursor(Cursor.DEFAULT);
+			}
+		});
 		return lbl;
 	}
 
@@ -531,5 +763,29 @@ public class MainWindow extends Application {
 	public void setSceneMainMenu(Scene sceneMainMenu) {
 		this.sceneMainMenu = sceneMainMenu;
 	}
-	
+
+	public Scene getSceneNewGame() {
+		return sceneNewGame;
+	}
+
+	public void setSceneNewGame(Scene sceneNewGame) {
+		this.sceneNewGame = sceneNewGame;
+	}
+
+	public Scene getSceneSettings() {
+		return sceneSettings;
+	}
+
+	public void setSceneSettings(Scene sceneSettings) {
+		this.sceneSettings = sceneSettings;
+	}
+
+	public Scene getSceneConnect() {
+		return sceneConnect;
+	}
+
+	public void setSceneConnect(Scene sceneConnect) {
+		this.sceneConnect = sceneConnect;
+	}
+
 }

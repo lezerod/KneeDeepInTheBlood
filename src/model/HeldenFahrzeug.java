@@ -8,11 +8,11 @@ package model;
 public class HeldenFahrzeug extends FireableObject {
 
 	private boolean hasSpezialWeapon;
-	
+
 	public HeldenFahrzeug(boolean hasSpezialWeapon) {
 		this.hasSpezialWeapon = hasSpezialWeapon;
 	}
-	
+
 	public boolean isHasSpezialWeapon() {
 		return hasSpezialWeapon;
 	}
@@ -20,5 +20,5 @@ public class HeldenFahrzeug extends FireableObject {
 	public void setHasSpezialWeapon(boolean hasSpezialWeapon) {
 		this.hasSpezialWeapon = hasSpezialWeapon;
 	}
-	
+
 }
