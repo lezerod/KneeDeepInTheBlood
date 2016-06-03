@@ -43,7 +43,7 @@ public class ClientThreadTCPWORLD extends Thread {
 		while (true) {
 			try {
 				// Verbindung zu Port 13000 auf localhost aufbauen:
-				Socket socket = new Socket("localhost", 13001);
+				Socket socket = new Socket("localhost", 13002);
 				/**
 				 * Der Thread empfängt die Gesendete GameWorld von dem Server
 				 * und updatet mit ihr die View des Clients.

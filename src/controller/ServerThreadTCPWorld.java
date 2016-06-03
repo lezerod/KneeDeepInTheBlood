@@ -30,7 +30,7 @@ public class ServerThreadTCPWorld extends Thread {
  */
 	public ServerThreadTCPWorld(GameWorld world) throws IOException {
 		// Warte auf Anfragen auf Port 13000:
-		serverSocket = new ServerSocket(13001);
+		serverSocket = new ServerSocket(13002);
 		this.world = world;
 	}
 
