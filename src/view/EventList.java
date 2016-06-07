@@ -43,9 +43,18 @@ public interface EventList {
 	 */
 	public void raiseNewGameClick(int menuIndex);
 
-	// diese beiden sind noch nicht fertig implementiert !
-	public void raiseSettingsClick(int menuIndex);
+	/**
+	 * Diese Methode wird aufgerufen, wenn eine Einstellung in der SceneSettings geändert wurde.
+	 * @param key Der eindeutige Code der Einstellung
+	 * @param value Der neue Wert der Einstellung
+	 */
+	public void raiseSettingsClick(String key, int value);
 
-	public void raiseConnectClick(int menuIndex);
+	/**
+	 * Diese Methode wird aufgerufen wenn auf einen Label in der SceneConnect gedrückt wird.
+	 * @param connect true, wenn auf connect gedrückt wurde, false wenn auf abbrechen geklickt wurde.
+	 * @param Ip die IP, falls auf Connect gedrückt wurde
+	 */
+	public void raiseConnectClick(boolean connect,String Ip);
 
 }

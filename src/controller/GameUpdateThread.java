@@ -2,6 +2,7 @@ package controller;
 
 import controller.GameSettings;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -27,6 +28,8 @@ public class GameUpdateThread extends Thread implements EventList {
 
 	private MainWindow view;
 	private GameWorld gameWorld;
+
+	private boolean enableSounds = true;
 
 	private boolean gameIsRunning = false;
 
@@ -57,6 +60,7 @@ public class GameUpdateThread extends Thread implements EventList {
 	public void run() {
 
 		init();
+		view.playMusic(GameSettings.MUSICBACKGROUND);
 
 		// Dauerschleife des Spiels
 		while (true) {
@@ -276,6 +280,9 @@ public class GameUpdateThread extends Thread implements EventList {
 		gameWorld.getHeldenfahrzeug().erhöheLastShot();
 
 		if (spacePressed && gameWorld.getHeldenfahrzeug().getLastShot() >= GameSettings.HELDENFEUERRATE) {
+			if (enableSounds) {
+				view.playSound(GameSettings.SFXSHOTFIRED);
+			}
 			MoveableObject movObj = new MoveableObject();
 			movObj.setPosition(gameWorld.getHeldenfahrzeug().getX() + (gameWorld.getHeldenfahrzeug().getWidth() / 2),
 					gameWorld.getHeldenfahrzeug().getY() + (gameWorld.getHeldenfahrzeug().getHeight() / 2),
@@ -299,6 +306,9 @@ public class GameUpdateThread extends Thread implements EventList {
 	private void checkCollisions() {
 		for (int i = 0; i < gameWorld.getProjektile().size(); i++) {
 			if (checkForCollision(gameWorld.getProjektile().get(i), gameWorld.getHeldenfahrzeug())) {
+				if (enableSounds) {
+					view.playSound(GameSettings.SFXHELDENHIT);
+				}
 				gameWorld.setLeben(gameWorld.getLeben() - 1);
 				gameWorld.getProjektile().remove(i);
 				i--;
@@ -333,12 +343,13 @@ public class GameUpdateThread extends Thread implements EventList {
 		for (int i = 0; i < gameWorld.getProjektileFriendly().size(); i++) {
 			for (int j = 0; j < gameWorld.getAliens().size(); j++) {
 
-				try { // TODO SCHLEIFENPROBLEM MUSS NOCH BEHOBEN WERDEN
-						// !!!!!!!!!!!!!!!!!!!! ! Nur Übergangslösung !
+				try {
 					MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
 					Alien aktAlien = gameWorld.getAliens().get(j);
 					if (checkForCollision(aktProjektil, aktAlien)) {
-
+						if (enableSounds) {
+							view.playSound(GameSettings.SFXALIENHIT);
+						}
 						gameWorld.getProjektileFriendly().remove(i);
 						gameWorld.getAliens().remove(j);
 						gameWorld.setAliensSlain(gameWorld.getAliensSlain() + 1);
@@ -489,6 +500,8 @@ public class GameUpdateThread extends Thread implements EventList {
 	public void raiseMenuClick(int menuIndex) {
 		if (menuIndex == 0) {
 			view.switchScene(view.getSceneNewGame());
+		} else if (menuIndex==1) {
+			view.switchScene(view.getSceneConnect());
 		} else if (menuIndex == 2) {
 			view.switchScene(view.getSceneSettings());
 		} else if (menuIndex == 3) {
@@ -506,13 +519,27 @@ public class GameUpdateThread extends Thread implements EventList {
 	}
 
 	@Override
-	public void raiseSettingsClick(int menuIndex) {
-
+	public void raiseSettingsClick(String key, int value) {
+		if (key.equals("sound")) {
+			if (value == 0) {
+				enableSounds = false;
+			} else if (value == 1) {
+				enableSounds = true;
+			}
+		} else if (key.equals("music")) {
+			if (value == 0) {
+				view.stopMusic();
+			} else if (value == 1) {
+				view.playMusic(GameSettings.MUSICBACKGROUND);
+			}
+		}
 	}
 
 	@Override
-	public void raiseConnectClick(int menuIndex) {
-
+	public void raiseConnectClick(boolean connect, String ip) {
+		if (!connect) {
+			view.switchScene(view.getSceneMainMenu());
+		}
 	}
 
 }

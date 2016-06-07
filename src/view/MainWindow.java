@@ -1,24 +1,27 @@
 /**
  * Diese Klasse stellt die GUI des Spiels dar.
  * 
- * @author Planung der Verknüpfunf von View+Controller und Planung des Aufbaus der View:
+ * @author Planung der Verknüpfung von View+Controller und Planung des Aufbaus der View:
  *  Julien, Till, Marco; Umsetzung: Julien
  * 
  */
 
 package view;
 
+import java.net.URL;
 import java.util.ArrayList;
 import controller.GameSettings;
 import controller.GameUpdateThread;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -26,9 +29,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Alien;
 import model.GameWorld;
 import model.HeldenFahrzeug;
@@ -38,6 +44,8 @@ import javafx.scene.control.CheckBox;
 public class MainWindow extends Application {
 
 	private ArrayList<EventList> listener = new ArrayList<EventList>();
+
+	private MediaPlayer musikPlayer;
 
 	private Stage primaryStage;
 
@@ -53,10 +61,8 @@ public class MainWindow extends Application {
 	private Pane paneSettings;
 	private Scene sceneSettings;
 
-	// noch nicht vollständig implementiert:
 	private Pane paneConnect;
 	private Scene sceneConnect;
-	// Ende noch nicht vollständig implementiert
 
 	private Pane spielfeld = new Pane();
 	private Label lblLeben;
@@ -120,12 +126,16 @@ public class MainWindow extends Application {
 		this.sceneMainMenu = new Scene(paneMainMenu, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
 				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
 
-		this.paneNewGame = new BorderPane();
+		this.paneNewGame = new Pane();
 		this.sceneNewGame = new Scene(paneNewGame, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
 				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
 
-		this.paneSettings = new BorderPane();
+		this.paneSettings = new Pane();
 		this.sceneSettings = new Scene(paneSettings, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
+				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
+		
+		this.paneConnect = new Pane();
+		this.sceneConnect = new Scene(paneConnect, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
 				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
 
 		registerEvents();
@@ -142,6 +152,7 @@ public class MainWindow extends Application {
 		erzeugeSceneGame();
 		erzeugeSceneNewGame();
 		erzeugeSceneSettings();
+		erzeugeSceneConnect();
 	}
 
 	/**
@@ -379,8 +390,8 @@ public class MainWindow extends Application {
 		menu.getChildren().add(lbl);
 		paneSettings.getChildren().add(menu);
 
-		CheckBox chk = new CheckBox();
-		chk.setText("Enable music");
+		final CheckBox chk = new CheckBox();
+		chk.setText("Enable Sounds");
 		chk.setStyle("-fx-text-fill: rgb(255, 255, 255);");
 		chk.setLayoutX(250);
 		chk.setLayoutY(180);
@@ -388,18 +399,44 @@ public class MainWindow extends Application {
 		chk.setFont(new Font(18));
 		chk.setTextAlignment(TextAlignment.CENTER);
 		chk.setAlignment(Pos.CENTER);
+		chk.setSelected(true);
+		chk.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					if (chk.isSelected()) {
+						listener.get(i).raiseSettingsClick("sound", 1);
+					} else {
+						listener.get(i).raiseSettingsClick("sound", 0);
+					}
+				}
+			}
+		});
 		menu.getChildren().add(chk);
 
-		chk = new CheckBox();
-		chk.setText("Fullscreen");
-		chk.setStyle("-fx-text-fill: rgb(255, 255, 255);");
-		chk.setLayoutX(250);
-		chk.setLayoutY(240);
-		chk.setPrefWidth(150);
-		chk.setFont(new Font(18));
-		chk.setTextAlignment(TextAlignment.CENTER);
-		chk.setAlignment(Pos.CENTER);
-		menu.getChildren().add(chk);
+		final CheckBox chk2 = new CheckBox();
+		chk2.setText("Enable Music");
+		chk2.setStyle("-fx-text-fill: rgb(255, 255, 255);");
+		chk2.setLayoutX(250);
+		chk2.setLayoutY(240);
+		chk2.setPrefWidth(150);
+		chk2.setFont(new Font(18));
+		chk2.setTextAlignment(TextAlignment.CENTER);
+		chk2.setAlignment(Pos.CENTER);
+		chk2.setSelected(true);
+		chk2.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					if (chk2.isSelected()) {
+						listener.get(i).raiseSettingsClick("music", 1);
+					} else {
+						listener.get(i).raiseSettingsClick("music", 0);
+					}
+				}
+			}
+		});
+		menu.getChildren().add(chk2);
 
 		Label menLbl = new Label();
 		menLbl.setText("back to Main Menu");
@@ -419,6 +456,90 @@ public class MainWindow extends Application {
 
 	}
 
+	/**
+	 * erzeugt alle Steuerelemente für SceneConnect
+	 */
+	private void erzeugeSceneConnect() {
+		
+		paneConnect.setStyle("-fx-background-color: RGB(0,0,0);");
+
+		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGTITLEPFAD).toExternalForm());
+		ImageView imgVBackground = new ImageView();
+		imgVBackground.setImage(imgBackground);
+		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGRÖSSE);
+		imgVBackground.setLayoutY(20);
+		imgVBackground.setFitHeight(GameSettings.HÖHE - 20);
+		imgVBackground.setFitWidth(GameSettings.BREITE / 2);
+
+		paneConnect.getChildren().add(imgVBackground);
+
+		// Title-Label
+
+		Label lbl = new Label("Connect to Game");
+		lbl.setLayoutX(60);
+		lbl.setLayoutY(80);
+		lbl.setPrefWidth(500);
+		lbl.setFont(new Font(45));
+		lbl.setStyle("-fx-text-fill: rgb(150, 50, 50);");
+		lbl.setTextAlignment(TextAlignment.CENTER);
+		lbl.setAlignment(Pos.CENTER);
+
+		Pane menu = new Pane();
+		menu.getChildren().add(lbl);
+		paneConnect.getChildren().add(menu);
+		
+		lbl = new Label("Enter IP:");
+		lbl.setLayoutX(200);
+		lbl.setLayoutY(210);
+		lbl.setPrefWidth(200);
+		lbl.setFont(new Font(18));
+		lbl.setStyle("-fx-text-fill: rgb(255, 255, 255);");
+		lbl.setTextAlignment(TextAlignment.CENTER);
+		lbl.setAlignment(Pos.CENTER);
+		menu.getChildren().add(lbl);
+		
+		TextField tbIp = new TextField();
+		tbIp.setFont(new Font(18));
+		tbIp.setLayoutX(200);
+		tbIp.setLayoutY(250);
+		tbIp.setPrefWidth(200);
+		tbIp.setAlignment(Pos.CENTER);
+		menu.getChildren().add(tbIp);
+		
+		Label menLbl = new Label();
+		menLbl.setText("Connect");
+		menLbl.setLayoutX(60);
+		menLbl.setLayoutY(300);
+		menLbl.setPrefWidth(500);
+		menLbl = formatiereMenuLabel(menLbl);
+		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseConnectClick(true, tbIp.getText());
+				}
+			}
+		});
+		menu.getChildren().add(menLbl);
+		
+		menLbl = new Label();
+		menLbl.setText("back to Main Menu");
+		menLbl.setLayoutX(60);
+		menLbl.setLayoutY(400);
+		menLbl.setPrefWidth(500);
+		menLbl = formatiereMenuLabel(menLbl);
+		menLbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				for (int i = 0; i < listener.size(); i++) {
+					listener.get(i).raiseConnectClick(false,"");
+				}
+			}
+		});
+		menu.getChildren().add(menLbl);
+		
+	}
+	
 	/**
 	 * erzeugt alle Steuerelemente für SceneGame
 	 */
@@ -746,6 +867,31 @@ public class MainWindow extends Application {
 			}
 		});
 		return lbl;
+	}
+
+	public void playSound(String pfad) {
+		final URL resource = getClass().getResource(pfad);
+		final Media media = new Media(resource.toString());
+		final MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.play();
+	}
+
+	public void playMusic(String pfad) {
+		final URL resource = getClass().getResource(pfad);
+		final Media media = new Media(resource.toString());
+		musikPlayer = new MediaPlayer(media);
+		musikPlayer.setOnEndOfMedia(new Runnable() {
+			@Override
+			public void run() {
+
+				musikPlayer.seek(Duration.ZERO);
+			}
+		});
+		musikPlayer.play();
+	}
+	
+	public void stopMusic() {
+		musikPlayer.stop();
 	}
 
 	public Scene getSceneGame() {
