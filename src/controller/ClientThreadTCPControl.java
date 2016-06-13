@@ -87,7 +87,6 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 					socket.close();
 				}
 
-
 				Thread.sleep(10);
 
 		 }catch (Exception e) {
@@ -169,5 +168,6 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }

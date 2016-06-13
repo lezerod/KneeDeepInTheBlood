@@ -56,6 +56,7 @@ public class ClientViewNew extends Application {
 	private ArrayList<ImageView> aliensImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektileImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektileFriendlyImgV = new ArrayList<ImageView>();
+	private ArrayList<ImageView> projektileClientImgV = new ArrayList<ImageView>();
 
 	/**
 	 * startet die GUI Anzeige
@@ -333,6 +334,16 @@ public class ClientViewNew extends Application {
 			imgView.setFitWidth(0);
 			imgView.setImage(img);
 			projektileImgV.add(imgView);
+		}
+
+		for (int i = 0; i <= 9; i++) {
+			Image img = new Image(getClass().getResource(GameSettings.IMGPROJEKTILFRIENDLYPFAD).toExternalForm(), 100,
+					100, true, true);
+			ImageView imgView = new ImageView();
+			imgView.setFitHeight(0);
+			imgView.setFitWidth(0);
+			imgView.setImage(img);
+			projektileFriendlyImgV.add(imgView);
 		}
 
 		for (int i = 0; i <= 9; i++) {

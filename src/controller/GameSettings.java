@@ -27,6 +27,11 @@ public interface GameSettings {
 	public static final int HELDENSPEZIALWAFFECOOLDWON = 1000;
 	public static final int HELDENSPEZIALWAFFEDAUER = 5000;
 
+	public static final int IWILLDESTROYYOUTANKBREITE = 25;
+	public static final int IWILLDESTROYYOUTANKHÖHE = 50;
+	public static final int IWILLDESTROYYOUTANKSPEED = 2;
+	public static final int IWILLDESTROYYOUTANKFEUERRATE = 100;
+
 	public static final int ALIENBREITE = 30;
 	public static final int ALIENHÖHE = 30;
 	public static final double ALIENCHANGETURNINGCHANCE = 0.01;
@@ -48,6 +53,8 @@ public interface GameSettings {
 	public static final String IMGPROJEKTILPFAD = "resources/projEnemy.png";
 	public static final String IMGPROJEKTILFRIENDLYPFAD = "resources/projFriendly.png";
 	public static final String IMGTANKPFAD = "resources/julien_tank.png";
+	public static final String IMGIWILLDESTORYYOUTANKPFAD = "resources/iwill.png";
+	public static final String IMGPROJEKTILECLIENT = "resources/projClient.png";
 
 	public static final String SFXSHOTFIRED = "resources/button-50.wav";
 	public static final String SFXALIENHIT = "resources/button-16.wav";

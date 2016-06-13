@@ -41,6 +41,7 @@ import javafx.util.Duration;
 import model.Alien;
 import model.GameWorld;
 import model.HeldenFahrzeug;
+import model.IwillDestroyYouTank;
 import model.MoveableObject;
 import javafx.scene.control.CheckBox;
 
@@ -74,9 +75,11 @@ public class MainWindow extends Application {
 
 	// zur Darstellung der Projektile, der Aliens und des Heldenfahrzeugs
 	private ImageView heldenFahrzeugImgV = new ImageView();
+	private ImageView iWillDestroyYouTankImgV = new ImageView();
 	private ArrayList<ImageView> aliensImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektileImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektileFriendlyImgV = new ArrayList<ImageView>();
+	private ArrayList<ImageView> projektiliWillDestroyImgV = new ArrayList<ImageView>();
 
 	/**
 	 * startet die GUI Anzeige
@@ -662,12 +665,29 @@ public class MainWindow extends Application {
 			projektileFriendlyImgV.add(imgView);
 		}
 
+		for (int i = 0; i <= 9; i++) {
+			Image img = new Image(getClass().getResource(GameSettings.IMGPROJEKTILECLIENT).toExternalForm(), 100,
+					100, true, true);
+			ImageView imgView = new ImageView();
+			imgView.setFitHeight(0);
+			imgView.setFitWidth(0);
+			imgView.setImage(img);
+			projektiliWillDestroyImgV.add(imgView);
+		}
+
 		Image img = new Image(getClass().getResource(GameSettings.IMGHELDENFAHRZEUGPFAD).toExternalForm(), 100, 100,
 				true, true);
 		heldenFahrzeugImgV = new ImageView();
 		heldenFahrzeugImgV.setFitHeight(0);
 		heldenFahrzeugImgV.setFitWidth(0);
 		heldenFahrzeugImgV.setImage(img);
+
+		Image img2 = new Image(getClass().getResource(GameSettings.IMGIWILLDESTORYYOUTANKPFAD).toExternalForm(), 100, 100, true, true);
+		iWillDestroyYouTankImgV = new ImageView();
+		iWillDestroyYouTankImgV.setFitHeight(0);
+		iWillDestroyYouTankImgV.setFitWidth(0);
+		iWillDestroyYouTankImgV.setImage(img2);
+		iWillDestroyYouTankImgV.setVisible(false);
 
 	}
 
@@ -722,7 +742,10 @@ public class MainWindow extends Application {
 				updateHeldenFahrzeug(gameWorld.getHeldenfahrzeug());
 				updateAliens(gameWorld.getAliens());
 				updateProjektile(gameWorld.getProjektile(), gameWorld.getProjektileFriendly());
-
+				if(gameWorld.getIwillDestroyYouTank().isConnected()){
+				updateIwillDestroyYouTank(gameWorld.getIwillDestroyYouTank());
+				updateiWillProjektile(gameWorld.getProjektileClient());
+				}
 			};
 		});
 
@@ -778,6 +801,19 @@ public class MainWindow extends Application {
 		spielfeld.getChildren().add(heldenFahrzeugImgV);
 	}
 
+	public void activateIwillDestroyYouTank(IwillDestroyYouTank iwillDestroyYouTank){
+		iWillDestroyYouTankImgV.setVisible(true);
+	}
+	private void updateIwillDestroyYouTank(IwillDestroyYouTank iwillDestroyYouTank){
+		iWillDestroyYouTankImgV.setFitHeight(iwillDestroyYouTank.getHeight());
+		iWillDestroyYouTankImgV.setFitWidth(iwillDestroyYouTank.getWidth());
+		iWillDestroyYouTankImgV.setLayoutX(iwillDestroyYouTank.getX());
+		iWillDestroyYouTankImgV.setLayoutY(iwillDestroyYouTank.getY());
+		iWillDestroyYouTankImgV.setRotate(iwillDestroyYouTank.getWinkel());
+		spielfeld.getChildren().add(iWillDestroyYouTankImgV);
+	}
+
+
 	/**
 	 * updated die Aliens auf dem Spielfeld
 	 *
@@ -804,7 +840,7 @@ public class MainWindow extends Application {
 	 *            die Heldenfahrzeugprojektile
 	 */
 	private void updateProjektile(ArrayList<MoveableObject> enemyProjektile,
-			ArrayList<MoveableObject> friendlyProjektile) {
+			ArrayList<MoveableObject> friendlyProjektile){
 		updateEnemyProjektile(enemyProjektile);
 		updateFriendlyProjektile(friendlyProjektile);
 	}
@@ -841,6 +877,17 @@ public class MainWindow extends Application {
 			imgVProj.setLayoutY(enemyProjektile.get(i).getY());
 			spielfeld.getChildren().add(imgVProj);
 		}
+	}
+	private void updateiWillProjektile(ArrayList<MoveableObject> iWillProjektile){
+		for (int i = 0; i < iWillProjektile.size(); i++) {
+			ImageView imgVProj = projektiliWillDestroyImgV.get(i);
+			imgVProj.setFitHeight(iWillProjektile.get(i).getHeight());
+			imgVProj.setFitWidth(iWillProjektile.get(i).getWidth());
+			imgVProj.setLayoutX(iWillProjektile.get(i).getX());
+			imgVProj.setLayoutY(iWillProjektile.get(i).getY());
+			spielfeld.getChildren().add(imgVProj);
+		}
+
 	}
 
 	/**

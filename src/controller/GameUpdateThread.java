@@ -13,6 +13,7 @@ import model.Alien;
 import model.GameObject;
 import model.GameWorld;
 import model.HeldenFahrzeug;
+import model.IwillDestroyYouTank;
 import model.MoveableObject;
 import view.EventList;
 import view.MainWindow;
@@ -54,7 +55,6 @@ public class GameUpdateThread extends Thread implements EventList {
 		this.gameWorld = gameWorld;
 		this.view = view;
 		view.playMusic(GameSettings.MUSICBACKGROUND);
-
 	}
 
 	/**
@@ -79,7 +79,13 @@ public class GameUpdateThread extends Thread implements EventList {
 
 				view.updateView(gameWorld);
 
+				if(gameWorld.getIwillDestroyYouTank().isConnected()){
+					view.activateIwillDestroyYouTank(gameWorld.getIwillDestroyYouTank());
+				}
+
 			}
+
+
 		}
 
 	}
@@ -114,12 +120,14 @@ public class GameUpdateThread extends Thread implements EventList {
 		createStartModel();
 		gameIsRunning = true;
 		view.switchScene(view.getSceneGame());
+
 		try {
-			new ServerThreadTCPControl(this.gameWorld).start();
-			new ServerThreadTCPWorld(this.gameWorld).start();
-		} catch (IOException e1) {
+			new ServerThreadTCPControl(gameWorld).start();
+			new ServerThreadTCPWorld(gameWorld).start();;
+
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		};
 
 	}
@@ -161,6 +169,13 @@ public class GameUpdateThread extends Thread implements EventList {
 		heldenFahrzeug.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
 		gameWorld.setHeldenfahrzeug(heldenFahrzeug);
 
+		// Create the 'IwillDestroyYouTaon'
+		IwillDestroyYouTank iwillDestroyYouTank = new IwillDestroyYouTank(false);
+		iwillDestroyYouTank.setPosition((GameSettings.BREITE - (GameSettings.HELDENBREITE / 2)) / 2,
+				(GameSettings.HÖHE - (GameSettings.HELDENHÖHE / 2)) / 2, GameSettings.HELDENBREITE,
+				GameSettings.HELDENHÖHE);
+		iwillDestroyYouTank.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
+		gameWorld.setIwillDestroyYouTank(iwillDestroyYouTank);
 	}}
 
 	/**
@@ -200,6 +215,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		updateAliens();
 		updateProjektile();
 		updateHeldenFahrzeug();
+		updateIwillDestoryYouTank();
 
 		checkCollisions();
 
@@ -246,6 +262,7 @@ public class GameUpdateThread extends Thread implements EventList {
 	private void updateProjektile() {
 		updateEnemyProjektile();
 		updateFriendlyProjektile();
+		updateiWillProjektile();
 	}
 
 	/**
@@ -284,6 +301,18 @@ public class GameUpdateThread extends Thread implements EventList {
 
 		}
 	}}
+	private void updateiWillProjektile(){
+		synchronized (gameWorld) {
+			for (int i = 0; i < gameWorld.getProjektileClient().size(); i++) {
+				MoveableObject aktProjektil = gameWorld.getProjektileClient().get(i);
+
+				aktProjektil.move(false);
+
+				// prüfen, dass die Projektile nicht ausserhalb des Fensters sind:
+				korrigierePosition(aktProjektil, true);
+
+		}}
+	}
 
 	/**
 	 * Update des Heldenfahrzeugs
@@ -326,6 +355,48 @@ public class GameUpdateThread extends Thread implements EventList {
 		korrigierePosition(gameWorld.getHeldenfahrzeug(), false);
 
 	}
+	private void updateIwillDestoryYouTank() {
+		synchronized (gameWorld) {
+
+			if (gameWorld.getIwillDestroyYouTank().isUp()) {
+				gameWorld.getIwillDestroyYouTank().move(false);
+			}
+			if (gameWorld.getIwillDestroyYouTank().isDown()) {
+				gameWorld.getIwillDestroyYouTank().move(true);
+			}
+			if (gameWorld.getIwillDestroyYouTank().isLeft())
+				gameWorld.getIwillDestroyYouTank().setWinkel(
+						gameWorld.getIwillDestroyYouTank().getWinkel() - GameSettings.HELDENWINKELCHANGESPEED);
+			if (gameWorld.getIwillDestroyYouTank().isRight())
+				gameWorld.getIwillDestroyYouTank().setWinkel(
+						gameWorld.getIwillDestroyYouTank().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
+
+			gameWorld.getIwillDestroyYouTank().erhöheLastShot();
+
+			if (gameWorld.getIwillDestroyYouTank().isSpace() && gameWorld.getIwillDestroyYouTank().getLastShot() >= GameSettings.HELDENFEUERRATE) {
+				 if (enableSounds) {
+				 view.playSound(GameSettings.SFXSHOTFIRED);
+				 }
+				MoveableObject movObj = new MoveableObject();
+				movObj.setPosition(
+						gameWorld.getIwillDestroyYouTank().getX() + (gameWorld.getIwillDestroyYouTank().getWidth() / 2),
+						gameWorld.getIwillDestroyYouTank().getY()
+								+ (gameWorld.getIwillDestroyYouTank().getHeight() / 2),
+						GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHÖHE);
+				movObj.setSpeed(GameSettings.PROJEKTILFRIENDLYSPEED);
+				movObj.setWinkel(gameWorld.getIwillDestroyYouTank().getWinkel());
+				gameWorld.getProjektileClient().add(movObj);
+				gameWorld.getIwillDestroyYouTank().setLastShot(0);
+			}
+
+
+		}
+		korrigierePosition(gameWorld.getIwillDestroyYouTank(), false);
+
+	}
+
+
+
 
 	/**
 	 * diese Methode überprüft alle möglichen Kollisionen und behandelt diese
@@ -577,6 +648,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		else{
 			view.startClient(ip, this.view);
 			view.switchScene(view.getSceneGame());
+			view.activateIwillDestroyYouTank(gameWorld.getIwillDestroyYouTank());
 		}
 	}
 

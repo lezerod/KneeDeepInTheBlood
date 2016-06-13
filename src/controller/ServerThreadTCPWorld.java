@@ -15,20 +15,24 @@ import java.net.Socket;
 import model.GameWorld;
 
 /**
- *Diese Klasse sendet die GameWorld von dem Server an den Client.
+ * Diese Klasse sendet die GameWorld von dem Server an den Client.
+ *
  * @author til
  *
  */
 public class ServerThreadTCPWorld extends Thread {
 	private ServerSocket serverSocket;
 	private GameWorld world;
-/**
- * Der Konstruktor benötigt die aktuelle Gameworld als Parametet aus dem GameUpdateThread um immer die aktuellste GameWorld zu versenden.
- * @param world
- * @throws IOException
- */
+
+	/**
+	 * Der Konstruktor benötigt die aktuelle Gameworld als Parametet aus dem
+	 * GameUpdateThread um immer die aktuellste GameWorld zu versenden.
+	 *
+	 * @param world
+	 * @throws IOException
+	 */
 	public ServerThreadTCPWorld(GameWorld world) throws IOException {
-		// Warte auf Anfragen auf Port 13000:
+		// Warte auf Anfragen auf Port 13002:
 		serverSocket = new ServerSocket(13002);
 		this.world = world;
 	}
@@ -39,6 +43,7 @@ public class ServerThreadTCPWorld extends Thread {
 			try {
 
 				Socket clientSocket = serverSocket.accept();
+				world.getIwillDestroyYouTank().setConnected(true);
 				OutputStream os = clientSocket.getOutputStream();
 				ObjectOutputStream outOb = new ObjectOutputStream(os);
 				synchronized (world) {

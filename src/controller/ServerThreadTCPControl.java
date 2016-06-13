@@ -28,11 +28,11 @@ public class ServerThreadTCPControl extends Thread {
 	private boolean left = false;
 	private boolean right = false;
 	private boolean space = false;
-	private GameWorld gameworld = null;
+	private GameWorld gameWorld = null;
 
 	public ServerThreadTCPControl(GameWorld gameworld) throws IOException {
 		serverSocket = new ServerSocket(8888);
-		this.gameworld = gameworld;
+		this.gameWorld = gameworld;
 	}
 
 	public void run() {
@@ -53,68 +53,87 @@ public class ServerThreadTCPControl extends Thread {
 				 * bearbeitet
 				 */
 
-				if((control & 1) == 1){
+				if ((control & 1) == 1) {
 					System.out.println("Up was pressed!");
 					up = true;
 				}
-				if( (control & 16) == 16){
+				else{
+					up = false;
+				}
+				if ((control & 16) == 16) {
 					System.out.println("Space was pressed!");
-					space = true;}
-				if((control & 2) == 2){
+					space = true;
+				}
+				else{
+					space = false;
+				}
+				if ((control & 2) == 2) {
 					System.out.println("Down was pressed!");
 					down = true;
 				}
-				if((control & 4) == 4){
+				else{
+					down = false;
+				}
+				if ((control & 4) == 4) {
 					System.out.println("Left was pressed!");
 					left = true;
 				}
-				if((control & 8) == 8){
+				else{
+					left = false;
+				}
+				if ((control & 8) == 8) {
 					System.out.println("Right was pressed!");
 					right = true;
 				}
-				moveClient(up, down, left, right, space, gameworld);
+				else{
+					right = false;
+				}
 
+				gameWorld.getIwillDestroyYouTank().setUp(up);
+				gameWorld.getIwillDestroyYouTank().setDown(down);
+				gameWorld.getIwillDestroyYouTank().setLeft(left);
+				gameWorld.getIwillDestroyYouTank().setRight(right);
+				gameWorld.getIwillDestroyYouTank().setSpace(space);
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
 		}
-	}}
-
-	public void moveClient(boolean up, boolean down, boolean left, boolean right, boolean space, GameWorld gameWorld) {
-		System.out.println("Habs geschafft");
-
-		System.out.println(this.up);
-		if (this.up) {
-			System.out.println("up is true");
-			gameWorld.getHeldenfahrzeug().move(false);}
-			if (this.down) {
-				gameWorld.getHeldenfahrzeug().move(true);
-			}
-
-			if (this.left)
-				gameWorld.getHeldenfahrzeug()
-						.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel() - GameSettings.HELDENWINKELCHANGESPEED);
-			if (this.right)
-				gameWorld.getHeldenfahrzeug()
-						.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
-
-			gameWorld.getHeldenfahrzeug().erhöheLastShot();
-
-			if (this.space && gameWorld.getHeldenfahrzeug().getLastShot() >= GameSettings.HELDENFEUERRATE) {
-				MoveableObject movObj = new MoveableObject();
-				movObj.setPosition(
-						gameWorld.getHeldenfahrzeug().getX() + (gameWorld.getHeldenfahrzeug().getWidth() / 2),
-						gameWorld.getHeldenfahrzeug().getY() + (gameWorld.getHeldenfahrzeug().getHeight() / 2),
-						GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHÖHE);
-				movObj.setSpeed(GameSettings.PROJEKTILFRIENDLYSPEED);
-				movObj.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel());
-				gameWorld.getProjektileFriendly().add(movObj);
-				gameWorld.getHeldenfahrzeug().setLastShot(0);
-			}
-
-		 this.up = false;
-		 this.down = false;
-		 this.left = false;
-		 this.right = false;
-		 this.space = false;
 	}
+
+//	private void updateIwillDestoryYouTank(boolean up, boolean down, boolean left, boolean right, boolean space,
+//			GameWorld gameWorld) {
+//		synchronized (gameWorld) {
+//
+//			if (up) {
+//				gameWorld.getIwillDestroyYouTank().move(false);
+//			}
+//			if (down) {
+//				gameWorld.getIwillDestroyYouTank().move(true);
+//			}
+//			if (left)
+//				gameWorld.getIwillDestroyYouTank().setWinkel(
+//						gameWorld.getIwillDestroyYouTank().getWinkel() - GameSettings.HELDENWINKELCHANGESPEED);
+//			if (right)
+//				gameWorld.getIwillDestroyYouTank().setWinkel(
+//						gameWorld.getIwillDestroyYouTank().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
+//
+//			gameWorld.getIwillDestroyYouTank().erhöheLastShot();
+//
+//			if (space && gameWorld.getIwillDestroyYouTank().getLastShot() >= GameSettings.HELDENFEUERRATE) {
+//				// if (enableSounds) {
+//				// view.playSound(GameSettings.SFXSHOTFIRED);
+//				// }
+//				MoveableObject movObj = new MoveableObject();
+//				movObj.setPosition(
+//						gameWorld.getIwillDestroyYouTank().getX() + (gameWorld.getIwillDestroyYouTank().getWidth() / 2),
+//						gameWorld.getIwillDestroyYouTank().getY()
+//								+ (gameWorld.getIwillDestroyYouTank().getHeight() / 2),
+//						GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHÖHE);
+//				movObj.setSpeed(GameSettings.PROJEKTILFRIENDLYSPEED);
+//				movObj.setWinkel(gameWorld.getIwillDestroyYouTank().getWinkel());
+//				gameWorld.getProjektileClient().add(movObj);
+//				gameWorld.getIwillDestroyYouTank().setLastShot(0);
+//			}
+//		}
+//	}
 }

@@ -20,10 +20,12 @@ public class GameWorld implements Serializable{
 	private int threadTicks;
 
 	private HeldenFahrzeug heldenfahrzeug;
+	private IwillDestroyYouTank iwillDestroyYouTank;
 	private ArrayList<GameObject> items;
 	private ArrayList<Alien> aliens;
 	private ArrayList<MoveableObject> projektile;
 	private ArrayList<MoveableObject> projektileFriendly;
+	private ArrayList<MoveableObject> projektileClient;
 
 	private int leben;
 	private int aliensSlain;
@@ -34,10 +36,12 @@ public class GameWorld implements Serializable{
 
 	public GameWorld(int breite, int höhe) {
 		heldenfahrzeug = new HeldenFahrzeug(false);
+		iwillDestroyYouTank = new IwillDestroyYouTank(false);
 		items = new ArrayList<GameObject>();
 		aliens = new ArrayList<Alien>();
 		projektile = new ArrayList<MoveableObject>();
 		projektileFriendly = new ArrayList<MoveableObject>();
+		projektileClient = new ArrayList<MoveableObject>();
 		width = breite;
 		height = höhe;
 		leben = GameSettings.HELDENSTARTLEBEN;
@@ -130,5 +134,23 @@ public class GameWorld implements Serializable{
 	public void setTicksSinceLastSpwan(int ticksSinceLastSpwan) {
 		this.ticksSinceLastSpwan = ticksSinceLastSpwan;
 	}
+
+	public IwillDestroyYouTank getIwillDestroyYouTank() {
+		return iwillDestroyYouTank;
+	}
+
+	public void setIwillDestroyYouTank(IwillDestroyYouTank iwillDestroyYouTank) {
+		this.iwillDestroyYouTank = iwillDestroyYouTank;
+	}
+
+	public ArrayList<MoveableObject> getProjektileClient() {
+		return projektileClient;
+	}
+
+	public void setProjektileClient(ArrayList<MoveableObject> projektileClient) {
+		this.projektileClient = projektileClient;
+	}
+
+
 
 }
