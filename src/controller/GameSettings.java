@@ -2,7 +2,7 @@ package controller;
 
 /**
  * In diesem Interface stehen alle Konstanten des Spiels
- * 
+ *
  * @author Julien, Marco, Till
  *
  */
@@ -38,7 +38,7 @@ public interface GameSettings {
 
 	public static final int PROJEKTILBREITE = 10;
 	public static final int PROJEKTILHÖHE = 10;
-	public static final int PROJEKTILENEMYSPEED = 2; 
+	public static final int PROJEKTILENEMYSPEED = 2;
 	public static final int PROJEKTILFRIENDLYSPEED = 5;
 
 	public static final String IMGBACKGROUNDPFAD = "resources/background.png";
@@ -54,6 +54,6 @@ public interface GameSettings {
 	public static final String SFXHELDENHIT = "resources/button-26.wav";
 	public static final String SFXWIN = "resources/button-26.wav";
 	public static final String SFXLOOSE = "resources/button-26.wav";
-	public static final String MUSICBACKGROUND = "resources/button-26.wav";
-	
+	public static final String MUSICBACKGROUND = "resources/Musik.wav";
+
 }

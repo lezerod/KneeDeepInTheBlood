@@ -85,8 +85,8 @@ public class ClientViewNew extends Application {
 //				this);
 //		gameUpdateThread.start();
 //				new ClientThreadTCPControl(this).start();
-				new ClientThreadTCPWORLD(new GameWorld(GameSettings.BREITE, GameSettings.HÖHE), this).start();
-				new ClientThreadTCPControl(this).start();
+//				new ClientThreadTCPWORLD(new GameWorld(GameSettings.BREITE, GameSettings.HÖHE), this).start();
+//				new ClientThreadTCPControl(this).start();
 //		new ClientHandlerTCP(new ClientThreadTCPControl(this), new ClientThreadTCPWORLD(new GameWorld(GameSettings.BREITE, GameSettings.HÖHE), this));
 
 	}

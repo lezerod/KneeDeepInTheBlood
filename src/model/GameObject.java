@@ -1,13 +1,15 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Diese Klasse bildet die Basis für alle Objekte, die sich auf dem Spielfeld
  * befinden.
- * 
+ *
  * @author Julien, Marco, Till
  *
  */
-public class GameObject {
+public class GameObject implements Serializable {
 
 	private float x = 0;
 	private float y = 0;
@@ -21,7 +23,7 @@ public class GameObject {
 
 	/**
 	 * Diese Funktion dient zum setzen der Position auf dem Spielfeld
-	 * 
+	 *
 	 * @param x
 	 *            X-Koordinate
 	 * @param y

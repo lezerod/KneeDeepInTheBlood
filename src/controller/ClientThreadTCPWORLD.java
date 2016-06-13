@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import model.GameWorld;
-import view.ClientView;
 import view.ClientViewNew;
 import view.MainWindow;
 
@@ -23,8 +22,9 @@ import view.MainWindow;
  *
  */
 public class ClientThreadTCPWORLD extends Thread {
-	ClientViewNew window = new ClientViewNew();
+	MainWindow window = null;
 	GameWorld world = null;
+	String ip = null;
 
 	/**
 	 * Innerhalb des Konstruktors wird eine Neue Gameworld erstellt und die View
@@ -33,17 +33,17 @@ public class ClientThreadTCPWORLD extends Thread {
 	 * @param gameworld
 	 * @param view
 	 */
-	public ClientThreadTCPWORLD(GameWorld gameworld, ClientViewNew view) {
+	public ClientThreadTCPWORLD(GameWorld gameworld, MainWindow view, String ip) {
 		this.world = gameworld;
 		this.window = view;
-
+		this.ip = ip;
 	}
 
 	public void run() {
 		while (true) {
 			try {
 				// Verbindung zu Port 13000 auf localhost aufbauen:
-				Socket socket = new Socket("localhost", 13002);
+				Socket socket = new Socket(this.ip, 13002);
 				/**
 				 * Der Thread empfängt die Gesendete GameWorld von dem Server
 				 * und updatet mit ihr die View des Clients.

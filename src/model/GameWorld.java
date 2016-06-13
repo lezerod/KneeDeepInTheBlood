@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import controller.GameSettings;
@@ -11,7 +12,7 @@ import controller.GameSettings;
  * @author Julien, Till, Marco
  *
  */
-public class GameWorld {
+public class GameWorld implements Serializable{
 
 	private final int width;
 	private final int height;

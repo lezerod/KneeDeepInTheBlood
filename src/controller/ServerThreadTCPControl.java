@@ -23,7 +23,7 @@ import model.MoveableObject;
  */
 public class ServerThreadTCPControl extends Thread {
 	private ServerSocket serverSocket;
-	private boolean up = true;
+	private boolean up = false;
 	private boolean down = false;
 	private boolean left = false;
 	private boolean right = false;

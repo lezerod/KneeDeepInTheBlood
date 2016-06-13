@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 import controller.GameSettings;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -19,7 +21,7 @@ import javafx.scene.input.KeyEvent;
 /**
  * Diese Klasse stellt den Hauptthread des Spiels dar. Er updated die ganze Zeit
  * die GameWorld und ruft dann die update Methode in der View auf.
- * 
+ *
  * @author Planung Struktur/Grundkonzept/Spielkonzept: Julien, Till, Marco;
  *         Umsetzung: Julien
  *
@@ -42,7 +44,7 @@ public class GameUpdateThread extends Thread implements EventList {
 
 	/**
 	 * Konstruktor
-	 * 
+	 *
 	 * @param gameWorld
 	 *            die Spielwelt
 	 * @param view
@@ -51,6 +53,8 @@ public class GameUpdateThread extends Thread implements EventList {
 	public GameUpdateThread(GameWorld gameWorld, MainWindow view) {
 		this.gameWorld = gameWorld;
 		this.view = view;
+		view.playMusic(GameSettings.MUSICBACKGROUND);
+
 	}
 
 	/**
@@ -60,8 +64,6 @@ public class GameUpdateThread extends Thread implements EventList {
 	public void run() {
 
 		init();
-		view.playMusic(GameSettings.MUSICBACKGROUND);
-
 		// Dauerschleife des Spiels
 		while (true) {
 
@@ -92,7 +94,7 @@ public class GameUpdateThread extends Thread implements EventList {
 
 	/**
 	 * diese Methode startet ein neues Spiel
-	 * 
+	 *
 	 * @param schwierigkeitsgrad
 	 *            Easy, Middle oder hard
 	 */
@@ -112,12 +114,23 @@ public class GameUpdateThread extends Thread implements EventList {
 		createStartModel();
 		gameIsRunning = true;
 		view.switchScene(view.getSceneGame());
+		try {
+			new ServerThreadTCPControl(this.gameWorld).start();
+			new ServerThreadTCPWorld(this.gameWorld).start();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		};
+
 	}
 
 	/**
 	 * erzeugt den Startzustand des Models
 	 */
 	private void createStartModel() {
+		synchronized (gameWorld) {
+
+
 
 		gameWorld.setLeben(GameSettings.HELDENSTARTLEBEN);
 		gameWorld.setAliensSlain(0);
@@ -148,12 +161,15 @@ public class GameUpdateThread extends Thread implements EventList {
 		heldenFahrzeug.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
 		gameWorld.setHeldenfahrzeug(heldenFahrzeug);
 
-	}
+	}}
 
 	/**
 	 * updated das gesamte Model
 	 */
 	private void updateModel() {
+		synchronized (gameWorld) {
+
+
 		// prüfen, ob die zeit um ist.
 		if (gameWorld.getThreadTicks() > (gameWorld.getMinutesToWin() * 60 * 1000 / GameSettings.THREADTICKTIME)) {
 
@@ -189,12 +205,15 @@ public class GameUpdateThread extends Thread implements EventList {
 
 		checkForNewSpawn();
 		gameWorld.setTicksSinceLastSpwan(gameWorld.getTicksSinceLastSpwan() + 1);
-	}
+	}}
 
 	/**
 	 * diese Methode updated die Aliens auf dem Spielfeld
 	 */
 	private void updateAliens() {
+		synchronized (gameWorld) {
+
+
 		for (int i = 0; i < gameWorld.getAliens().size(); i++) {
 			Alien aktAlien = gameWorld.getAliens().get(i);
 
@@ -219,7 +238,7 @@ public class GameUpdateThread extends Thread implements EventList {
 			// prüfen, dass die Aliens nicht ausserhalb des Fensters sind:
 			korrigierePosition(aktAlien, false);
 		}
-	}
+	}}
 
 	/**
 	 * updated die Projektile
@@ -233,6 +252,9 @@ public class GameUpdateThread extends Thread implements EventList {
 	 * updated die gegnerischen Projektile
 	 */
 	private void updateEnemyProjektile() {
+		synchronized (gameWorld) {
+
+
 		// update projektile
 		for (int i = 0; i < gameWorld.getProjektile().size(); i++) {
 			MoveableObject aktProjektil = gameWorld.getProjektile().get(i);
@@ -243,12 +265,15 @@ public class GameUpdateThread extends Thread implements EventList {
 			korrigierePosition(aktProjektil, true);
 
 		}
-	}
+	}}
 
 	/**
 	 * updated die freundlichen Projektile
 	 */
 	private void updateFriendlyProjektile() {
+		synchronized (gameWorld) {
+
+
 		for (int i = 0; i < gameWorld.getProjektileFriendly().size(); i++) {
 			MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
 
@@ -258,12 +283,15 @@ public class GameUpdateThread extends Thread implements EventList {
 			korrigierePosition(aktProjektil, true);
 
 		}
-	}
+	}}
 
 	/**
 	 * Update des Heldenfahrzeugs
 	 */
 	private void updateHeldenFahrzeug() {
+		synchronized (gameWorld) {
+
+
 		if (topPressed) {
 			gameWorld.getHeldenfahrzeug().move(false);
 		}
@@ -291,7 +319,7 @@ public class GameUpdateThread extends Thread implements EventList {
 			movObj.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel());
 			gameWorld.getProjektileFriendly().add(movObj);
 			gameWorld.getHeldenfahrzeug().setLastShot(0);
-		}
+		}}
 
 		// prüfen, dass das Heldenfahrezeug nicht ausserhalb des Fensters ist
 		// und ggf. position korrigieren:
@@ -304,6 +332,9 @@ public class GameUpdateThread extends Thread implements EventList {
 	 * ggf.
 	 */
 	private void checkCollisions() {
+		synchronized (gameWorld) {
+
+
 		for (int i = 0; i < gameWorld.getProjektile().size(); i++) {
 			if (checkForCollision(gameWorld.getProjektile().get(i), gameWorld.getHeldenfahrzeug())) {
 				if (enableSounds) {
@@ -363,12 +394,15 @@ public class GameUpdateThread extends Thread implements EventList {
 			}
 		}
 
-	}
+	}}
 
 	/**
 	 * diese Methode überprüft, ob ein neues Alien spawnen soll und kann
 	 */
 	private void checkForNewSpawn() {
+		synchronized (gameWorld) {
+
+
 		if ((gameWorld.getTicksSinceLastSpwan() > GameSettings.ALIENRESPAWNRATE)
 				&& gameWorld.getAliens().size() < GameSettings.ALIENMAXANZAHL) {
 			Alien newAlien = new Alien(false);
@@ -378,7 +412,7 @@ public class GameUpdateThread extends Thread implements EventList {
 			gameWorld.getAliens().add(newAlien);
 			gameWorld.setTicksSinceLastSpwan(0);
 		}
-	}
+	}}
 
 	/**
 	 * KeyDown-Event Behandlung
@@ -432,7 +466,7 @@ public class GameUpdateThread extends Thread implements EventList {
 	/**
 	 * Methode prüft, ob das Spielfeldobject ausserhalb des Spielfeldes ist, und
 	 * setzt das Object dann ggf. wieder ins Spielfeld.
-	 * 
+	 *
 	 * @param gameObject
 	 *            Das Spielfeldobjekt
 	 * @param deleteObj
@@ -473,7 +507,7 @@ public class GameUpdateThread extends Thread implements EventList {
 
 	/**
 	 * Funktion prüft, ob zwei Spielfeldobjekte kollidieren
-	 * 
+	 *
 	 * @param gameObjectA
 	 *            Das erste Spielfeldobjekt
 	 * @param gameObjectB
@@ -539,6 +573,10 @@ public class GameUpdateThread extends Thread implements EventList {
 	public void raiseConnectClick(boolean connect, String ip) {
 		if (!connect) {
 			view.switchScene(view.getSceneMainMenu());
+		}
+		else{
+			view.startClient(ip, this.view);
+			view.switchScene(view.getSceneGame());
 		}
 	}
 

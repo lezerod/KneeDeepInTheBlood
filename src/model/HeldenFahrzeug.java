@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
+
 /**
- * 
+ *
  * @author Julien, Till, Marco
  *
  */
-public class HeldenFahrzeug extends FireableObject {
+public class HeldenFahrzeug extends FireableObject implements Serializable {
 
 	private boolean hasSpezialWeapon;
 

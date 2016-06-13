@@ -1,6 +1,5 @@
 package controller;
 
-import view.ClientView;
 import view.ClientViewNew;
 
 public class ClassMainClient {

@@ -1,13 +1,15 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Diese Klasse beschreibt alle Objekte auf dem Spielfeld, die sich mit der Zeit
  * bewegen.
- * 
+ *
  * @author Julien, Till, Marco
  *
  */
-public class MoveableObject extends GameObject {
+public class MoveableObject extends GameObject implements Serializable {
 	private float richtung = 0;
 	private int speed = 0;
 
@@ -29,7 +31,7 @@ public class MoveableObject extends GameObject {
 
 	/**
 	 * ändert die Position des Moveable Objects abhängig von seinem Zustand
-	 * 
+	 *
 	 * @param rückwarts
 	 *            true, wenn es eine Bewegung nach hinten ist
 	 */
@@ -40,7 +42,7 @@ public class MoveableObject extends GameObject {
 
 	/**
 	 * Helper-Methode um die neue X-Position zu ermitteln
-	 * 
+	 *
 	 * @param winkel
 	 *            aktueller Winkel
 	 * @param speed
@@ -64,7 +66,7 @@ public class MoveableObject extends GameObject {
 
 	/**
 	 * Helper-Methode um die neue Y-Position zu ermitteln
-	 * 
+	 *
 	 * @param winkel
 	 *            aktueller Winkel
 	 * @param speed

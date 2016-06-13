@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * @author Julien, Marco, Till
  *
  */
 
-public class Alien extends FireableObject {
+public class Alien extends FireableObject implements Serializable {
 
 	private boolean isImmun;
 

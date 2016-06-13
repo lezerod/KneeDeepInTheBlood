@@ -21,7 +21,6 @@ import model.GameWorld;
  */
 public class ServerThreadTCPWorld extends Thread {
 	private ServerSocket serverSocket;
-	// DatagramSocket server = null;
 	private GameWorld world;
 /**
  * Der Konstruktor benötigt die aktuelle Gameworld als Parametet aus dem GameUpdateThread um immer die aktuellste GameWorld zu versenden.

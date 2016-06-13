@@ -11,9 +11,9 @@ import java.net.Socket;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import view.ClientView;
 import view.ClientViewNew;
 import view.EventList;
+import view.MainWindow;
 
 /**
  * In dieser Klasse wird die Steuerung von dem Client an den Server geschickt.
@@ -24,12 +24,13 @@ import view.EventList;
  *
  */
 public class ClientThreadTCPControl extends Thread implements EventList {
-	private ClientViewNew view;
+	private MainWindow view;
 	private boolean up = false;
 	private boolean down = false;
 	private boolean left = false;
 	private boolean right = false;
 	private boolean space = false;
+	private String ip = null;
 
 	/**
 	 * Konstruktor welcher die View als Parameter benötigt um auf den
@@ -37,8 +38,9 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 	 *
 	 * @param view
 	 */
-	public ClientThreadTCPControl(ClientViewNew view) {
+	public ClientThreadTCPControl(MainWindow view, String ip) {
 		this.view = view;
+		this.ip = ip;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -56,9 +58,9 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 				 * Es werden die booelean abgefragt ob eine Taste gedrükt wurde. Bei einer gedrückten Taste
 				 * wird dies zu dem byte addiert.
 				 */
-				String ausgabe = "";
 				byte send = 0;
 				if (up) {
+					System.out.println("oben");
 
 					send += 1;
 				}
@@ -76,7 +78,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 				}
 
 				if(send != 0){
-					Socket socket = new Socket("localhost", 8888);
+					Socket socket = new Socket(this.ip, 8888);
 					BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 					out.write(send);
 					out.newLine();
@@ -146,6 +148,24 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 
 	@Override
 	public void raiseMenuClick(int menuIndex) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void raiseNewGameClick(int menuIndex) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void raiseSettingsClick(String key, int value) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void raiseConnectClick(boolean connect, String Ip) {
 		// TODO Auto-generated method stub
 
 	}

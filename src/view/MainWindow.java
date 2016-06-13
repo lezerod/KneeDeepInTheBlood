@@ -1,15 +1,18 @@
 /**
  * Diese Klasse stellt die GUI des Spiels dar.
- * 
+ *
  * @author Planung der Verknüpfung von View+Controller und Planung des Aufbaus der View:
  *  Julien, Till, Marco; Umsetzung: Julien
- * 
+ *
  */
 
 package view;
 
 import java.net.URL;
 import java.util.ArrayList;
+
+import controller.ClientThreadTCPControl;
+import controller.ClientThreadTCPWORLD;
 import controller.GameSettings;
 import controller.GameUpdateThread;
 import javafx.application.Application;
@@ -106,7 +109,7 @@ public class MainWindow extends Application {
 
 	/**
 	 * wechselt die Scene, die angezeigt wird
-	 * 
+	 *
 	 * @param scene
 	 *            die neue Scene
 	 */
@@ -133,7 +136,7 @@ public class MainWindow extends Application {
 		this.paneSettings = new Pane();
 		this.sceneSettings = new Scene(paneSettings, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
 				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
-		
+
 		this.paneConnect = new Pane();
 		this.sceneConnect = new Scene(paneConnect, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
 				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
@@ -460,7 +463,7 @@ public class MainWindow extends Application {
 	 * erzeugt alle Steuerelemente für SceneConnect
 	 */
 	private void erzeugeSceneConnect() {
-		
+
 		paneConnect.setStyle("-fx-background-color: RGB(0,0,0);");
 
 		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGTITLEPFAD).toExternalForm());
@@ -487,7 +490,7 @@ public class MainWindow extends Application {
 		Pane menu = new Pane();
 		menu.getChildren().add(lbl);
 		paneConnect.getChildren().add(menu);
-		
+
 		lbl = new Label("Enter IP:");
 		lbl.setLayoutX(200);
 		lbl.setLayoutY(210);
@@ -497,7 +500,7 @@ public class MainWindow extends Application {
 		lbl.setTextAlignment(TextAlignment.CENTER);
 		lbl.setAlignment(Pos.CENTER);
 		menu.getChildren().add(lbl);
-		
+
 		TextField tbIp = new TextField();
 		tbIp.setFont(new Font(18));
 		tbIp.setLayoutX(200);
@@ -505,7 +508,7 @@ public class MainWindow extends Application {
 		tbIp.setPrefWidth(200);
 		tbIp.setAlignment(Pos.CENTER);
 		menu.getChildren().add(tbIp);
-		
+
 		Label menLbl = new Label();
 		menLbl.setText("Connect");
 		menLbl.setLayoutX(60);
@@ -521,7 +524,7 @@ public class MainWindow extends Application {
 			}
 		});
 		menu.getChildren().add(menLbl);
-		
+
 		menLbl = new Label();
 		menLbl.setText("back to Main Menu");
 		menLbl.setLayoutX(60);
@@ -537,9 +540,9 @@ public class MainWindow extends Application {
 			}
 		});
 		menu.getChildren().add(menLbl);
-		
+
 	}
-	
+
 	/**
 	 * erzeugt alle Steuerelemente für SceneGame
 	 */
@@ -701,7 +704,7 @@ public class MainWindow extends Application {
 	/**
 	 * wird vom ControllerThread aufgerufen und updated die GUI gemäß der
 	 * aktuellen GameWorld
-	 * 
+	 *
 	 * @param gameWorld
 	 */
 	public void updateView(GameWorld gameWorld) {
@@ -728,7 +731,7 @@ public class MainWindow extends Application {
 	/**
 	 * diese Methode updated die 3 Label in dem Spiel die Auskunft über den
 	 * aktuellen Status geben
-	 * 
+	 *
 	 * @param leben
 	 *            Das aktuelle eigene Leben
 	 * @param aliensSlain
@@ -762,7 +765,7 @@ public class MainWindow extends Application {
 
 	/**
 	 * updated das Heldenfahrzeug auf dem Spielfeld
-	 * 
+	 *
 	 * @param heldenfahrzeug
 	 *            das Heldenfahrzeug
 	 */
@@ -777,7 +780,7 @@ public class MainWindow extends Application {
 
 	/**
 	 * updated die Aliens auf dem Spielfeld
-	 * 
+	 *
 	 * @param aliens
 	 *            Liste der Aliens
 	 */
@@ -794,7 +797,7 @@ public class MainWindow extends Application {
 
 	/**
 	 * updated die Projektile auf dem Spielfeld
-	 * 
+	 *
 	 * @param enemyProjektile
 	 *            die Alienprojektile
 	 * @param friendlyProjektile
@@ -808,7 +811,7 @@ public class MainWindow extends Application {
 
 	/**
 	 * updated die freundlichen projektile
-	 * 
+	 *
 	 * @param friendlyProjektile
 	 *            die Heldenfahrzeugprojektile
 	 */
@@ -825,7 +828,7 @@ public class MainWindow extends Application {
 
 	/**
 	 * updated die feindlichen Projektile
-	 * 
+	 *
 	 * @param enemyProjektile
 	 *            die Projektile der Aliens
 	 */
@@ -842,7 +845,7 @@ public class MainWindow extends Application {
 
 	/**
 	 * formatiert den Label im "Menü-Style"
-	 * 
+	 *
 	 * @param lbl
 	 *            der zu formatierende Label
 	 * @return der formatierte Label
@@ -889,7 +892,20 @@ public class MainWindow extends Application {
 		});
 		musikPlayer.play();
 	}
-	
+	public void startClient(String ip, MainWindow view){
+		Platform.runLater(new Runnable() {
+			String g = ip;
+			MainWindow h = view;
+			@Override
+			public void run() {
+				new ClientThreadTCPControl(h, g).start();;
+				new ClientThreadTCPWORLD(new GameWorld(GameSettings.BREITE, GameSettings.HÖHE), h, g).start();;
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
 	public void stopMusic() {
 		musikPlayer.stop();
 	}

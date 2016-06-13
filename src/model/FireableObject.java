@@ -1,12 +1,14 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Diese Klasse beschreibt Objekte, die Projektile schiessen können
- * 
+ *
  * @author Julien
  *
  */
-public class FireableObject extends MoveableObject {
+public class FireableObject extends MoveableObject implements Serializable {
 
 	private int lastShot;
 
