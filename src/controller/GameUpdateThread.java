@@ -2,9 +2,9 @@ package controller;
 
 import java.io.IOException;
 
+
 import controller.GameSettings;
 import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -31,7 +31,6 @@ public class GameUpdateThread extends Thread implements EventList {
 
 	private MainWindow view;
 	private GameWorld gameWorld;
-
 	private boolean enableSounds = true;
 
 	private boolean gameIsRunning = false;
@@ -85,7 +84,6 @@ public class GameUpdateThread extends Thread implements EventList {
 
 			}
 
-
 		}
 
 	}
@@ -137,8 +135,6 @@ public class GameUpdateThread extends Thread implements EventList {
 	 */
 	private void createStartModel() {
 		synchronized (gameWorld) {
-
-
 
 		gameWorld.setLeben(GameSettings.HELDENSTARTLEBEN);
 		gameWorld.setAliensSlain(0);
@@ -215,7 +211,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		updateAliens();
 		updateProjektile();
 		updateHeldenFahrzeug();
-		updateIwillDestoryYouTank();
+		korrigierePosition(gameWorld.getIwillDestroyYouTank(), false);
 
 		checkCollisions();
 
@@ -299,8 +295,8 @@ public class GameUpdateThread extends Thread implements EventList {
 			// prüfen, dass die Projektile nicht ausserhalb des Fensters sind:
 			korrigierePosition(aktProjektil, true);
 
+		}}
 		}
-	}}
 	private void updateiWillProjektile(){
 		synchronized (gameWorld) {
 			for (int i = 0; i < gameWorld.getProjektileClient().size(); i++) {
@@ -355,48 +351,6 @@ public class GameUpdateThread extends Thread implements EventList {
 		korrigierePosition(gameWorld.getHeldenfahrzeug(), false);
 
 	}
-	private void updateIwillDestoryYouTank() {
-		synchronized (gameWorld) {
-
-			if (gameWorld.getIwillDestroyYouTank().isUp()) {
-				gameWorld.getIwillDestroyYouTank().move(false);
-			}
-			if (gameWorld.getIwillDestroyYouTank().isDown()) {
-				gameWorld.getIwillDestroyYouTank().move(true);
-			}
-			if (gameWorld.getIwillDestroyYouTank().isLeft())
-				gameWorld.getIwillDestroyYouTank().setWinkel(
-						gameWorld.getIwillDestroyYouTank().getWinkel() - GameSettings.HELDENWINKELCHANGESPEED);
-			if (gameWorld.getIwillDestroyYouTank().isRight())
-				gameWorld.getIwillDestroyYouTank().setWinkel(
-						gameWorld.getIwillDestroyYouTank().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
-
-			gameWorld.getIwillDestroyYouTank().erhöheLastShot();
-
-			if (gameWorld.getIwillDestroyYouTank().isSpace() && gameWorld.getIwillDestroyYouTank().getLastShot() >= GameSettings.HELDENFEUERRATE) {
-				 if (enableSounds) {
-				 view.playSound(GameSettings.SFXSHOTFIRED);
-				 }
-				MoveableObject movObj = new MoveableObject();
-				movObj.setPosition(
-						gameWorld.getIwillDestroyYouTank().getX() + (gameWorld.getIwillDestroyYouTank().getWidth() / 2),
-						gameWorld.getIwillDestroyYouTank().getY()
-								+ (gameWorld.getIwillDestroyYouTank().getHeight() / 2),
-						GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHÖHE);
-				movObj.setSpeed(GameSettings.PROJEKTILFRIENDLYSPEED);
-				movObj.setWinkel(gameWorld.getIwillDestroyYouTank().getWinkel());
-				gameWorld.getProjektileClient().add(movObj);
-				gameWorld.getIwillDestroyYouTank().setLastShot(0);
-			}
-
-
-		}
-		korrigierePosition(gameWorld.getIwillDestroyYouTank(), false);
-
-	}
-
-
-
 
 	/**
 	 * diese Methode überprüft alle möglichen Kollisionen und behandelt diese
@@ -464,8 +418,45 @@ public class GameUpdateThread extends Thread implements EventList {
 
 			}
 		}
+		for (int i = 0; i < gameWorld.getProjektileClient().size(); i++){
+			if(checkForCollision(gameWorld.getProjektileClient().get(i), gameWorld.getHeldenfahrzeug())){
+				gameWorld.getHeldenfahrzeug().setSpeed(1);
+				gameWorld.getProjektileClient().remove(i);
 
-	}}
+				new Thread(){
+					public void run(){
+						try {
+							Thread.sleep(3000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						gameWorld.getHeldenfahrzeug().setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
+					}
+				}.start();
+
+			}
+			for(int j = 0; j < gameWorld.getAliens().size(); j++){
+				try {
+					MoveableObject aktProjektil = gameWorld.getProjektileClient().get(i);
+					Alien aktAlien = gameWorld.getAliens().get(j);
+					if (checkForCollision(aktProjektil, aktAlien)) {
+						if (enableSounds) {
+							view.playSound(GameSettings.SFXALIENHIT);
+						}
+						gameWorld.getProjektileClient().remove(i);
+						gameWorld.getAliens().remove(j);
+						i--;
+						j--;
+
+			}}
+					catch(Exception e){
+						e.printStackTrace();
+					}
+
+		}
+
+	}}}
 
 	/**
 	 * diese Methode überprüft, ob ein neues Alien spawnen soll und kann
@@ -573,6 +564,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		if (ausserhalb) {
 			gameWorld.getProjektile().remove(gameObject);
 			gameWorld.getProjektileFriendly().remove(gameObject);
+			gameWorld.getProjektileClient().remove(gameObject);
 		}
 	}
 

@@ -7,10 +7,7 @@ package view;
 
 import java.util.ArrayList;
 
-import controller.ClientThreadTCPControl;
-import controller.ClientThreadTCPWORLD;
 import controller.GameSettings;
-import controller.GameUpdateThread;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

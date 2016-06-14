@@ -1,17 +1,11 @@
 package controller;
 
-import java.awt.print.Printable;
 import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import view.ClientViewNew;
 import view.EventList;
 import view.MainWindow;
 
