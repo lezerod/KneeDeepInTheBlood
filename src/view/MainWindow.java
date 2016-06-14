@@ -39,6 +39,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Alien;
+import model.GameObject;
 import model.GameWorld;
 import model.HeldenFahrzeug;
 import model.IwillDestroyYouTank;
@@ -77,6 +78,7 @@ public class MainWindow extends Application {
 	private ImageView heldenFahrzeugImgV = new ImageView();
 	private ImageView iWillDestroyYouTankImgV = new ImageView();
 	private ArrayList<ImageView> aliensImgV = new ArrayList<ImageView>();
+	private ArrayList<ImageView> itemImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektileImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektileFriendlyImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektiliWillDestroyImgV = new ArrayList<ImageView>();
@@ -675,12 +677,22 @@ public class MainWindow extends Application {
 			projektiliWillDestroyImgV.add(imgView);
 		}
 
+		for(int i = 0; i <= 5; i++){
+			Image img = new Image(getClass().getResource(GameSettings.IMGITEMBFG).toExternalForm(), 100, 100, true, true);
+			ImageView imgView = new ImageView();
+			imgView.setFitHeight(0);
+			imgView.setFitWidth(0);
+			imgView.setImage(img);
+			itemImgV.add(imgView);
+		}
+
 		Image img = new Image(getClass().getResource(GameSettings.IMGHELDENFAHRZEUGPFAD).toExternalForm(), 100, 100,
 				true, true);
 		heldenFahrzeugImgV = new ImageView();
 		heldenFahrzeugImgV.setFitHeight(0);
 		heldenFahrzeugImgV.setFitWidth(0);
 		heldenFahrzeugImgV.setImage(img);
+
 
 		Image img2 = new Image(getClass().getResource(GameSettings.IMGIWILLDESTORYYOUTANKPFAD).toExternalForm(), 100, 100, true, true);
 		iWillDestroyYouTankImgV = new ImageView();
@@ -742,6 +754,8 @@ public class MainWindow extends Application {
 				updateHeldenFahrzeug(gameWorld.getHeldenfahrzeug());
 				updateAliens(gameWorld.getAliens());
 				updateProjektile(gameWorld.getProjektile(), gameWorld.getProjektileFriendly());
+				updateItems(gameWorld.getItems());
+
 				if(gameWorld.getIwillDestroyYouTank().isConnected()){
 				updateIwillDestroyYouTank(gameWorld.getIwillDestroyYouTank());
 				updateiWillProjektile(gameWorld.getProjektileClient());
@@ -843,6 +857,18 @@ public class MainWindow extends Application {
 			ArrayList<MoveableObject> friendlyProjektile){
 		updateEnemyProjektile(enemyProjektile);
 		updateFriendlyProjektile(friendlyProjektile);
+	}
+
+	private void updateItems(ArrayList<GameObject> items){
+		for(int i = 0; i < items.size(); i++){
+			ImageView imgVItem = itemImgV.get(i);
+			imgVItem.setFitHeight(items.get(i).getHeight());
+			imgVItem.setFitWidth(items.get(i).getWidth());
+			imgVItem.setLayoutX(items.get(i).getX());
+			imgVItem.setLayoutY(items.get(i).getY());
+			imgVItem.setVisible(true);
+			spielfeld.getChildren().add(imgVItem);
+		}
 	}
 
 	/**

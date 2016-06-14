@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-
+import java.util.Random;
 
 import controller.GameSettings;
 import javafx.application.Platform;
@@ -172,6 +172,8 @@ public class GameUpdateThread extends Thread implements EventList {
 				GameSettings.HELDENHÖHE);
 		iwillDestroyYouTank.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
 		gameWorld.setIwillDestroyYouTank(iwillDestroyYouTank);
+
+
 	}}
 
 	/**
@@ -211,8 +213,8 @@ public class GameUpdateThread extends Thread implements EventList {
 		updateAliens();
 		updateProjektile();
 		updateHeldenFahrzeug();
+		updateItems();
 		korrigierePosition(gameWorld.getIwillDestroyYouTank(), false);
-
 		checkCollisions();
 
 		checkForNewSpawn();
@@ -352,6 +354,19 @@ public class GameUpdateThread extends Thread implements EventList {
 
 	}
 
+	private void updateItems(){
+		if(gameWorld.getItems().size() < 1){
+		Random rand = new Random();
+		int randint = rand.nextInt(10000);
+		if(randint <= 50){
+			int x = rand.nextInt(GameSettings.BREITE);
+			int y = rand.nextInt(GameSettings.HÖHE);
+			GameObject bfg = new GameObject();
+			bfg.setPosition(x, y, 20, 20);
+			gameWorld.getItems().add(bfg);
+		}}
+	}
+
 	/**
 	 * diese Methode überprüft alle möglichen Kollisionen und behandelt diese
 	 * ggf.
@@ -436,6 +451,26 @@ public class GameUpdateThread extends Thread implements EventList {
 				}.start();
 
 			}
+			if(gameWorld.getItems().size() != 0){
+			for(int j = 0; i < gameWorld.getItems().size(); j++){
+				if(checkForCollision(gameWorld.getHeldenfahrzeug(),gameWorld.getItems().get(j))){
+					gameWorld.getHeldenfahrzeug().setHasSpezialWeapon(true);
+					gameWorld.getItems().remove(j);
+					System.out.println("BFG!");
+
+					new Thread(){
+						public void run(){
+							try{
+								Thread.sleep(10000);
+							}
+							catch (Exception e){
+								e.printStackTrace();
+							}
+							gameWorld.getHeldenfahrzeug().setHasSpezialWeapon(false);
+						}
+					}.start();
+				}
+			}}
 			for(int j = 0; j < gameWorld.getAliens().size(); j++){
 				try {
 					MoveableObject aktProjektil = gameWorld.getProjektileClient().get(i);

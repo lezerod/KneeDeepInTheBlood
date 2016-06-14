@@ -1,17 +1,10 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
-
 import model.GameWorld;
-import view.ClientViewNew;
 import view.MainWindow;
 
 /**

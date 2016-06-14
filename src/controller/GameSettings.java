@@ -55,6 +55,7 @@ public interface GameSettings {
 	public static final String IMGTANKPFAD = "resources/julien_tank.png";
 	public static final String IMGIWILLDESTORYYOUTANKPFAD = "resources/iwill.png";
 	public static final String IMGPROJEKTILECLIENT = "resources/projClient.png";
+	public static final String IMGITEMBFG = "resources/bfg.png";
 
 	public static final String SFXSHOTFIRED = "resources/button-50.wav";
 	public static final String SFXALIENHIT = "resources/button-16.wav";
