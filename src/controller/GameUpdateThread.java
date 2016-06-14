@@ -451,26 +451,6 @@ public class GameUpdateThread extends Thread implements EventList {
 				}.start();
 
 			}
-			if(gameWorld.getItems().size() != 0){
-			for(int j = 0; i < gameWorld.getItems().size(); j++){
-				if(checkForCollision(gameWorld.getHeldenfahrzeug(),gameWorld.getItems().get(j))){
-					gameWorld.getHeldenfahrzeug().setHasSpezialWeapon(true);
-					gameWorld.getItems().remove(j);
-					System.out.println("BFG!");
-
-					new Thread(){
-						public void run(){
-							try{
-								Thread.sleep(10000);
-							}
-							catch (Exception e){
-								e.printStackTrace();
-							}
-							gameWorld.getHeldenfahrzeug().setHasSpezialWeapon(false);
-						}
-					}.start();
-				}
-			}}
 			for(int j = 0; j < gameWorld.getAliens().size(); j++){
 				try {
 					MoveableObject aktProjektil = gameWorld.getProjektileClient().get(i);
@@ -491,7 +471,28 @@ public class GameUpdateThread extends Thread implements EventList {
 
 		}
 
-	}}}
+	}
+		if(gameWorld.getItems().size() != 0){
+		for(int j = 0; j < gameWorld.getItems().size(); j++){
+			if(checkForCollision(gameWorld.getHeldenfahrzeug(),gameWorld.getItems().get(j))){
+				gameWorld.getHeldenfahrzeug().setHasSpezialWeapon(true);
+				gameWorld.getItems().remove(j);
+				System.out.println("BFG!");
+
+				new Thread(){
+					public void run(){
+						try{
+							Thread.sleep(10000);
+						}
+						catch (Exception e){
+							e.printStackTrace();
+						}
+						gameWorld.getHeldenfahrzeug().setHasSpezialWeapon(false);
+					}
+				}.start();
+			}
+		}}
+}}
 
 	/**
 	 * diese Methode überprüft, ob ein neues Alien spawnen soll und kann
