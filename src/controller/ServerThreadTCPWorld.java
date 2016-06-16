@@ -15,11 +15,12 @@ import model.GameWorld;
  *
  */
 public class ServerThreadTCPWorld extends Thread {
-	private ServerSocket serverSocket;
+	private volatile ServerSocket serverSocket;
 	private GameWorld world;
+	private volatile boolean flag = true;
 
 	/**
-	 * Der Konstruktor benötigt die aktuelle Gameworld als Parametet aus dem
+	 * Der Konstruktor benoetigt die aktuelle Gameworld als Parametet aus dem
 	 * GameUpdateThread um immer die aktuellste GameWorld zu versenden.
 	 *
 	 * @param world
@@ -27,15 +28,15 @@ public class ServerThreadTCPWorld extends Thread {
 	 */
 	public ServerThreadTCPWorld(GameWorld world) throws IOException {
 		// Warte auf Anfragen auf Port 13002:
-		serverSocket = new ServerSocket(13002);
 		this.world = world;
+		serverSocket = new ServerSocket(13003);
+
 	}
 
 	public void run() {
 
-		while (true) {
+		while (flag) {
 			try {
-
 				Socket clientSocket = serverSocket.accept();
 				world.getIwillDestroyYouTank().setConnected(true);
 				OutputStream os = clientSocket.getOutputStream();
@@ -54,5 +55,11 @@ public class ServerThreadTCPWorld extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+	public void startRunning(){
+		flag = true;
+	}
+	public void stopRunning(){
+		flag = true;
 	}
 }

@@ -23,6 +23,7 @@ public class GameWorld implements Serializable{
 	private IwillDestroyYouTank iwillDestroyYouTank;
 	private ArrayList<GameObject> items;
 	private ArrayList<Alien> aliens;
+	private ArrayList<Alien> immunAliens;
 	private ArrayList<MoveableObject> projektile;
 	private ArrayList<MoveableObject> projektileFriendly;
 	private ArrayList<MoveableObject> projektileClient;
@@ -34,16 +35,17 @@ public class GameWorld implements Serializable{
 
 	private int ticksSinceLastSpwan;
 
-	public GameWorld(int breite, int höhe) {
+	public GameWorld(int breite, int hoehe) {
 		heldenfahrzeug = new HeldenFahrzeug(false);
 		iwillDestroyYouTank = new IwillDestroyYouTank(false);
 		items = new ArrayList<GameObject>();
 		aliens = new ArrayList<Alien>();
+		immunAliens = new ArrayList<Alien>();
 		projektile = new ArrayList<MoveableObject>();
 		projektileFriendly = new ArrayList<MoveableObject>();
 		projektileClient = new ArrayList<MoveableObject>();
 		width = breite;
-		height = höhe;
+		height = hoehe;
 		leben = GameSettings.HELDENSTARTLEBEN;
 	}
 
@@ -150,6 +152,16 @@ public class GameWorld implements Serializable{
 	public void setProjektileClient(ArrayList<MoveableObject> projektileClient) {
 		this.projektileClient = projektileClient;
 	}
+
+	public ArrayList<Alien> getImmunAliens() {
+		return immunAliens;
+	}
+
+	public void setImmunAliens(ArrayList<Alien> immunAliens) {
+		this.immunAliens = immunAliens;
+	}
+	
+	
 
 
 

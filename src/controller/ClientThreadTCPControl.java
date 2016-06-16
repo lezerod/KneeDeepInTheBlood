@@ -72,7 +72,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 				}
 
 				if(send != 0){
-					Socket socket = new Socket(this.ip, 8888);
+					Socket socket = new Socket(this.ip, 8889);
 					BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 					out.write(send);
 					out.newLine();

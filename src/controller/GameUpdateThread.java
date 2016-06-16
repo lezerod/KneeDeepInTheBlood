@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import controller.GameSettings;
@@ -32,8 +33,9 @@ public class GameUpdateThread extends Thread implements EventList {
 	private MainWindow view;
 	private GameWorld gameWorld;
 	private boolean enableSounds = true;
-
 	private boolean gameIsRunning = false;
+	private ServerThreadTCPControl stc;
+	private ServerThreadTCPWorld stw;
 
 	// diese booleans geben den Status der Tasten an
 	private boolean leftPressed = false;
@@ -54,6 +56,16 @@ public class GameUpdateThread extends Thread implements EventList {
 		this.gameWorld = gameWorld;
 		this.view = view;
 		view.playMusic(GameSettings.MUSICBACKGROUND);
+//		try {
+//			stc = new ServerThreadTCPControl(gameWorld);
+//			stw = new ServerThreadTCPWorld(gameWorld);
+//			stc.start();
+//			stw.start();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
 	}
 
 	/**
@@ -63,6 +75,13 @@ public class GameUpdateThread extends Thread implements EventList {
 	public void run() {
 
 		init();
+		try {
+			new ServerThreadTCPControl(gameWorld).start();
+			new ServerThreadTCPWorld(gameWorld).start();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		// Dauerschleife des Spiels
 		while (true) {
 
@@ -73,11 +92,8 @@ public class GameUpdateThread extends Thread implements EventList {
 			}
 
 			if (gameIsRunning) {
-
 				updateModel();
-
 				view.updateView(gameWorld);
-
 				if(gameWorld.getIwillDestroyYouTank().isConnected()){
 					view.activateIwillDestroyYouTank(gameWorld.getIwillDestroyYouTank());
 				}
@@ -92,6 +108,8 @@ public class GameUpdateThread extends Thread implements EventList {
 	 * registriert diese Instanz als Listener
 	 */
 	private void init() {
+
+
 		// EventsListener eintragen
 		view.registerEventListener(this);
 	}
@@ -119,15 +137,6 @@ public class GameUpdateThread extends Thread implements EventList {
 		gameIsRunning = true;
 		view.switchScene(view.getSceneGame());
 
-		try {
-			new ServerThreadTCPControl(gameWorld).start();
-			new ServerThreadTCPWorld(gameWorld).start();;
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-
 	}
 
 	/**
@@ -141,6 +150,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		gameWorld.setThreadTicks(0);
 
 		gameWorld.getAliens().clear();
+		gameWorld.getImmunAliens().clear();
 		gameWorld.getProjektile().clear();
 		gameWorld.getProjektileFriendly().clear();
 		gameWorld.setHeldenfahrzeug(null);
@@ -150,8 +160,8 @@ public class GameUpdateThread extends Thread implements EventList {
 		for (int i = 0; i < GameSettings.ALIENMAXANZAHL; i++) {
 			alien = new Alien(false);
 			float x = (float) Math.random() * (GameSettings.BREITE - GameSettings.ALIENBREITE);
-			float y = (float) Math.random() * (GameSettings.HÖHE - GameSettings.ALIENHÖHE);
-			alien.setPosition(x, y, GameSettings.ALIENBREITE, GameSettings.ALIENHÖHE);
+			float y = (float) Math.random() * (GameSettings.HOEHE - GameSettings.ALIENHOEHE);
+			alien.setPosition(x, y, GameSettings.ALIENBREITE, GameSettings.ALIENHOEHE);
 			alien.setSpeed(GameSettings.ALIENSPEED);
 			gameWorld.getAliens().add(alien);
 		}
@@ -160,16 +170,16 @@ public class GameUpdateThread extends Thread implements EventList {
 		HeldenFahrzeug heldenFahrzeug = new HeldenFahrzeug(false);
 		// genau in der Mitte:
 		heldenFahrzeug.setPosition((GameSettings.BREITE - (GameSettings.HELDENBREITE / 2)) / 2,
-				(GameSettings.HÖHE - (GameSettings.HELDENHÖHE / 2)) / 2, GameSettings.HELDENBREITE,
-				GameSettings.HELDENHÖHE);
+				(GameSettings.HOEHE - (GameSettings.HELDENHOEHE / 2)) / 2, GameSettings.HELDENBREITE,
+				GameSettings.HELDENHOEHE);
 		heldenFahrzeug.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
 		gameWorld.setHeldenfahrzeug(heldenFahrzeug);
 
 		// Create the 'IwillDestroyYouTaon'
 		IwillDestroyYouTank iwillDestroyYouTank = new IwillDestroyYouTank(false);
 		iwillDestroyYouTank.setPosition((GameSettings.BREITE - (GameSettings.HELDENBREITE / 2)) / 2,
-				(GameSettings.HÖHE - (GameSettings.HELDENHÖHE / 2)) / 2, GameSettings.HELDENBREITE,
-				GameSettings.HELDENHÖHE);
+				(GameSettings.HOEHE - (GameSettings.HELDENHOEHE / 2)) / 2, GameSettings.HELDENBREITE,
+				GameSettings.HELDENHOEHE);
 		iwillDestroyYouTank.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
 		gameWorld.setIwillDestroyYouTank(iwillDestroyYouTank);
 
@@ -183,7 +193,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		synchronized (gameWorld) {
 
 
-		// prüfen, ob die zeit um ist.
+		// pruefen, ob die zeit um ist.
 		if (gameWorld.getThreadTicks() > (gameWorld.getMinutesToWin() * 60 * 1000 / GameSettings.THREADTICKTIME)) {
 
 			Platform.runLater(new Runnable() {
@@ -193,14 +203,22 @@ public class GameUpdateThread extends Thread implements EventList {
 
 					Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
 					alert.setTitle("Spiel zu Ende");
-					alert.setHeaderText("Herzlichen Glückwunsch! Sie haben das Spiel gewonnen.");
-					alert.setContentText("Möchten sie nocheinmal spielen?");
+					alert.setHeaderText("Herzlichen GlÃ¼ckwunsch! Sie haben das Spiel gewonnen.");
+					alert.setContentText("MÃ¶chten sie nocheinmal spielen?");
 					gameIsRunning = false;
 					alert.showAndWait();
 					if (alert.getResult() == ButtonType.YES) {
 						view.switchScene(view.getSceneNewGame());
 					} else if (alert.getResult() == ButtonType.NO) {
 						view.switchScene(view.getSceneMainMenu());
+//						try {
+//							new ServerThreadTCPWorld(gameWorld).stop();
+//							new ServerThreadTCPControl(gameWorld).stop();
+
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
 					}
 
 				};
@@ -210,7 +228,8 @@ public class GameUpdateThread extends Thread implements EventList {
 			return;
 		}
 		gameWorld.setThreadTicks(gameWorld.getThreadTicks() + 1);
-		updateAliens();
+		updateAliens(gameWorld.getAliens());
+		updateAliens(gameWorld.getImmunAliens());
 		updateProjektile();
 		updateHeldenFahrzeug();
 		updateItems();
@@ -224,12 +243,12 @@ public class GameUpdateThread extends Thread implements EventList {
 	/**
 	 * diese Methode updated die Aliens auf dem Spielfeld
 	 */
-	private void updateAliens() {
+	private void updateAliens(ArrayList<Alien>aliens) {
 		synchronized (gameWorld) {
 
 
-		for (int i = 0; i < gameWorld.getAliens().size(); i++) {
-			Alien aktAlien = gameWorld.getAliens().get(i);
+		for (int i = 0; i < aliens.size(); i++) {
+			Alien aktAlien = aliens.get(i);
 
 			if (Math.random() <= GameSettings.ALIENCHANGETURNINGCHANCE) {
 				aktAlien.setWinkel((float) (360 * Math.random()));
@@ -237,19 +256,19 @@ public class GameUpdateThread extends Thread implements EventList {
 
 			aktAlien.move(false);
 
-			aktAlien.erhöheLastShot();
+			aktAlien.erhoeheLastShot();
 
 			if (aktAlien.getLastShot() >= GameSettings.ALIENFEUERRATE) {
 				MoveableObject movObj = new MoveableObject();
 				movObj.setPosition(aktAlien.getX(), aktAlien.getY(), GameSettings.PROJEKTILBREITE,
-						GameSettings.PROJEKTILHÖHE);
+						GameSettings.PROJEKTILHOEHE);
 				movObj.setSpeed(GameSettings.PROJEKTILENEMYSPEED);
 				movObj.setWinkel((float) (360 * Math.random()));
 				gameWorld.getProjektile().add(movObj);
 				aktAlien.setLastShot(0);
 			}
 
-			// prüfen, dass die Aliens nicht ausserhalb des Fensters sind:
+			// pruefen, dass die Aliens nicht ausserhalb des Fensters sind:
 			korrigierePosition(aktAlien, false);
 		}
 	}}
@@ -276,7 +295,7 @@ public class GameUpdateThread extends Thread implements EventList {
 
 			aktProjektil.move(false);
 
-			// prüfen, dass die Projektile nicht ausserhalb des Fensters sind:
+			// pruefen, dass die Projektile nicht ausserhalb des Fensters sind:
 			korrigierePosition(aktProjektil, true);
 
 		}
@@ -294,7 +313,7 @@ public class GameUpdateThread extends Thread implements EventList {
 
 			aktProjektil.move(false);
 
-			// prüfen, dass die Projektile nicht ausserhalb des Fensters sind:
+			// pruefen, dass die Projektile nicht ausserhalb des Fensters sind:
 			korrigierePosition(aktProjektil, true);
 
 		}}
@@ -306,7 +325,7 @@ public class GameUpdateThread extends Thread implements EventList {
 
 				aktProjektil.move(false);
 
-				// prüfen, dass die Projektile nicht ausserhalb des Fensters sind:
+				// pruefen, dass die Projektile nicht ausserhalb des Fensters sind:
 				korrigierePosition(aktProjektil, true);
 
 		}}
@@ -332,7 +351,7 @@ public class GameUpdateThread extends Thread implements EventList {
 			gameWorld.getHeldenfahrzeug()
 					.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
 
-		gameWorld.getHeldenfahrzeug().erhöheLastShot();
+		gameWorld.getHeldenfahrzeug().erhoeheLastShot();
 
 		if (spacePressed && gameWorld.getHeldenfahrzeug().getLastShot() >= GameSettings.HELDENFEUERRATE) {
 			if (enableSounds) {
@@ -341,14 +360,14 @@ public class GameUpdateThread extends Thread implements EventList {
 			MoveableObject movObj = new MoveableObject();
 			movObj.setPosition(gameWorld.getHeldenfahrzeug().getX() + (gameWorld.getHeldenfahrzeug().getWidth() / 2),
 					gameWorld.getHeldenfahrzeug().getY() + (gameWorld.getHeldenfahrzeug().getHeight() / 2),
-					GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHÖHE);
+					GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHOEHE);
 			movObj.setSpeed(GameSettings.PROJEKTILFRIENDLYSPEED);
 			movObj.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel());
 			gameWorld.getProjektileFriendly().add(movObj);
 			gameWorld.getHeldenfahrzeug().setLastShot(0);
 		}}
 
-		// prüfen, dass das Heldenfahrezeug nicht ausserhalb des Fensters ist
+		// pruefen, dass das Heldenfahrezeug nicht ausserhalb des Fensters ist
 		// und ggf. position korrigieren:
 		korrigierePosition(gameWorld.getHeldenfahrzeug(), false);
 
@@ -360,7 +379,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		int randint = rand.nextInt(10000);
 		if(randint <= 50){
 			int x = rand.nextInt(GameSettings.BREITE);
-			int y = rand.nextInt(GameSettings.HÖHE);
+			int y = rand.nextInt(GameSettings.HOEHE);
 			GameObject bfg = new GameObject();
 			bfg.setPosition(x, y, 20, 20);
 			gameWorld.getItems().add(bfg);
@@ -368,7 +387,7 @@ public class GameUpdateThread extends Thread implements EventList {
 	}
 
 	/**
-	 * diese Methode überprüft alle möglichen Kollisionen und behandelt diese
+	 * diese Methode ueberprueft alle moeglichen Kollisionen und behandelt diese
 	 * ggf.
 	 */
 	private void checkCollisions() {
@@ -393,12 +412,20 @@ public class GameUpdateThread extends Thread implements EventList {
 							Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
 							alert.setTitle("Spiel zu Ende");
 							alert.setHeaderText("Sie wurden leider zu oft getroffen und haben verloren.");
-							alert.setContentText("Möchten sie nocheinmal spielen?");
+							alert.setContentText("MÃ¶chten sie nocheinmal spielen?");
 							gameIsRunning = false;
 							alert.showAndWait();
 							if (alert.getResult() == ButtonType.YES) {
 								view.switchScene(view.getSceneNewGame());
 							} else if (alert.getResult() == ButtonType.NO) {
+								try {
+									new ServerThreadTCPWorld(gameWorld).stop();
+									new ServerThreadTCPControl(gameWorld).stop();
+
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								view.switchScene(view.getSceneMainMenu());
 							}
 
@@ -423,6 +450,27 @@ public class GameUpdateThread extends Thread implements EventList {
 						}
 						gameWorld.getProjektileFriendly().remove(i);
 						gameWorld.getAliens().remove(j);
+						gameWorld.setAliensSlain(gameWorld.getAliensSlain() + 1);
+						i--;
+						j--;
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+
+			}
+
+			for (int j = 0; j < gameWorld.getImmunAliens().size(); j++) {
+
+				try {
+					MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
+					Alien aktAlien = gameWorld.getImmunAliens().get(j);
+					if (checkForCollision(aktProjektil, aktAlien) && gameWorld.getHeldenfahrzeug().isHasSpezialWeapon()) {
+						if (enableSounds) {
+							view.playSound(GameSettings.SFXALIENHIT);
+						}
+						gameWorld.getProjektileFriendly().remove(i);
+						gameWorld.getImmunAliens().remove(j);
 						gameWorld.setAliensSlain(gameWorld.getAliensSlain() + 1);
 						i--;
 						j--;
@@ -495,7 +543,7 @@ public class GameUpdateThread extends Thread implements EventList {
 }}
 
 	/**
-	 * diese Methode überprüft, ob ein neues Alien spawnen soll und kann
+	 * diese Methode ueberprueft, ob ein neues Alien spawnen soll und kann
 	 */
 	private void checkForNewSpawn() {
 		synchronized (gameWorld) {
@@ -503,12 +551,22 @@ public class GameUpdateThread extends Thread implements EventList {
 
 		if ((gameWorld.getTicksSinceLastSpwan() > GameSettings.ALIENRESPAWNRATE)
 				&& gameWorld.getAliens().size() < GameSettings.ALIENMAXANZAHL) {
-			Alien newAlien = new Alien(false);
-			newAlien.setPosition((float) (Math.random() * GameSettings.BREITE),
-					(float) (Math.random() * GameSettings.HÖHE), GameSettings.ALIENBREITE, GameSettings.ALIENHÖHE);
-			newAlien.setSpeed(GameSettings.ALIENSPEED);
-			gameWorld.getAliens().add(newAlien);
-			gameWorld.setTicksSinceLastSpwan(0);
+			if(Math.random() <= GameSettings.ALIENIMMUNCHANCE) {
+				Alien newAlien = new Alien(true);
+				newAlien.setPosition((float) (Math.random() * GameSettings.BREITE),
+						(float) (Math.random() * GameSettings.HOEHE), GameSettings.ALIENBREITE, GameSettings.ALIENHOEHE);
+				newAlien.setSpeed(GameSettings.ALIENSPEED);
+				gameWorld.getImmunAliens().add(newAlien);
+				gameWorld.setTicksSinceLastSpwan(0);
+			} else {
+				Alien newAlien = new Alien(false);
+				newAlien.setPosition((float) (Math.random() * GameSettings.BREITE),
+						(float) (Math.random() * GameSettings.HOEHE), GameSettings.ALIENBREITE, GameSettings.ALIENHOEHE);
+				newAlien.setSpeed(GameSettings.ALIENSPEED);
+				gameWorld.getAliens().add(newAlien);
+				gameWorld.setTicksSinceLastSpwan(0);
+			}
+
 		}
 	}}
 
@@ -535,13 +593,23 @@ public class GameUpdateThread extends Thread implements EventList {
 			alert.setContentText("Der Spielstand geht verloren.");
 			alert.showAndWait();
 			if (alert.getResult() == ButtonType.YES) {
+				try {
+					new ServerThreadTCPWorld(gameWorld).stop();
+					new ServerThreadTCPControl(gameWorld).stop();
+
+				} catch (IOException f) {
+					// TODO Auto-generated catch block
+					f.printStackTrace();
+				}
 				view.switchScene(view.getSceneMainMenu());
 			} else if (alert.getResult() == ButtonType.NO) {
 				gameIsRunning = true;
+
 			}
 
 		}
 	}
+
 
 	/**
 	 * Keyup-Event Behandlung
@@ -562,13 +630,13 @@ public class GameUpdateThread extends Thread implements EventList {
 	}
 
 	/**
-	 * Methode prüft, ob das Spielfeldobject ausserhalb des Spielfeldes ist, und
+	 * Methode prueft, ob das Spielfeldobject ausserhalb des Spielfeldes ist, und
 	 * setzt das Object dann ggf. wieder ins Spielfeld.
 	 *
 	 * @param gameObject
 	 *            Das Spielfeldobjekt
 	 * @param deleteObj
-	 *            true, wenn es gelöscht werden soll, false wenn es zurück ins
+	 *            true, wenn es geloescht werden soll, false wenn es zurueck ins
 	 *            Spielfeld gesetzt werden soll
 	 */
 	private void korrigierePosition(GameObject gameObject, boolean deleteObj) {
@@ -579,9 +647,9 @@ public class GameUpdateThread extends Thread implements EventList {
 			else
 				ausserhalb = true;
 		}
-		if (gameObject.getY() > (GameSettings.HÖHE - gameObject.getHeight())) {
+		if (gameObject.getY() > (GameSettings.HOEHE - gameObject.getHeight())) {
 			if (!deleteObj)
-				gameObject.setY(GameSettings.HÖHE - gameObject.getHeight());
+				gameObject.setY(GameSettings.HOEHE - gameObject.getHeight());
 			else
 				ausserhalb = true;
 		}
@@ -605,7 +673,7 @@ public class GameUpdateThread extends Thread implements EventList {
 	}
 
 	/**
-	 * Funktion prüft, ob zwei Spielfeldobjekte kollidieren
+	 * Funktion prueft, ob zwei Spielfeldobjekte kollidieren
 	 *
 	 * @param gameObjectA
 	 *            Das erste Spielfeldobjekt
@@ -624,7 +692,7 @@ public class GameUpdateThread extends Thread implements EventList {
 		float height2 = gameObjectB.getHeight();
 		float width1 = gameObjectA.getWidth();
 		float width2 = gameObjectB.getWidth();
-		// Formel für die Kollisionsberechnung
+		// Formel fuer die Kollisionsberechnung
 		return position1[0] < position2[0] + width2 && position2[0] < position1[0] + width1
 				&& position1[1] < position2[1] + height2 && position2[1] < position1[1] + height1;
 	}

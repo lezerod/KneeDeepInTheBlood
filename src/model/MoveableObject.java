@@ -30,14 +30,14 @@ public class MoveableObject extends GameObject implements Serializable {
 	}
 
 	/**
-	 * ändert die Position des Moveable Objects abhängig von seinem Zustand
+	 * aendert die Position des Moveable Objects abhaengig von seinem Zustand
 	 *
-	 * @param rückwarts
+	 * @param rueckwarts
 	 *            true, wenn es eine Bewegung nach hinten ist
 	 */
-	public void move(boolean rückwarts) {
-		this.setX((float) (getNewPosX(this.getWinkel(), this.getSpeed(), this.getX(), this.getY(), rückwarts)));
-		this.setY((float) (getNewPosY(this.getWinkel(), this.getSpeed(), this.getX(), this.getY(), rückwarts)));
+	public void move(boolean rueckwaerts) {
+		this.setX((float) (getNewPosX(this.getWinkel(), this.getSpeed(), this.getX(), this.getY(), rueckwaerts)));
+		this.setY((float) (getNewPosY(this.getWinkel(), this.getSpeed(), this.getX(), this.getY(), rueckwaerts)));
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class MoveableObject extends GameObject implements Serializable {
 	 * @param y
 	 *            aktuelle Y-Position
 	 * @param back
-	 *            true, wenn er rückwärts fährt
+	 *            true, wenn er rueckwaerts faehrt
 	 * @return die neue X-Position
 	 */
 	private static double getNewPosX(float winkel, int speed, double x, double y, boolean back) {
@@ -76,7 +76,7 @@ public class MoveableObject extends GameObject implements Serializable {
 	 * @param y
 	 *            aktuelle Y-Position
 	 * @param back
-	 *            true, wenn er rückwärts fährt
+	 *            true, wenn er rueckwaerts faehrt
 	 * @return die neue Y-Position
 	 */
 	private static double getNewPosY(float winkel, int speed, double x, double y, boolean back) {

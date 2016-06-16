@@ -1,7 +1,7 @@
 /**
  * Diese Klasse stellt die GUI des Spiels dar.
  *
- * @author Planung der Verknüpfung von View+Controller und Planung des Aufbaus der View:
+ * @author Planung der Verknuepfung von View+Controller und Planung des Aufbaus der View:
  *  Julien, Till, Marco; Umsetzung: Julien
  *
  */
@@ -77,7 +77,9 @@ public class MainWindow extends Application {
 	// zur Darstellung der Projektile, der Aliens und des Heldenfahrzeugs
 	private ImageView heldenFahrzeugImgV = new ImageView();
 	private ImageView iWillDestroyYouTankImgV = new ImageView();
+	private ImageView heldenFahrzeugBfgImgV = new ImageView();
 	private ArrayList<ImageView> aliensImgV = new ArrayList<ImageView>();
+	private ArrayList<ImageView> immAlienImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> itemImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektileImgV = new ArrayList<ImageView>();
 	private ArrayList<ImageView> projektileFriendlyImgV = new ArrayList<ImageView>();
@@ -106,7 +108,7 @@ public class MainWindow extends Application {
 		primaryStage.setResizable(false);
 
 		// Starten des GameUpdateThreads
-		GameUpdateThread gameUpdateThread = new GameUpdateThread(new GameWorld(GameSettings.BREITE, GameSettings.HÖHE),
+		GameUpdateThread gameUpdateThread = new GameUpdateThread(new GameWorld(GameSettings.BREITE, GameSettings.HOEHE),
 				this);
 		gameUpdateThread.start();
 
@@ -131,20 +133,20 @@ public class MainWindow extends Application {
 		this.sceneGame = new Scene(paneGame);
 
 		this.paneMainMenu = new Pane();
-		this.sceneMainMenu = new Scene(paneMainMenu, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
-				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
+		this.sceneMainMenu = new Scene(paneMainMenu, GameSettings.BREITE + (2 * GameSettings.RANDGROESSE),
+				GameSettings.HOEHE + (2 * GameSettings.RANDGROESSE));
 
 		this.paneNewGame = new Pane();
-		this.sceneNewGame = new Scene(paneNewGame, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
-				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
+		this.sceneNewGame = new Scene(paneNewGame, GameSettings.BREITE + (2 * GameSettings.RANDGROESSE),
+				GameSettings.HOEHE + (2 * GameSettings.RANDGROESSE));
 
 		this.paneSettings = new Pane();
-		this.sceneSettings = new Scene(paneSettings, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
-				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
+		this.sceneSettings = new Scene(paneSettings, GameSettings.BREITE + (2 * GameSettings.RANDGROESSE),
+				GameSettings.HOEHE + (2 * GameSettings.RANDGROESSE));
 
 		this.paneConnect = new Pane();
-		this.sceneConnect = new Scene(paneConnect, GameSettings.BREITE + (2 * GameSettings.RANDGRÖSSE),
-				GameSettings.HÖHE + (2 * GameSettings.RANDGRÖSSE));
+		this.sceneConnect = new Scene(paneConnect, GameSettings.BREITE + (2 * GameSettings.RANDGROESSE),
+				GameSettings.HOEHE + (2 * GameSettings.RANDGROESSE));
 
 		registerEvents();
 
@@ -164,7 +166,7 @@ public class MainWindow extends Application {
 	}
 
 	/**
-	 * erzeugt alle Steuerelemente für SceneMainMenu
+	 * erzeugt alle Steuerelemente fuer SceneMainMenu
 	 */
 	private void erzeugeSceneMainMenu() {
 		// Create the Border Panes:
@@ -174,9 +176,9 @@ public class MainWindow extends Application {
 		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGTITLEPFAD).toExternalForm());
 		ImageView imgVBackground = new ImageView();
 		imgVBackground.setImage(imgBackground);
-		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGRÖSSE);
+		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGROESSE);
 		imgVBackground.setLayoutY(20);
-		imgVBackground.setFitHeight(GameSettings.HÖHE - 20);
+		imgVBackground.setFitHeight(GameSettings.HOEHE - 20);
 		imgVBackground.setFitWidth(GameSettings.BREITE / 2);
 
 		paneMainMenu.getChildren().add(imgVBackground);
@@ -275,9 +277,9 @@ public class MainWindow extends Application {
 		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGTITLEPFAD).toExternalForm());
 		ImageView imgVBackground = new ImageView();
 		imgVBackground.setImage(imgBackground);
-		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGRÖSSE);
+		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGROESSE);
 		imgVBackground.setLayoutY(20);
-		imgVBackground.setFitHeight(GameSettings.HÖHE - 20);
+		imgVBackground.setFitHeight(GameSettings.HOEHE - 20);
 		imgVBackground.setFitWidth(GameSettings.BREITE / 2);
 
 		paneNewGame.getChildren().add(imgVBackground);
@@ -376,9 +378,9 @@ public class MainWindow extends Application {
 		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGTITLEPFAD).toExternalForm());
 		ImageView imgVBackground = new ImageView();
 		imgVBackground.setImage(imgBackground);
-		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGRÖSSE);
+		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGROESSE);
 		imgVBackground.setLayoutY(20);
-		imgVBackground.setFitHeight(GameSettings.HÖHE - 20);
+		imgVBackground.setFitHeight(GameSettings.HOEHE - 20);
 		imgVBackground.setFitWidth(GameSettings.BREITE / 2);
 
 		paneSettings.getChildren().add(imgVBackground);
@@ -465,7 +467,7 @@ public class MainWindow extends Application {
 	}
 
 	/**
-	 * erzeugt alle Steuerelemente für SceneConnect
+	 * erzeugt alle Steuerelemente fuer SceneConnect
 	 */
 	private void erzeugeSceneConnect() {
 
@@ -474,9 +476,9 @@ public class MainWindow extends Application {
 		Image imgBackground = new Image(getClass().getResource(GameSettings.IMGTITLEPFAD).toExternalForm());
 		ImageView imgVBackground = new ImageView();
 		imgVBackground.setImage(imgBackground);
-		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGRÖSSE);
+		imgVBackground.setLayoutX(GameSettings.BREITE / 2 + GameSettings.RANDGROESSE);
 		imgVBackground.setLayoutY(20);
-		imgVBackground.setFitHeight(GameSettings.HÖHE - 20);
+		imgVBackground.setFitHeight(GameSettings.HOEHE - 20);
 		imgVBackground.setFitWidth(GameSettings.BREITE / 2);
 
 		paneConnect.getChildren().add(imgVBackground);
@@ -549,24 +551,24 @@ public class MainWindow extends Application {
 	}
 
 	/**
-	 * erzeugt alle Steuerelemente für SceneGame
+	 * erzeugt alle Steuerelemente fuer SceneGame
 	 */
 	private void erzeugeSceneGame() {
 		// Create the Border Panes:
 		Pane top = new Pane();
 		top.setStyle("-fx-background-color: RGB(0,0,0);");
 		paneGame.setTop(top);
-		// top.setPadding(new Insets(GameSettings.RANDGRÖSSE));
+		// top.setPadding(new Insets(GameSettings.RANDGROESSE));
 
 		lblLeben = new Label();
 		lblAliensSlain = new Label();
 		lblTimeLeft = new Label();
 
-		// Die StatusLbl hinzufügen:
+		// Die StatusLbl hinzufuegen:
 		lblLeben.setText("Lifes: 3");
 		lblLeben.setFont(new Font(30));
 		lblLeben.setStyle("-fx-text-fill: rgb(150, 150, 150);");
-		lblLeben.setLayoutX(GameSettings.RANDGRÖSSE * 2);
+		lblLeben.setLayoutX(GameSettings.RANDGROESSE * 2);
 		lblLeben.setLayoutY(80);
 		lblLeben.setPrefWidth(GameSettings.BREITE);
 		top.getChildren().add(lblLeben);
@@ -574,7 +576,7 @@ public class MainWindow extends Application {
 		lblAliensSlain.setText("Aliens slain: 0");
 		lblAliensSlain.setFont(new Font(30));
 		lblAliensSlain.setStyle("-fx-text-fill: rgb(150, 150, 150);");
-		lblAliensSlain.setLayoutX(GameSettings.RANDGRÖSSE * 2);
+		lblAliensSlain.setLayoutX(GameSettings.RANDGROESSE * 2);
 		lblAliensSlain.setLayoutY(80);
 		lblAliensSlain.setPrefWidth(GameSettings.BREITE);
 		lblAliensSlain.setAlignment(Pos.CENTER);
@@ -584,7 +586,7 @@ public class MainWindow extends Application {
 		lblTimeLeft.setText("3:00");
 		lblTimeLeft.setFont(new Font(30));
 		lblTimeLeft.setStyle("-fx-text-fill: rgb(150, 150, 150);");
-		lblTimeLeft.setLayoutX(GameSettings.RANDGRÖSSE * 2);
+		lblTimeLeft.setLayoutX(GameSettings.RANDGROESSE * 2);
 		lblTimeLeft.setLayoutY(80);
 		lblTimeLeft.setPrefWidth(GameSettings.BREITE);
 		lblTimeLeft.setAlignment(Pos.CENTER_RIGHT);
@@ -594,17 +596,17 @@ public class MainWindow extends Application {
 		AnchorPane left = new AnchorPane();
 		left.setStyle("-fx-background-color: RGB(0,0,0);");
 		paneGame.setLeft(left);
-		left.setPadding(new Insets(GameSettings.RANDGRÖSSE));
+		left.setPadding(new Insets(GameSettings.RANDGROESSE));
 
 		AnchorPane right = new AnchorPane();
 		right.setStyle("-fx-background-color: RGB(0,0,0);");
 		paneGame.setRight(right);
-		right.setPadding(new Insets(GameSettings.RANDGRÖSSE));
+		right.setPadding(new Insets(GameSettings.RANDGROESSE));
 
 		AnchorPane bottom = new AnchorPane();
 		bottom.setStyle("-fx-background-color: RGB(0,0,0);");
 		paneGame.setBottom(bottom);
-		bottom.setPadding(new Insets(GameSettings.RANDGRÖSSE));
+		bottom.setPadding(new Insets(GameSettings.RANDGROESSE));
 
 		// Create the center Pane:
 
@@ -617,7 +619,7 @@ public class MainWindow extends Application {
 		imgVBackground.setImage(imgBackground);
 		imgVBackground.setLayoutX(1);
 		imgVBackground.setLayoutY(1);
-		imgVBackground.setFitHeight(GameSettings.HÖHE);
+		imgVBackground.setFitHeight(GameSettings.HOEHE);
 		imgVBackground.setFitWidth(GameSettings.BREITE);
 
 		center.getChildren().add(imgVBackground);
@@ -631,9 +633,9 @@ public class MainWindow extends Application {
 	}
 
 	/**
-	 * Diese Methode erzeugt eine Liste von ImageViews, die später zur
+	 * Diese Methode erzeugt eine Liste von ImageViews, die spaeter zur
 	 * Darstellung des aktuellen Spielfeldes genutzt werden. Da die Bilder hier
-	 * schon geladen werden, spart man später diese Zeit und erhöht die
+	 * schon geladen werden, spart man spaeter diese Zeit und erhoeht die
 	 * Framrate.
 	 */
 	private void erzeugeDynamischeSteuerelemente() {
@@ -645,6 +647,16 @@ public class MainWindow extends Application {
 			imgView.setFitWidth(0);
 			imgView.setImage(img);
 			aliensImgV.add(imgView);
+		}
+
+		for(int i = 0; i <= 9; i++){
+			Image img = new Image(getClass().getResource(GameSettings.IMGALIENIMMUN).toExternalForm(), 100, 100, true,
+					true);
+			ImageView imgView = new ImageView();
+			imgView.setFitHeight(0);
+			imgView.setFitWidth(0);
+			imgView.setImage(img);
+			immAlienImgV.add(imgView);
 		}
 
 		for (int i = 0; i <= 99; i++) {
@@ -701,6 +713,12 @@ public class MainWindow extends Application {
 		iWillDestroyYouTankImgV.setImage(img2);
 		iWillDestroyYouTankImgV.setVisible(false);
 
+		Image img3 = new Image(getClass().getResource(GameSettings.IMGHELDENFAHRZEUGBFGPFAD).toExternalForm(), 100, 100,
+				true, true);
+		heldenFahrzeugBfgImgV = new ImageView();
+		heldenFahrzeugBfgImgV.setFitHeight(0);
+		heldenFahrzeugBfgImgV.setFitWidth(0);
+		heldenFahrzeugBfgImgV.setImage(img3);
 	}
 
 	/**
@@ -727,14 +745,14 @@ public class MainWindow extends Application {
 	}
 
 	/**
-	 * ermöglicht es dem Controller sich als listener zu registrieren
+	 * ermoeglicht es dem Controller sich als listener zu registrieren
 	 */
 	public void registerEventListener(EventList e) {
 		listener.add(e);
 	}
 
 	/**
-	 * wird vom ControllerThread aufgerufen und updated die GUI gemäß der
+	 * wird vom ControllerThread aufgerufen und updated die GUI gemaess der
 	 * aktuellen GameWorld
 	 *
 	 * @param gameWorld
@@ -755,6 +773,7 @@ public class MainWindow extends Application {
 				updateAliens(gameWorld.getAliens());
 				updateProjektile(gameWorld.getProjektile(), gameWorld.getProjektileFriendly());
 				updateItems(gameWorld.getItems());
+				updateImmunAliens(gameWorld.getImmunAliens());
 
 				if(gameWorld.getIwillDestroyYouTank().isConnected()){
 				updateIwillDestroyYouTank(gameWorld.getIwillDestroyYouTank());
@@ -766,18 +785,18 @@ public class MainWindow extends Application {
 	}
 
 	/**
-	 * diese Methode updated die 3 Label in dem Spiel die Auskunft über den
+	 * diese Methode updated die 3 Label in dem Spiel die Auskunft ueber den
 	 * aktuellen Status geben
 	 *
 	 * @param leben
 	 *            Das aktuelle eigene Leben
 	 * @param aliensSlain
-	 *            die Anzahl der getöteten Aliens
+	 *            die Anzahl der getoeteten Aliens
 	 * @param Ticks
-	 *            die Anzahl der Schleifen-Durchläufe (für die Berechnung der
+	 *            die Anzahl der Schleifen-Durchlaeufe (fuer die Berechnung der
 	 *            Zeit bis zum Sieg)
 	 * @param minutesToWin
-	 *            die Minuten die insgesamt überstanden werden müssen(abhängig
+	 *            die Minuten die insgesamt ueberstanden werden muessen(abhaengig
 	 *            vom Schwierigkeitsgrad)
 	 */
 	private void updateStatusLbl(int leben, int aliensSlain, int Ticks, int minutesToWin) {
@@ -787,7 +806,7 @@ public class MainWindow extends Application {
 		int millis = Ticks * GameSettings.THREADTICKTIME;
 		int sekunden = millis / 1000;
 		int sekLeft = (minutesToWin * 60) - sekunden;
-		// Sekundenzeit in schönen String wandeln:
+		// Sekundenzeit in schoenen String wandeln:
 		int minLeft = 0;
 		while (sekLeft > 59) {
 			sekLeft -= 60;
@@ -807,13 +826,22 @@ public class MainWindow extends Application {
 	 *            das Heldenfahrzeug
 	 */
 	private void updateHeldenFahrzeug(HeldenFahrzeug heldenfahrzeug) {
+		if(heldenfahrzeug.isHasSpezialWeapon()){
+		heldenFahrzeugBfgImgV.setFitHeight(heldenfahrzeug.getHeight());
+		heldenFahrzeugBfgImgV.setFitWidth(heldenfahrzeug.getWidth());
+		heldenFahrzeugBfgImgV.setLayoutX(heldenfahrzeug.getX());
+		heldenFahrzeugBfgImgV.setLayoutY(heldenfahrzeug.getY());
+		heldenFahrzeugBfgImgV.setRotate(heldenfahrzeug.getWinkel());
+		spielfeld.getChildren().add(heldenFahrzeugBfgImgV);
+		}
+		else{
 		heldenFahrzeugImgV.setFitHeight(heldenfahrzeug.getHeight());
 		heldenFahrzeugImgV.setFitWidth(heldenfahrzeug.getWidth());
 		heldenFahrzeugImgV.setLayoutX(heldenfahrzeug.getX());
 		heldenFahrzeugImgV.setLayoutY(heldenfahrzeug.getY());
 		heldenFahrzeugImgV.setRotate(heldenfahrzeug.getWinkel());
 		spielfeld.getChildren().add(heldenFahrzeugImgV);
-	}
+	}}
 
 	public void activateIwillDestroyYouTank(IwillDestroyYouTank iwillDestroyYouTank){
 		iWillDestroyYouTankImgV.setVisible(true);
@@ -916,8 +944,20 @@ public class MainWindow extends Application {
 
 	}
 
+	private void updateImmunAliens(ArrayList<Alien> aliensImmun){
+		for (int i = 0; i < aliensImmun.size(); i++) {
+			ImageView imgVProj = immAlienImgV.get(i);
+			imgVProj.setFitHeight(aliensImmun.get(i).getHeight());
+			imgVProj.setFitWidth(aliensImmun.get(i).getWidth());
+			imgVProj.setLayoutX(aliensImmun.get(i).getX());
+			imgVProj.setLayoutY(aliensImmun.get(i).getY());
+			spielfeld.getChildren().add(imgVProj);
+		}
+
+	}
+
 	/**
-	 * formatiert den Label im "Menü-Style"
+	 * formatiert den Label im "Menue-Style"
 	 *
 	 * @param lbl
 	 *            der zu formatierende Label
@@ -972,7 +1012,7 @@ public class MainWindow extends Application {
 			@Override
 			public void run() {
 				new ClientThreadTCPControl(h, g).start();;
-				new ClientThreadTCPWORLD(new GameWorld(GameSettings.BREITE, GameSettings.HÖHE), h, g).start();;
+				new ClientThreadTCPWORLD(new GameWorld(GameSettings.BREITE, GameSettings.HOEHE), h, g).start();;
 				// TODO Auto-generated method stub
 
 			}

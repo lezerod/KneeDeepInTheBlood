@@ -8,23 +8,25 @@ import model.GameWorld;
 import model.MoveableObject;
 
 /**
- * Diese Klasse empfängt die Tastendrücke von dem Client und wertet diese Weiter
+ * Diese Klasse empfaengt die Tastendruecke von dem Client und wertet diese Weiter
  * aus.
  *
  * @author til
  *
  */
 public class ServerThreadTCPControl extends Thread {
-	private ServerSocket serverSocket;
+	private volatile ServerSocket serverSocket;
 	private GameWorld gameWorld = null;
+	private volatile boolean flag = true;
 
 	public ServerThreadTCPControl(GameWorld gameworld) throws IOException {
-		serverSocket = new ServerSocket(8888);
 		this.gameWorld = gameworld;
-	}
+		serverSocket = new ServerSocket(8889);
 
+	}
 	public void run() {
-		while (true) {
+		while (flag) {
+
 			try {
 				Socket clientSocket = serverSocket.accept();
 				/**
@@ -44,8 +46,6 @@ public class ServerThreadTCPControl extends Thread {
 				dis.close();
 				clientSocket.close();
 				Thread.sleep(10);
-
-
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -101,7 +101,7 @@ public class ServerThreadTCPControl extends Thread {
 				gameWorld.getIwillDestroyYouTank().setWinkel(
 						gameWorld.getIwillDestroyYouTank().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
 
-			gameWorld.getIwillDestroyYouTank().erhöheLastShot();
+			gameWorld.getIwillDestroyYouTank().erhoeheLastShot();
 
 			if (space && gameWorld.getIwillDestroyYouTank().getLastShot() >= GameSettings.HELDENFEUERRATE) {
 				MoveableObject movObj = new MoveableObject();
@@ -109,7 +109,7 @@ public class ServerThreadTCPControl extends Thread {
 						gameWorld.getIwillDestroyYouTank().getX() + (gameWorld.getIwillDestroyYouTank().getWidth() / 2),
 						gameWorld.getIwillDestroyYouTank().getY()
 								+ (gameWorld.getIwillDestroyYouTank().getHeight() / 2),
-						GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHÖHE);
+						GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHOEHE);
 				movObj.setSpeed(GameSettings.PROJEKTILFRIENDLYSPEED);
 				movObj.setWinkel(gameWorld.getIwillDestroyYouTank().getWinkel());
 				gameWorld.getProjektileClient().add(movObj);
@@ -117,4 +117,11 @@ public class ServerThreadTCPControl extends Thread {
 			}
 		}
 	}
+	public void stopRunning(){
+		flag = false;
+	}
+	public void startRunning(){
+		flag = true;
+	}
+
 }
