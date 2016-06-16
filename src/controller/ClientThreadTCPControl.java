@@ -11,8 +11,7 @@ import view.MainWindow;
 
 /**
  * In dieser Klasse wird die Steuerung von dem Client an den Server geschickt.
- * Die eingaben werden als kodierter String an den Server geschickt. Die
- * Kodierung lautet wie folgt: 1. UP 2. DOWN 3. LEFT 4. RIGHT 5. SPACE
+ * Die eingaben werden als kodierter String an den Server geschickt. 
  *
  * @author til
  *
@@ -27,7 +26,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 	private String ip = null;
 
 	/**
-	 * Konstruktor welcher die View als Parameter benötigt um auf den
+	 * Konstruktor welcher die View als Parameter benÃ¶tigt um auf den
 	 * Eventlistener zuzugreifen.
 	 *
 	 * @param view
@@ -39,7 +38,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 	}
 
 	/**
-	 * Thread welcher in einer Dauerschleife läuft.
+	 * Thread welcher in einer Dauerschleife lÃ¤uft.
 	 */
 	public void run() {
 		/**
@@ -49,13 +48,11 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 		while (true) {
 			try {
 				/**
-				 * Es werden die booelean abgefragt ob eine Taste gedrükt wurde. Bei einer gedrückten Taste
+				 * Es werden die booelean abgefragt ob eine Taste gedrÃ¼kt wurde. Bei einer gedrÃ¼ckten Taste
 				 * wird dies zu dem byte addiert.
 				 */
 				byte send = 0;
 				if (up) {
-					System.out.println("oben");
-
 					send += 1;
 				}
 				if (down) {
@@ -91,7 +88,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 	}
 
 	/**
-	 * Diese Methode registriert die Tastendrücke und setzt den zugewiesenen
+	 * Diese Methode registriert die TastendrÃ¼cke und setzt den zugewiesenen
 	 * boolean auf true.
 	 *
 	 * @param e
@@ -111,7 +108,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 	}
 
 	/**
-	 * Diese Methode registriert wenn eine Taste nicht mehr gedrückt wird und
+	 * Diese Methode registriert wenn eine Taste nicht mehr gedrÃ¼ckt wird und
 	 * setzt den zugewiesenen booean auf false.
 	 *
 	 * @param e
