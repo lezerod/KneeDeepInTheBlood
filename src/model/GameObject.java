@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 
 /**
- * Diese Klasse bildet die Basis für alle Objekte, die sich auf dem Spielfeld
+ * Diese Klasse bildet die Basis fuer alle Objekte, die sich auf dem Spielfeld
  * befinden.
  *
  * @author Julien, Marco, Till
@@ -31,7 +31,7 @@ public class GameObject implements Serializable {
 	 * @param width
 	 *            Breite
 	 * @param height
-	 *            Höhe
+	 *            Hoehe
 	 */
 	public void setPosition(float x, float y, int width, int height) {
 		this.x = x;

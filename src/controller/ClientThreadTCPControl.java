@@ -11,7 +11,8 @@ import view.MainWindow;
 
 /**
  * In dieser Klasse wird die Steuerung von dem Client an den Server geschickt.
- * Die eingaben werden als kodierter String an den Server geschickt. 
+ * Die eingaben werden als kodierter String an den Server geschickt. Die
+ * Kodierung lautet wie folgt: 1. UP 2. DOWN 3. LEFT 4. RIGHT 5. SPACE
  *
  * @author til
  *
@@ -26,7 +27,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 	private String ip = null;
 
 	/**
-	 * Konstruktor welcher die View als Parameter benötigt um auf den
+	 * Konstruktor welcher die View als Parameter benoetigt um auf den
 	 * Eventlistener zuzugreifen.
 	 *
 	 * @param view
@@ -38,7 +39,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 	}
 
 	/**
-	 * Thread welcher in einer Dauerschleife läuft.
+	 * Thread welcher in einer Dauerschleife laeuft.
 	 */
 	public void run() {
 		/**
@@ -48,16 +49,13 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 		while (true) {
 			try {
 				/**
-<<<<<<< HEAD
-				 * Es werden die booelean abgefragt ob eine Taste gedr�kt wurde.
-				 * Bei einer gedr�ckten Taste wird dies zu dem byte addiert.
-=======
-				 * Es werden die booelean abgefragt ob eine Taste gedrükt wurde. Bei einer gedrückten Taste
-				 * wird dies zu dem byte addiert.
->>>>>>> origin/master
+				 * Es werden die booelean abgefragt ob eine Taste gedrueckt wurde.
+				 * Bei einer gedrueckten Taste wird dies zu dem byte addiert.
 				 */
 				byte send = 0;
 				if (up) {
+					System.out.println("oben");
+
 					send += 1;
 				}
 				if (down) {
@@ -93,7 +91,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 	}
 
 	/**
-	 * Diese Methode registriert die Tastendrücke und setzt den zugewiesenen
+	 * Diese Methode registriert die Tastendruecke und setzt den zugewiesenen
 	 * boolean auf true.
 	 *
 	 * @param e
@@ -113,7 +111,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 	}
 
 	/**
-	 * Diese Methode registriert wenn eine Taste nicht mehr gedrückt wird und
+	 * Diese Methode registriert wenn eine Taste nicht mehr gedrueckt wird und
 	 * setzt den zugewiesenen booean auf false.
 	 *
 	 * @param e

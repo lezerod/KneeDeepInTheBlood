@@ -15,7 +15,7 @@ public class ClassMain {
 	 * GameControllers
 	 *
 	 * @param args
-	 *            Übergabeparameter
+	 *            Uebergabeparameter
 	 */
 	public static void main(String[] args) {
 		MainWindow view = new MainWindow();

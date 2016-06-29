@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 
 /**
- * Diese Klasse beschreibt Objekte, die Projektile schiessen k�nnen
+ * Diese Klasse beschreibt Objekte, die Projektile schiessen koennen
  *
  * @author Julien
  *
@@ -21,7 +21,7 @@ public class FireableObject extends MoveableObject implements Serializable {
 	}
 
 	/**
-	 * erh�ht die variable, die die Anzahl der Loops seit dem letzten Schuss
+	 * erhoeht die Variable, die die Anzahl der Loops seit dem letzten Schuss
 	 * speichert um 1.
 	 */
 	public void erhoeheLastShot() {

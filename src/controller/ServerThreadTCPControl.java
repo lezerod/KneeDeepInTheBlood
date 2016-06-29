@@ -8,12 +8,8 @@ import model.GameWorld;
 import model.MoveableObject;
 
 /**
-<<<<<<< HEAD
  * Diese Klasse empfaengt die Tastendruecke von dem Client und wertet diese
  * Weiter aus.
-=======
- * Diese Klasse empfängt die Tastendrücke von dem Client und wertet diese weiter aus.
->>>>>>> origin/master
  *
  * @author til
  *
@@ -35,37 +31,24 @@ public class ServerThreadTCPControl extends Thread {
 
 				/**
 				 * Es wird ein InputstreamReader gestartet um das Gesendete von
-<<<<<<< HEAD
 				 * dem Client zu empfangen. Danach wird das byte an die
 				 * handleInput methode weitergereicht.
-=======
-				 * dem Client zu empfangen. Danach wird das byte an die handleInput methode
-				 * weitergereicht.
->>>>>>> origin/master
 				 */
 				byte control;
 				DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
 				control = dis.readByte();
-<<<<<<< HEAD
 				System.out.println(control);
 
-=======
->>>>>>> origin/master
 				handleInput(control);
 				dis.close();
 				clientSocket.close();
 				Thread.sleep(10);
-<<<<<<< HEAD
 
-=======
-				
->>>>>>> origin/master
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-<<<<<<< HEAD
 
 	/**
 	 * Diese Methode wertet das byte aus und setzt bei einem erfolg den daf�r
@@ -75,14 +58,6 @@ public class ServerThreadTCPControl extends Thread {
 	 * @param input
 	 */
 	private void handleInput(byte input) {
-=======
-	/**
-	 * Diese Methode wertet das byte aus und setzt bei einem erfolg den dafür vorgesehenen boolean auf true.
- 	* Zur überpfüung wird das bitweise und verwendet.
- 	* @param input
-	*/
-	private void handleInput(byte input){
->>>>>>> origin/master
 		boolean up = false;
 		boolean down = false;
 		boolean left = false;
@@ -113,7 +88,6 @@ public class ServerThreadTCPControl extends Thread {
 		updateIwillDestoryYouTank(up, down, left, right, space, gameWorld);
 
 	}
-<<<<<<< HEAD
 
 	/**
 	 * Diese Methode gibt die ausgewerteten Angaben aus dem byte an die
@@ -125,15 +99,6 @@ public class ServerThreadTCPControl extends Thread {
 	 * @param right
 	 * @param space
 	 * @param gameWorld
-=======
-	/**
-	 *@param up 
-	 *@param down
-	 *@param left
-	 *@param right
-	 *@param space
-	 *@param GameWorld
->>>>>>> origin/master
 	 */
 	private void updateIwillDestoryYouTank(boolean up, boolean down, boolean left, boolean right, boolean space,
 			GameWorld gameWorld) {
@@ -152,11 +117,7 @@ public class ServerThreadTCPControl extends Thread {
 				gameWorld.getIwillDestroyYouTank().setWinkel(
 						gameWorld.getIwillDestroyYouTank().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
 
-<<<<<<< HEAD
 			gameWorld.getIwillDestroyYouTank().erhoeheLastShot();
-=======
-			gameWorld.getIwillDestroyYouTank().erhöheLastShot();
->>>>>>> origin/master
 
 			if (space && gameWorld.getIwillDestroyYouTank().getLastShot() >= GameSettings.HELDENFEUERRATE) {
 				MoveableObject movObj = new MoveableObject();
@@ -164,11 +125,7 @@ public class ServerThreadTCPControl extends Thread {
 						gameWorld.getIwillDestroyYouTank().getX() + (gameWorld.getIwillDestroyYouTank().getWidth() / 2),
 						gameWorld.getIwillDestroyYouTank().getY()
 								+ (gameWorld.getIwillDestroyYouTank().getHeight() / 2),
-<<<<<<< HEAD
 						GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHOEHE);
-=======
-						GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHÖHE);
->>>>>>> origin/master
 				movObj.setSpeed(GameSettings.PROJEKTILFRIENDLYSPEED);
 				movObj.setWinkel(gameWorld.getIwillDestroyYouTank().getWinkel());
 				gameWorld.getProjektileClient().add(movObj);

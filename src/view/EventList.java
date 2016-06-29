@@ -11,7 +11,7 @@ import javafx.scene.input.KeyEvent;
 public interface EventList {
 
 	/**
-	 * Methode wird aufgerufen, wenn eine Taste wird im Spiel runtergedrückt
+	 * Methode wird aufgerufen, wenn eine Taste wird im Spiel runtergedrueckt
 	 *
 	 * @param e
 	 *            Der KeyCode
@@ -27,25 +27,25 @@ public interface EventList {
 	public void raiseKeyUpEvent(KeyEvent e);
 
 	/**
-	 * Methode wird aufgerufen, wenn ein Menüpunkt im MainMenu angeklickt wurde
+	 * Methode wird aufgerufen, wenn ein Menuepunkt im MainMenu angeklickt wurde
 	 *
 	 * @param menuIndex
-	 *            Der Index des Menüpunktes
+	 *            Der Index des Menuepunktes
 	 */
 	public void raiseMenuClick(int menuIndex);
 
 	/**
-	 * Methode wird aufgerufen, wenn ein Menüpunkt im NewGame Menü angeklickt
+	 * Methode wird aufgerufen, wenn ein Menuepunkt im NewGame Menue angeklickt
 	 * wurde
 	 *
 	 * @param menuIndex
-	 *            Der Index des Menüpunktes
+	 *            Der Index des Menuepunktes
 	 */
 	public void raiseNewGameClick(int menuIndex);
 
 	/**
 	 * Diese Methode wird aufgerufen, wenn eine Einstellung in der SceneSettings
-	 * geändert wurde.
+	 * geaendert wurde.
 	 *
 	 * @param key
 	 *            Der eindeutige Code der Einstellung
@@ -56,13 +56,13 @@ public interface EventList {
 
 	/**
 	 * Diese Methode wird aufgerufen wenn auf einen Label in der SceneConnect
-	 * gedrückt wird.
+	 * gedrueckt wird.
 	 *
 	 * @param connect
-	 *            true, wenn auf connect gedrückt wurde, false wenn auf
+	 *            true, wenn auf connect gedrueckt wurde, false wenn auf
 	 *            abbrechen geklickt wurde.
 	 * @param Ip
-	 *            die IP, falls auf Connect gedrückt wurde
+	 *            die IP, falls auf Connect gedrueckt wurde
 	 */
 	public void raiseConnectClick(boolean connect, String Ip);
 
