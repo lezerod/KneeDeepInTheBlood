@@ -113,7 +113,8 @@ public class MainWindow extends Application {
 				Platform.exit();
 				System.exit(0);
 				// TODO Auto-generated method stub
-			}});
+			}
+		});
 
 		// Starten des GameUpdateThreads
 		GameUpdateThread gameUpdateThread = new GameUpdateThread(new GameWorld(GameSettings.BREITE, GameSettings.HOEHE),
