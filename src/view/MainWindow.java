@@ -37,6 +37,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import model.Alien;
 import model.GameObject;
@@ -99,7 +100,6 @@ public class MainWindow extends Application {
 	@Override
 	public void start(Stage primStage) throws Exception {
 		this.primaryStage = primStage;
-
 		initGameView();
 		switchScene(sceneMainMenu);
 
@@ -107,10 +107,18 @@ public class MainWindow extends Application {
 		primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream(GameSettings.IMGALIENPFAD)));
 		primaryStage.show();
 		primaryStage.setResizable(false);
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				Platform.exit();
+				System.exit(0);
+				// TODO Auto-generated method stub
+			}});
 
 		// Starten des GameUpdateThreads
 		GameUpdateThread gameUpdateThread = new GameUpdateThread(new GameWorld(GameSettings.BREITE, GameSettings.HOEHE),
 				this);
+
 		gameUpdateThread.start();
 
 	}
