@@ -1,2 +1,2 @@
 # KneeDeepInTheBlood
-![Alt text](UML.jpg?raw=true)
+![ScreenShot](UML.jpg?raw=true)
