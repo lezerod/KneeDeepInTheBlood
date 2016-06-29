@@ -34,8 +34,6 @@ public class GameUpdateThread extends Thread implements EventList {
 	private GameWorld gameWorld;
 	private boolean enableSounds = true;
 	private boolean gameIsRunning = false;
-	private ServerThreadTCPControl stc;
-	private ServerThreadTCPWorld stw;
 
 	// diese booleans geben den Status der Tasten an
 	private boolean leftPressed = false;
@@ -56,16 +54,6 @@ public class GameUpdateThread extends Thread implements EventList {
 		this.gameWorld = gameWorld;
 		this.view = view;
 		view.playMusic(GameSettings.MUSICBACKGROUND);
-//		try {
-//			stc = new ServerThreadTCPControl(gameWorld);
-//			stw = new ServerThreadTCPWorld(gameWorld);
-//			stc.start();
-//			stw.start();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
 	}
 
 	/**
@@ -75,11 +63,11 @@ public class GameUpdateThread extends Thread implements EventList {
 	public void run() {
 
 		init();
+		// Starten des Netzwerkes
 		try {
 			new ServerThreadTCPControl(gameWorld).start();
 			new ServerThreadTCPWorld(gameWorld).start();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		// Dauerschleife des Spiels
@@ -94,7 +82,7 @@ public class GameUpdateThread extends Thread implements EventList {
 			if (gameIsRunning) {
 				updateModel();
 				view.updateView(gameWorld);
-				if(gameWorld.getIwillDestroyYouTank().isConnected()){
+				if (gameWorld.getIwillDestroyYouTank().isConnected()) {
 					view.activateIwillDestroyYouTank(gameWorld.getIwillDestroyYouTank());
 				}
 
@@ -108,7 +96,6 @@ public class GameUpdateThread extends Thread implements EventList {
 	 * registriert diese Instanz als Listener
 	 */
 	private void init() {
-
 
 		// EventsListener eintragen
 		view.registerEventListener(this);
@@ -145,46 +132,46 @@ public class GameUpdateThread extends Thread implements EventList {
 	private void createStartModel() {
 		synchronized (gameWorld) {
 
-		gameWorld.setLeben(GameSettings.HELDENSTARTLEBEN);
-		gameWorld.setAliensSlain(0);
-		gameWorld.setThreadTicks(0);
+			gameWorld.setLeben(GameSettings.HELDENSTARTLEBEN);
+			gameWorld.setAliensSlain(0);
+			gameWorld.setThreadTicks(0);
 
-		gameWorld.getAliens().clear();
-		gameWorld.getImmunAliens().clear();
-		gameWorld.getProjektile().clear();
-		gameWorld.getProjektileFriendly().clear();
-		gameWorld.setHeldenfahrzeug(null);
+			gameWorld.getAliens().clear();
+			gameWorld.getImmunAliens().clear();
+			gameWorld.getProjektile().clear();
+			gameWorld.getProjektileFriendly().clear();
+			gameWorld.setHeldenfahrzeug(null);
 
-		// Create some aliens:
-		Alien alien;
-		for (int i = 0; i < GameSettings.ALIENMAXANZAHL; i++) {
-			alien = new Alien(false);
-			float x = (float) Math.random() * (GameSettings.BREITE - GameSettings.ALIENBREITE);
-			float y = (float) Math.random() * (GameSettings.HOEHE - GameSettings.ALIENHOEHE);
-			alien.setPosition(x, y, GameSettings.ALIENBREITE, GameSettings.ALIENHOEHE);
-			alien.setSpeed(GameSettings.ALIENSPEED);
-			gameWorld.getAliens().add(alien);
+			// Create some aliens:
+			Alien alien;
+			for (int i = 0; i < GameSettings.ALIENMAXANZAHL; i++) {
+				alien = new Alien(false);
+				float x = (float) Math.random() * (GameSettings.BREITE - GameSettings.ALIENBREITE);
+				float y = (float) Math.random() * (GameSettings.HOEHE - GameSettings.ALIENHOEHE);
+				alien.setPosition(x, y, GameSettings.ALIENBREITE, GameSettings.ALIENHOEHE);
+				alien.setSpeed(GameSettings.ALIENSPEED);
+				gameWorld.getAliens().add(alien);
+			}
+
+			// Create the 'HeldenFahrzeug':
+			HeldenFahrzeug heldenFahrzeug = new HeldenFahrzeug(false);
+			// genau in der Mitte:
+			heldenFahrzeug.setPosition((GameSettings.BREITE - (GameSettings.HELDENBREITE / 2)) / 2,
+					(GameSettings.HOEHE - (GameSettings.HELDENHOEHE / 2)) / 2, GameSettings.HELDENBREITE,
+					GameSettings.HELDENHOEHE);
+			heldenFahrzeug.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
+			gameWorld.setHeldenfahrzeug(heldenFahrzeug);
+
+			// Create the 'IwillDestroyYouTaon'
+			IwillDestroyYouTank iwillDestroyYouTank = new IwillDestroyYouTank(false);
+			iwillDestroyYouTank.setPosition((GameSettings.BREITE - (GameSettings.HELDENBREITE / 2)) / 2,
+					(GameSettings.HOEHE - (GameSettings.HELDENHOEHE / 2)) / 2, GameSettings.HELDENBREITE,
+					GameSettings.HELDENHOEHE);
+			iwillDestroyYouTank.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
+			gameWorld.setIwillDestroyYouTank(iwillDestroyYouTank);
+
 		}
-
-		// Create the 'HeldenFahrzeug':
-		HeldenFahrzeug heldenFahrzeug = new HeldenFahrzeug(false);
-		// genau in der Mitte:
-		heldenFahrzeug.setPosition((GameSettings.BREITE - (GameSettings.HELDENBREITE / 2)) / 2,
-				(GameSettings.HOEHE - (GameSettings.HELDENHOEHE / 2)) / 2, GameSettings.HELDENBREITE,
-				GameSettings.HELDENHOEHE);
-		heldenFahrzeug.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
-		gameWorld.setHeldenfahrzeug(heldenFahrzeug);
-
-		// Create the 'IwillDestroyYouTaon'
-		IwillDestroyYouTank iwillDestroyYouTank = new IwillDestroyYouTank(false);
-		iwillDestroyYouTank.setPosition((GameSettings.BREITE - (GameSettings.HELDENBREITE / 2)) / 2,
-				(GameSettings.HOEHE - (GameSettings.HELDENHOEHE / 2)) / 2, GameSettings.HELDENBREITE,
-				GameSettings.HELDENHOEHE);
-		iwillDestroyYouTank.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
-		gameWorld.setIwillDestroyYouTank(iwillDestroyYouTank);
-
-
-	}}
+	}
 
 	/**
 	 * updated das gesamte Model
@@ -192,86 +179,78 @@ public class GameUpdateThread extends Thread implements EventList {
 	private void updateModel() {
 		synchronized (gameWorld) {
 
+			// pruefen, ob die zeit um ist.
+			if (gameWorld.getThreadTicks() > (gameWorld.getMinutesToWin() * 60 * 1000 / GameSettings.THREADTICKTIME)) {
 
-		// pruefen, ob die zeit um ist.
-		if (gameWorld.getThreadTicks() > (gameWorld.getMinutesToWin() * 60 * 1000 / GameSettings.THREADTICKTIME)) {
+				Platform.runLater(new Runnable() {
 
-			Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
 
-				@Override
-				public void run() {
+						Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+						alert.setTitle("Spiel zu Ende");
+						alert.setHeaderText("Herzlichen Glückwunsch! Sie haben das Spiel gewonnen.");
+						alert.setContentText("Möchten sie nocheinmal spielen?");
+						gameIsRunning = false;
+						alert.showAndWait();
+						if (alert.getResult() == ButtonType.YES) {
+							view.switchScene(view.getSceneNewGame());
+						} else if (alert.getResult() == ButtonType.NO) {
+							view.switchScene(view.getSceneMainMenu());
+						}
 
-					Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
-					alert.setTitle("Spiel zu Ende");
-					alert.setHeaderText("Herzlichen Glückwunsch! Sie haben das Spiel gewonnen.");
-					alert.setContentText("Möchten sie nocheinmal spielen?");
-					gameIsRunning = false;
-					alert.showAndWait();
-					if (alert.getResult() == ButtonType.YES) {
-						view.switchScene(view.getSceneNewGame());
-					} else if (alert.getResult() == ButtonType.NO) {
-						view.switchScene(view.getSceneMainMenu());
-//						try {
-//							new ServerThreadTCPWorld(gameWorld).stop();
-//							new ServerThreadTCPControl(gameWorld).stop();
+					};
+				});
 
-//						} catch (IOException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-					}
+				gameIsRunning = false;
+				return;
+			}
+			gameWorld.setThreadTicks(gameWorld.getThreadTicks() + 1);
+			updateAliens(gameWorld.getAliens());
+			updateAliens(gameWorld.getImmunAliens());
+			updateProjektile();
+			updateHeldenFahrzeug();
+			updateItems();
+			korrigierePosition(gameWorld.getIwillDestroyYouTank(), false);
+			checkCollisions();
 
-				};
-			});
-
-			gameIsRunning = false;
-			return;
+			checkForNewSpawn();
+			gameWorld.setTicksSinceLastSpwan(gameWorld.getTicksSinceLastSpwan() + 1);
 		}
-		gameWorld.setThreadTicks(gameWorld.getThreadTicks() + 1);
-		updateAliens(gameWorld.getAliens());
-		updateAliens(gameWorld.getImmunAliens());
-		updateProjektile();
-		updateHeldenFahrzeug();
-		updateItems();
-		korrigierePosition(gameWorld.getIwillDestroyYouTank(), false);
-		checkCollisions();
-
-		checkForNewSpawn();
-		gameWorld.setTicksSinceLastSpwan(gameWorld.getTicksSinceLastSpwan() + 1);
-	}}
+	}
 
 	/**
 	 * diese Methode updated die Aliens auf dem Spielfeld
 	 */
-	private void updateAliens(ArrayList<Alien>aliens) {
+	private void updateAliens(ArrayList<Alien> aliens) {
 		synchronized (gameWorld) {
 
+			for (int i = 0; i < aliens.size(); i++) {
+				Alien aktAlien = aliens.get(i);
 
-		for (int i = 0; i < aliens.size(); i++) {
-			Alien aktAlien = aliens.get(i);
+				if (Math.random() <= GameSettings.ALIENCHANGETURNINGCHANCE) {
+					aktAlien.setWinkel((float) (360 * Math.random()));
+				}
 
-			if (Math.random() <= GameSettings.ALIENCHANGETURNINGCHANCE) {
-				aktAlien.setWinkel((float) (360 * Math.random()));
+				aktAlien.move(false);
+
+				aktAlien.erhoeheLastShot();
+
+				if (aktAlien.getLastShot() >= GameSettings.ALIENFEUERRATE) {
+					MoveableObject movObj = new MoveableObject();
+					movObj.setPosition(aktAlien.getX(), aktAlien.getY(), GameSettings.PROJEKTILBREITE,
+							GameSettings.PROJEKTILHOEHE);
+					movObj.setSpeed(GameSettings.PROJEKTILENEMYSPEED);
+					movObj.setWinkel((float) (360 * Math.random()));
+					gameWorld.getProjektile().add(movObj);
+					aktAlien.setLastShot(0);
+				}
+
+				// pruefen, dass die Aliens nicht ausserhalb des Fensters sind:
+				korrigierePosition(aktAlien, false);
 			}
-
-			aktAlien.move(false);
-
-			aktAlien.erhoeheLastShot();
-
-			if (aktAlien.getLastShot() >= GameSettings.ALIENFEUERRATE) {
-				MoveableObject movObj = new MoveableObject();
-				movObj.setPosition(aktAlien.getX(), aktAlien.getY(), GameSettings.PROJEKTILBREITE,
-						GameSettings.PROJEKTILHOEHE);
-				movObj.setSpeed(GameSettings.PROJEKTILENEMYSPEED);
-				movObj.setWinkel((float) (360 * Math.random()));
-				gameWorld.getProjektile().add(movObj);
-				aktAlien.setLastShot(0);
-			}
-
-			// pruefen, dass die Aliens nicht ausserhalb des Fensters sind:
-			korrigierePosition(aktAlien, false);
 		}
-	}}
+	}
 
 	/**
 	 * updated die Projektile
@@ -288,18 +267,19 @@ public class GameUpdateThread extends Thread implements EventList {
 	private void updateEnemyProjektile() {
 		synchronized (gameWorld) {
 
+			// update projektile
+			for (int i = 0; i < gameWorld.getProjektile().size(); i++) {
+				MoveableObject aktProjektil = gameWorld.getProjektile().get(i);
 
-		// update projektile
-		for (int i = 0; i < gameWorld.getProjektile().size(); i++) {
-			MoveableObject aktProjektil = gameWorld.getProjektile().get(i);
+				aktProjektil.move(false);
 
-			aktProjektil.move(false);
+				// pruefen, dass die Projektile nicht ausserhalb des Fensters
+				// sind:
+				korrigierePosition(aktProjektil, true);
 
-			// pruefen, dass die Projektile nicht ausserhalb des Fensters sind:
-			korrigierePosition(aktProjektil, true);
-
+			}
 		}
-	}}
+	}
 
 	/**
 	 * updated die freundlichen Projektile
@@ -307,28 +287,35 @@ public class GameUpdateThread extends Thread implements EventList {
 	private void updateFriendlyProjektile() {
 		synchronized (gameWorld) {
 
+			for (int i = 0; i < gameWorld.getProjektileFriendly().size(); i++) {
+				MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
 
-		for (int i = 0; i < gameWorld.getProjektileFriendly().size(); i++) {
-			MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
+				aktProjektil.move(false);
 
-			aktProjektil.move(false);
+				// pruefen, dass die Projektile nicht ausserhalb des Fensters
+				// sind:
+				korrigierePosition(aktProjektil, true);
 
-			// pruefen, dass die Projektile nicht ausserhalb des Fensters sind:
-			korrigierePosition(aktProjektil, true);
-
-		}}
+			}
 		}
-	private void updateiWillProjektile(){
+	}
+
+	/**
+	 * updated die Projektile des IwillDestoryYouTank
+	 */
+	private void updateiWillProjektile() {
 		synchronized (gameWorld) {
 			for (int i = 0; i < gameWorld.getProjektileClient().size(); i++) {
 				MoveableObject aktProjektil = gameWorld.getProjektileClient().get(i);
 
 				aktProjektil.move(false);
 
-				// pruefen, dass die Projektile nicht ausserhalb des Fensters sind:
+				// pruefen, dass die Projektile nicht ausserhalb des Fensters
+				// sind:
 				korrigierePosition(aktProjektil, true);
 
-		}}
+			}
+		}
 	}
 
 	/**
@@ -337,35 +324,36 @@ public class GameUpdateThread extends Thread implements EventList {
 	private void updateHeldenFahrzeug() {
 		synchronized (gameWorld) {
 
-
-		if (topPressed) {
-			gameWorld.getHeldenfahrzeug().move(false);
-		}
-		if (bottomPressed) {
-			gameWorld.getHeldenfahrzeug().move(true);
-		}
-		if (leftPressed)
-			gameWorld.getHeldenfahrzeug()
-					.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel() - GameSettings.HELDENWINKELCHANGESPEED);
-		if (rightPressed)
-			gameWorld.getHeldenfahrzeug()
-					.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
-
-		gameWorld.getHeldenfahrzeug().erhoeheLastShot();
-
-		if (spacePressed && gameWorld.getHeldenfahrzeug().getLastShot() >= GameSettings.HELDENFEUERRATE) {
-			if (enableSounds) {
-				view.playSound(GameSettings.SFXSHOTFIRED);
+			if (topPressed) {
+				gameWorld.getHeldenfahrzeug().move(false);
 			}
-			MoveableObject movObj = new MoveableObject();
-			movObj.setPosition(gameWorld.getHeldenfahrzeug().getX() + (gameWorld.getHeldenfahrzeug().getWidth() / 2),
-					gameWorld.getHeldenfahrzeug().getY() + (gameWorld.getHeldenfahrzeug().getHeight() / 2),
-					GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHOEHE);
-			movObj.setSpeed(GameSettings.PROJEKTILFRIENDLYSPEED);
-			movObj.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel());
-			gameWorld.getProjektileFriendly().add(movObj);
-			gameWorld.getHeldenfahrzeug().setLastShot(0);
-		}}
+			if (bottomPressed) {
+				gameWorld.getHeldenfahrzeug().move(true);
+			}
+			if (leftPressed)
+				gameWorld.getHeldenfahrzeug()
+						.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel() - GameSettings.HELDENWINKELCHANGESPEED);
+			if (rightPressed)
+				gameWorld.getHeldenfahrzeug()
+						.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
+
+			gameWorld.getHeldenfahrzeug().erhoeheLastShot();
+
+			if (spacePressed && gameWorld.getHeldenfahrzeug().getLastShot() >= GameSettings.HELDENFEUERRATE) {
+				if (enableSounds) {
+					view.playSound(GameSettings.SFXSHOTFIRED);
+				}
+				MoveableObject movObj = new MoveableObject();
+				movObj.setPosition(
+						gameWorld.getHeldenfahrzeug().getX() + (gameWorld.getHeldenfahrzeug().getWidth() / 2),
+						gameWorld.getHeldenfahrzeug().getY() + (gameWorld.getHeldenfahrzeug().getHeight() / 2),
+						GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHOEHE);
+				movObj.setSpeed(GameSettings.PROJEKTILFRIENDLYSPEED);
+				movObj.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel());
+				gameWorld.getProjektileFriendly().add(movObj);
+				gameWorld.getHeldenfahrzeug().setLastShot(0);
+			}
+		}
 
 		// pruefen, dass das Heldenfahrezeug nicht ausserhalb des Fensters ist
 		// und ggf. position korrigieren:
@@ -373,17 +361,21 @@ public class GameUpdateThread extends Thread implements EventList {
 
 	}
 
-	private void updateItems(){
-		if(gameWorld.getItems().size() < 1){
-		Random rand = new Random();
-		int randint = rand.nextInt(10000);
-		if(randint <= 50){
-			int x = rand.nextInt(GameSettings.BREITE);
-			int y = rand.nextInt(GameSettings.HOEHE);
-			GameObject bfg = new GameObject();
-			bfg.setPosition(x, y, 20, 20);
-			gameWorld.getItems().add(bfg);
-		}}
+	/**
+	 * spawnt m�gliche Items
+	 */
+	private void updateItems() {
+		if (gameWorld.getItems().size() < 1) {
+			Random rand = new Random();
+			int randint = rand.nextInt(10000);
+			if (randint <= 50) {
+				int x = rand.nextInt(GameSettings.BREITE);
+				int y = rand.nextInt(GameSettings.HOEHE);
+				GameObject bfg = new GameObject();
+				bfg.setPosition(x, y, 20, 20);
+				gameWorld.getItems().add(bfg);
+			}
+		}
 	}
 
 	/**
@@ -393,154 +385,145 @@ public class GameUpdateThread extends Thread implements EventList {
 	private void checkCollisions() {
 		synchronized (gameWorld) {
 
+			for (int i = 0; i < gameWorld.getProjektile().size(); i++) {
+				if (checkForCollision(gameWorld.getProjektile().get(i), gameWorld.getHeldenfahrzeug())) {
+					if (enableSounds) {
+						view.playSound(GameSettings.SFXHELDENHIT);
+					}
+					gameWorld.setLeben(gameWorld.getLeben() - 1);
+					gameWorld.getProjektile().remove(i);
+					i--;
+					if (gameWorld.getLeben() <= 0) {
 
-		for (int i = 0; i < gameWorld.getProjektile().size(); i++) {
-			if (checkForCollision(gameWorld.getProjektile().get(i), gameWorld.getHeldenfahrzeug())) {
-				if (enableSounds) {
-					view.playSound(GameSettings.SFXHELDENHIT);
-				}
-				gameWorld.setLeben(gameWorld.getLeben() - 1);
-				gameWorld.getProjektile().remove(i);
-				i--;
-				if (gameWorld.getLeben() <= 0) {
+						Platform.runLater(new Runnable() {
 
-					Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
 
-						@Override
-						public void run() {
-
-							Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
-							alert.setTitle("Spiel zu Ende");
-							alert.setHeaderText("Sie wurden leider zu oft getroffen und haben verloren.");
-							alert.setContentText("Möchten sie nocheinmal spielen?");
-							gameIsRunning = false;
-							alert.showAndWait();
-							if (alert.getResult() == ButtonType.YES) {
-								view.switchScene(view.getSceneNewGame());
-							} else if (alert.getResult() == ButtonType.NO) {
-								try {
-									new ServerThreadTCPWorld(gameWorld).stop();
-									new ServerThreadTCPControl(gameWorld).stop();
-
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+								Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+								alert.setTitle("Spiel zu Ende");
+								alert.setHeaderText("Sie wurden leider zu oft getroffen und haben verloren.");
+								alert.setContentText("Möchten sie nocheinmal spielen?");
+								gameIsRunning = false;
+								alert.showAndWait();
+								if (alert.getResult() == ButtonType.YES) {
+									view.switchScene(view.getSceneNewGame());
+								} else if (alert.getResult() == ButtonType.NO) {
+									view.switchScene(view.getSceneMainMenu());
 								}
-								view.switchScene(view.getSceneMainMenu());
+
+							};
+						});
+
+						return;
+					}
+					break;
+				}
+			}
+
+			for (int i = 0; i < gameWorld.getProjektileFriendly().size(); i++) {
+				for (int j = 0; j < gameWorld.getAliens().size(); j++) {
+
+					try {
+						MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
+						Alien aktAlien = gameWorld.getAliens().get(j);
+						if (checkForCollision(aktProjektil, aktAlien)) {
+							if (enableSounds) {
+								view.playSound(GameSettings.SFXALIENHIT);
 							}
-
-						};
-					});
-
-					return;
-				}
-				break;
-			}
-		}
-
-		for (int i = 0; i < gameWorld.getProjektileFriendly().size(); i++) {
-			for (int j = 0; j < gameWorld.getAliens().size(); j++) {
-
-				try {
-					MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
-					Alien aktAlien = gameWorld.getAliens().get(j);
-					if (checkForCollision(aktProjektil, aktAlien)) {
-						if (enableSounds) {
-							view.playSound(GameSettings.SFXALIENHIT);
+							gameWorld.getProjektileFriendly().remove(i);
+							gameWorld.getAliens().remove(j);
+							gameWorld.setAliensSlain(gameWorld.getAliensSlain() + 1);
+							i--;
+							j--;
 						}
-						gameWorld.getProjektileFriendly().remove(i);
-						gameWorld.getAliens().remove(j);
-						gameWorld.setAliensSlain(gameWorld.getAliensSlain() + 1);
-						i--;
-						j--;
-					}
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-
-			}
-
-			for (int j = 0; j < gameWorld.getImmunAliens().size(); j++) {
-
-				try {
-					MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
-					Alien aktAlien = gameWorld.getImmunAliens().get(j);
-					if (checkForCollision(aktProjektil, aktAlien) && gameWorld.getHeldenfahrzeug().isHasSpezialWeapon()) {
-						if (enableSounds) {
-							view.playSound(GameSettings.SFXALIENHIT);
-						}
-						gameWorld.getProjektileFriendly().remove(i);
-						gameWorld.getImmunAliens().remove(j);
-						gameWorld.setAliensSlain(gameWorld.getAliensSlain() + 1);
-						i--;
-						j--;
-					}
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-
-			}
-		}
-		for (int i = 0; i < gameWorld.getProjektileClient().size(); i++){
-			if(checkForCollision(gameWorld.getProjektileClient().get(i), gameWorld.getHeldenfahrzeug())){
-				gameWorld.getHeldenfahrzeug().setSpeed(1);
-				gameWorld.getProjektileClient().remove(i);
-
-				new Thread(){
-					public void run(){
-						try {
-							Thread.sleep(3000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						gameWorld.getHeldenfahrzeug().setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
-					}
-				}.start();
-
-			}
-			for(int j = 0; j < gameWorld.getAliens().size(); j++){
-				try {
-					MoveableObject aktProjektil = gameWorld.getProjektileClient().get(i);
-					Alien aktAlien = gameWorld.getAliens().get(j);
-					if (checkForCollision(aktProjektil, aktAlien)) {
-						if (enableSounds) {
-							view.playSound(GameSettings.SFXALIENHIT);
-						}
-						gameWorld.getProjektileClient().remove(i);
-						gameWorld.getAliens().remove(j);
-						i--;
-						j--;
-
-			}}
-					catch(Exception e){
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 
-		}
+				}
 
-	}
-		if(gameWorld.getItems().size() != 0){
-		for(int j = 0; j < gameWorld.getItems().size(); j++){
-			if(checkForCollision(gameWorld.getHeldenfahrzeug(),gameWorld.getItems().get(j))){
-				gameWorld.getHeldenfahrzeug().setHasSpezialWeapon(true);
-				gameWorld.getItems().remove(j);
-				System.out.println("BFG!");
+				for (int j = 0; j < gameWorld.getImmunAliens().size(); j++) {
 
-				new Thread(){
-					public void run(){
-						try{
-							Thread.sleep(10000);
+					try {
+						MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
+						Alien aktAlien = gameWorld.getImmunAliens().get(j);
+						if (checkForCollision(aktProjektil, aktAlien)
+								&& gameWorld.getHeldenfahrzeug().isHasSpezialWeapon()) {
+							if (enableSounds) {
+								view.playSound(GameSettings.SFXALIENHIT);
+							}
+							gameWorld.getProjektileFriendly().remove(i);
+							gameWorld.getImmunAliens().remove(j);
+							gameWorld.setAliensSlain(gameWorld.getAliensSlain() + 1);
+							i--;
+							j--;
 						}
-						catch (Exception e){
-							e.printStackTrace();
-						}
-						gameWorld.getHeldenfahrzeug().setHasSpezialWeapon(false);
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-				}.start();
+				}
 			}
-		}}
-}}
+			for (int i = 0; i < gameWorld.getProjektileClient().size(); i++) {
+				if (checkForCollision(gameWorld.getProjektileClient().get(i), gameWorld.getHeldenfahrzeug())) {
+					gameWorld.getHeldenfahrzeug().setSpeed(1);
+					gameWorld.getProjektileClient().remove(i);
+
+					new Thread() {
+						public void run() {
+							try {
+								Thread.sleep(3000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							gameWorld.getHeldenfahrzeug().setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
+						}
+					}.start();
+
+				}
+				for (int j = 0; j < gameWorld.getAliens().size(); j++) {
+					try {
+						MoveableObject aktProjektil = gameWorld.getProjektileClient().get(i);
+						Alien aktAlien = gameWorld.getAliens().get(j);
+						if (checkForCollision(aktProjektil, aktAlien)) {
+							if (enableSounds) {
+								view.playSound(GameSettings.SFXALIENHIT);
+							}
+							gameWorld.getProjektileClient().remove(i);
+							gameWorld.getAliens().remove(j);
+							i--;
+							j--;
+
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				}
+
+			}
+			if (gameWorld.getItems().size() != 0) {
+				for (int j = 0; j < gameWorld.getItems().size(); j++) {
+					if (checkForCollision(gameWorld.getHeldenfahrzeug(), gameWorld.getItems().get(j))) {
+						gameWorld.getHeldenfahrzeug().setHasSpezialWeapon(true);
+						gameWorld.getItems().remove(j);
+						System.out.println("BFG!");
+
+						new Thread() {
+							public void run() {
+								try {
+									Thread.sleep(GameSettings.HELDENSPEZIALWAFFEDAUER);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+								gameWorld.getHeldenfahrzeug().setHasSpezialWeapon(false);
+							}
+						}.start();
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * diese Methode ueberprueft, ob ein neues Alien spawnen soll und kann
@@ -548,27 +531,29 @@ public class GameUpdateThread extends Thread implements EventList {
 	private void checkForNewSpawn() {
 		synchronized (gameWorld) {
 
+			if ((gameWorld.getTicksSinceLastSpwan() > GameSettings.ALIENRESPAWNRATE)
+					&& gameWorld.getAliens().size() < GameSettings.ALIENMAXANZAHL) {
+				if (Math.random() <= GameSettings.ALIENIMMUNCHANCE) {
+					Alien newAlien = new Alien(true);
+					newAlien.setPosition((float) (Math.random() * GameSettings.BREITE),
+							(float) (Math.random() * GameSettings.HOEHE), GameSettings.ALIENBREITE,
+							GameSettings.ALIENHOEHE);
+					newAlien.setSpeed(GameSettings.ALIENSPEED);
+					gameWorld.getImmunAliens().add(newAlien);
+					gameWorld.setTicksSinceLastSpwan(0);
+				} else {
+					Alien newAlien = new Alien(false);
+					newAlien.setPosition((float) (Math.random() * GameSettings.BREITE),
+							(float) (Math.random() * GameSettings.HOEHE), GameSettings.ALIENBREITE,
+							GameSettings.ALIENHOEHE);
+					newAlien.setSpeed(GameSettings.ALIENSPEED);
+					gameWorld.getAliens().add(newAlien);
+					gameWorld.setTicksSinceLastSpwan(0);
+				}
 
-		if ((gameWorld.getTicksSinceLastSpwan() > GameSettings.ALIENRESPAWNRATE)
-				&& gameWorld.getAliens().size() < GameSettings.ALIENMAXANZAHL) {
-			if(Math.random() <= GameSettings.ALIENIMMUNCHANCE) {
-				Alien newAlien = new Alien(true);
-				newAlien.setPosition((float) (Math.random() * GameSettings.BREITE),
-						(float) (Math.random() * GameSettings.HOEHE), GameSettings.ALIENBREITE, GameSettings.ALIENHOEHE);
-				newAlien.setSpeed(GameSettings.ALIENSPEED);
-				gameWorld.getImmunAliens().add(newAlien);
-				gameWorld.setTicksSinceLastSpwan(0);
-			} else {
-				Alien newAlien = new Alien(false);
-				newAlien.setPosition((float) (Math.random() * GameSettings.BREITE),
-						(float) (Math.random() * GameSettings.HOEHE), GameSettings.ALIENBREITE, GameSettings.ALIENHOEHE);
-				newAlien.setSpeed(GameSettings.ALIENSPEED);
-				gameWorld.getAliens().add(newAlien);
-				gameWorld.setTicksSinceLastSpwan(0);
 			}
-
 		}
-	}}
+	}
 
 	/**
 	 * KeyDown-Event Behandlung
@@ -593,14 +578,6 @@ public class GameUpdateThread extends Thread implements EventList {
 			alert.setContentText("Der Spielstand geht verloren.");
 			alert.showAndWait();
 			if (alert.getResult() == ButtonType.YES) {
-				try {
-					new ServerThreadTCPWorld(gameWorld).stop();
-					new ServerThreadTCPControl(gameWorld).stop();
-
-				} catch (IOException f) {
-					// TODO Auto-generated catch block
-					f.printStackTrace();
-				}
 				view.switchScene(view.getSceneMainMenu());
 			} else if (alert.getResult() == ButtonType.NO) {
 				gameIsRunning = true;
@@ -609,7 +586,6 @@ public class GameUpdateThread extends Thread implements EventList {
 
 		}
 	}
-
 
 	/**
 	 * Keyup-Event Behandlung
@@ -630,8 +606,8 @@ public class GameUpdateThread extends Thread implements EventList {
 	}
 
 	/**
-	 * Methode prueft, ob das Spielfeldobject ausserhalb des Spielfeldes ist, und
-	 * setzt das Object dann ggf. wieder ins Spielfeld.
+	 * Methode prueft, ob das Spielfeldobject ausserhalb des Spielfeldes ist,
+	 * und setzt das Object dann ggf. wieder ins Spielfeld.
 	 *
 	 * @param gameObject
 	 *            Das Spielfeldobjekt
@@ -701,7 +677,7 @@ public class GameUpdateThread extends Thread implements EventList {
 	public void raiseMenuClick(int menuIndex) {
 		if (menuIndex == 0) {
 			view.switchScene(view.getSceneNewGame());
-		} else if (menuIndex==1) {
+		} else if (menuIndex == 1) {
 			view.switchScene(view.getSceneConnect());
 		} else if (menuIndex == 2) {
 			view.switchScene(view.getSceneSettings());
@@ -740,8 +716,7 @@ public class GameUpdateThread extends Thread implements EventList {
 	public void raiseConnectClick(boolean connect, String ip) {
 		if (!connect) {
 			view.switchScene(view.getSceneMainMenu());
-		}
-		else{
+		} else {
 			view.startClient(ip, this.view);
 			view.switchScene(view.getSceneGame());
 			view.activateIwillDestroyYouTank(gameWorld.getIwillDestroyYouTank());

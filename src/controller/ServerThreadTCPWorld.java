@@ -17,7 +17,6 @@ import model.GameWorld;
 public class ServerThreadTCPWorld extends Thread {
 	private volatile ServerSocket serverSocket;
 	private GameWorld world;
-	private volatile boolean flag = true;
 
 	/**
 	 * Der Konstruktor benoetigt die aktuelle Gameworld als Parametet aus dem
@@ -35,7 +34,7 @@ public class ServerThreadTCPWorld extends Thread {
 
 	public void run() {
 
-		while (flag) {
+		while (true) {
 			try {
 				Socket clientSocket = serverSocket.accept();
 				world.getIwillDestroyYouTank().setConnected(true);
@@ -55,11 +54,5 @@ public class ServerThreadTCPWorld extends Thread {
 				e.printStackTrace();
 			}
 		}
-	}
-	public void startRunning(){
-		flag = true;
-	}
-	public void stopRunning(){
-		flag = true;
 	}
 }

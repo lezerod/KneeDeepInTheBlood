@@ -12,7 +12,7 @@ import controller.GameSettings;
  * @author Julien, Till, Marco
  *
  */
-public class GameWorld implements Serializable{
+public class GameWorld implements Serializable {
 
 	private final int width;
 	private final int height;
@@ -160,12 +160,5 @@ public class GameWorld implements Serializable{
 	public void setImmunAliens(ArrayList<Alien> immunAliens) {
 		this.immunAliens = immunAliens;
 	}
-	
-	
-
-
-
-
-
 
 }

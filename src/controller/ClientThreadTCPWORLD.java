@@ -20,11 +20,12 @@ public class ClientThreadTCPWORLD extends Thread {
 	String ip = null;
 
 	/**
-	 * Innerhalb des Konstruktors wird eine Neue Gameworld erstellt und die View
-	 * des Clients übergeben.
+	 * Innerhalb des Konstruktors wird eine gameworld ,die View und die IP des
+	 * Servers übergeben.
 	 *
 	 * @param gameworld
 	 * @param view
+	 * @param ip
 	 */
 	public ClientThreadTCPWORLD(GameWorld gameworld, MainWindow view, String ip) {
 		this.world = gameworld;
@@ -35,37 +36,37 @@ public class ClientThreadTCPWORLD extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				// Verbindung zu Port 13000 auf localhost aufbauen:
+				// Verbindung zu Port 13003 aufbauen:
 				Socket socket = new Socket(this.ip, 13003);
 				/**
 				 * Der Thread empfängt die Gesendete GameWorld von dem Server
 				 * und updatet mit ihr die View des Clients.
 				 */
-				if(socket.isConnected()){
-				InputStream i = socket.getInputStream();
-				ObjectInputStream ois = new ObjectInputStream(i);
-				world = (GameWorld) ois.readObject();
-				if(world != null){
-				window.updateView(world);
-				world = null;}
-				ois.close();
-				i.close();
-				socket.close();
-			}}
-			catch (IOException e) {
+				if (socket.isConnected()) {
+					InputStream i = socket.getInputStream();
+					ObjectInputStream ois = new ObjectInputStream(i);
+					world = (GameWorld) ois.readObject();
+					if (world != null) {
+						window.updateView(world);
+						world = null;
+					}
+					ois.close();
+					i.close();
+					socket.close();
+				}
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} try {
+			}
+			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-
 
 		}
 	}

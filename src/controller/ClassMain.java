@@ -17,7 +17,7 @@ public class ClassMain {
 	 * @param args
 	 *            Übergabeparameter
 	 */
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		MainWindow view = new MainWindow();
 		view.show();
 	}

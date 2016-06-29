@@ -24,7 +24,6 @@ public interface GameSettings {
 	public static final int HELDENWINKELCHANGESPEED = 3;
 	public static final int HELDENFEUERRATE = 100;
 	public static final int HELDENSTARTLEBEN = 7;
-	public static final int HELDENSPEZIALWAFFECOOLDWON = 1000;
 	public static final int HELDENSPEZIALWAFFEDAUER = 5000;
 
 	public static final int IWILLDESTROYYOUTANKBREITE = 25;

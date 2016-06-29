@@ -74,7 +74,8 @@ public class MainWindow extends Application {
 	private Label lblAliensSlain;
 	private Label lblTimeLeft;
 
-	// zur Darstellung der Projektile, der Aliens und des Heldenfahrzeugs
+	// zur Darstellung der Projektile, der Aliens, des Heldenfahrzeugs und des
+	// IwillDestoryYouTanks
 	private ImageView heldenFahrzeugImgV = new ImageView();
 	private ImageView iWillDestroyYouTankImgV = new ImageView();
 	private ImageView heldenFahrzeugBfgImgV = new ImageView();
@@ -542,7 +543,7 @@ public class MainWindow extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				for (int i = 0; i < listener.size(); i++) {
-					listener.get(i).raiseConnectClick(false,"");
+					listener.get(i).raiseConnectClick(false, "");
 				}
 			}
 		});
@@ -649,7 +650,7 @@ public class MainWindow extends Application {
 			aliensImgV.add(imgView);
 		}
 
-		for(int i = 0; i <= 9; i++){
+		for (int i = 0; i <= 9; i++) {
 			Image img = new Image(getClass().getResource(GameSettings.IMGALIENIMMUN).toExternalForm(), 100, 100, true,
 					true);
 			ImageView imgView = new ImageView();
@@ -680,8 +681,8 @@ public class MainWindow extends Application {
 		}
 
 		for (int i = 0; i <= 9; i++) {
-			Image img = new Image(getClass().getResource(GameSettings.IMGPROJEKTILECLIENT).toExternalForm(), 100,
-					100, true, true);
+			Image img = new Image(getClass().getResource(GameSettings.IMGPROJEKTILECLIENT).toExternalForm(), 100, 100,
+					true, true);
 			ImageView imgView = new ImageView();
 			imgView.setFitHeight(0);
 			imgView.setFitWidth(0);
@@ -689,8 +690,9 @@ public class MainWindow extends Application {
 			projektiliWillDestroyImgV.add(imgView);
 		}
 
-		for(int i = 0; i <= 5; i++){
-			Image img = new Image(getClass().getResource(GameSettings.IMGITEMBFG).toExternalForm(), 100, 100, true, true);
+		for (int i = 0; i <= 5; i++) {
+			Image img = new Image(getClass().getResource(GameSettings.IMGITEMBFG).toExternalForm(), 100, 100, true,
+					true);
 			ImageView imgView = new ImageView();
 			imgView.setFitHeight(0);
 			imgView.setFitWidth(0);
@@ -705,8 +707,8 @@ public class MainWindow extends Application {
 		heldenFahrzeugImgV.setFitWidth(0);
 		heldenFahrzeugImgV.setImage(img);
 
-
-		Image img2 = new Image(getClass().getResource(GameSettings.IMGIWILLDESTORYYOUTANKPFAD).toExternalForm(), 100, 100, true, true);
+		Image img2 = new Image(getClass().getResource(GameSettings.IMGIWILLDESTORYYOUTANKPFAD).toExternalForm(), 100,
+				100, true, true);
 		iWillDestroyYouTankImgV = new ImageView();
 		iWillDestroyYouTankImgV.setFitHeight(0);
 		iWillDestroyYouTankImgV.setFitWidth(0);
@@ -775,9 +777,9 @@ public class MainWindow extends Application {
 				updateItems(gameWorld.getItems());
 				updateImmunAliens(gameWorld.getImmunAliens());
 
-				if(gameWorld.getIwillDestroyYouTank().isConnected()){
-				updateIwillDestroyYouTank(gameWorld.getIwillDestroyYouTank());
-				updateiWillProjektile(gameWorld.getProjektileClient());
+				if (gameWorld.getIwillDestroyYouTank().isConnected()) {
+					updateIwillDestroyYouTank(gameWorld.getIwillDestroyYouTank());
+					updateiWillProjektile(gameWorld.getProjektileClient());
 				}
 			};
 		});
@@ -796,8 +798,8 @@ public class MainWindow extends Application {
 	 *            die Anzahl der Schleifen-Durchlaeufe (fuer die Berechnung der
 	 *            Zeit bis zum Sieg)
 	 * @param minutesToWin
-	 *            die Minuten die insgesamt ueberstanden werden muessen(abhaengig
-	 *            vom Schwierigkeitsgrad)
+	 *            die Minuten die insgesamt ueberstanden werden
+	 *            muessen(abhaengig vom Schwierigkeitsgrad)
 	 */
 	private void updateStatusLbl(int leben, int aliensSlain, int Ticks, int minutesToWin) {
 		lblLeben.setText("Lifes: " + leben);
@@ -826,27 +828,39 @@ public class MainWindow extends Application {
 	 *            das Heldenfahrzeug
 	 */
 	private void updateHeldenFahrzeug(HeldenFahrzeug heldenfahrzeug) {
-		if(heldenfahrzeug.isHasSpezialWeapon()){
-		heldenFahrzeugBfgImgV.setFitHeight(heldenfahrzeug.getHeight());
-		heldenFahrzeugBfgImgV.setFitWidth(heldenfahrzeug.getWidth());
-		heldenFahrzeugBfgImgV.setLayoutX(heldenfahrzeug.getX());
-		heldenFahrzeugBfgImgV.setLayoutY(heldenfahrzeug.getY());
-		heldenFahrzeugBfgImgV.setRotate(heldenfahrzeug.getWinkel());
-		spielfeld.getChildren().add(heldenFahrzeugBfgImgV);
+		if (heldenfahrzeug.isHasSpezialWeapon()) {
+			heldenFahrzeugBfgImgV.setFitHeight(heldenfahrzeug.getHeight());
+			heldenFahrzeugBfgImgV.setFitWidth(heldenfahrzeug.getWidth());
+			heldenFahrzeugBfgImgV.setLayoutX(heldenfahrzeug.getX());
+			heldenFahrzeugBfgImgV.setLayoutY(heldenfahrzeug.getY());
+			heldenFahrzeugBfgImgV.setRotate(heldenfahrzeug.getWinkel());
+			spielfeld.getChildren().add(heldenFahrzeugBfgImgV);
+		} else {
+			heldenFahrzeugImgV.setFitHeight(heldenfahrzeug.getHeight());
+			heldenFahrzeugImgV.setFitWidth(heldenfahrzeug.getWidth());
+			heldenFahrzeugImgV.setLayoutX(heldenfahrzeug.getX());
+			heldenFahrzeugImgV.setLayoutY(heldenfahrzeug.getY());
+			heldenFahrzeugImgV.setRotate(heldenfahrzeug.getWinkel());
+			spielfeld.getChildren().add(heldenFahrzeugImgV);
 		}
-		else{
-		heldenFahrzeugImgV.setFitHeight(heldenfahrzeug.getHeight());
-		heldenFahrzeugImgV.setFitWidth(heldenfahrzeug.getWidth());
-		heldenFahrzeugImgV.setLayoutX(heldenfahrzeug.getX());
-		heldenFahrzeugImgV.setLayoutY(heldenfahrzeug.getY());
-		heldenFahrzeugImgV.setRotate(heldenfahrzeug.getWinkel());
-		spielfeld.getChildren().add(heldenFahrzeugImgV);
-	}}
-
-	public void activateIwillDestroyYouTank(IwillDestroyYouTank iwillDestroyYouTank){
-		iWillDestroyYouTankImgV.setVisible(true);
 	}
-	private void updateIwillDestroyYouTank(IwillDestroyYouTank iwillDestroyYouTank){
+
+	/**
+	 * Zeigt den IwillDestoryYouTank an und versteckt das lblLeben.
+	 *
+	 * @param iwillDestroyYouTank
+	 */
+	public void activateIwillDestroyYouTank(IwillDestroyYouTank iwillDestroyYouTank) {
+		iWillDestroyYouTankImgV.setVisible(true);
+		lblLeben.setVisible(false);
+	}
+
+	/**
+	 * updated die Position des IwillDestroyYouTank auf dem Spielfeld.
+	 *
+	 * @param iwillDestroyYouTank
+	 */
+	private void updateIwillDestroyYouTank(IwillDestroyYouTank iwillDestroyYouTank) {
 		iWillDestroyYouTankImgV.setFitHeight(iwillDestroyYouTank.getHeight());
 		iWillDestroyYouTankImgV.setFitWidth(iwillDestroyYouTank.getWidth());
 		iWillDestroyYouTankImgV.setLayoutX(iwillDestroyYouTank.getX());
@@ -854,7 +868,6 @@ public class MainWindow extends Application {
 		iWillDestroyYouTankImgV.setRotate(iwillDestroyYouTank.getWinkel());
 		spielfeld.getChildren().add(iWillDestroyYouTankImgV);
 	}
-
 
 	/**
 	 * updated die Aliens auf dem Spielfeld
@@ -882,13 +895,18 @@ public class MainWindow extends Application {
 	 *            die Heldenfahrzeugprojektile
 	 */
 	private void updateProjektile(ArrayList<MoveableObject> enemyProjektile,
-			ArrayList<MoveableObject> friendlyProjektile){
+			ArrayList<MoveableObject> friendlyProjektile) {
 		updateEnemyProjektile(enemyProjektile);
 		updateFriendlyProjektile(friendlyProjektile);
 	}
 
-	private void updateItems(ArrayList<GameObject> items){
-		for(int i = 0; i < items.size(); i++){
+	/**
+	 * updated die Items auf dem Spielfeld
+	 *
+	 * @param items
+	 */
+	private void updateItems(ArrayList<GameObject> items) {
+		for (int i = 0; i < items.size(); i++) {
 			ImageView imgVItem = itemImgV.get(i);
 			imgVItem.setFitHeight(items.get(i).getHeight());
 			imgVItem.setFitWidth(items.get(i).getWidth());
@@ -932,7 +950,13 @@ public class MainWindow extends Application {
 			spielfeld.getChildren().add(imgVProj);
 		}
 	}
-	private void updateiWillProjektile(ArrayList<MoveableObject> iWillProjektile){
+
+	/**
+	 * updated die IwillDestroyYouTank projektile
+	 *
+	 * @param iWillProjektile
+	 */
+	private void updateiWillProjektile(ArrayList<MoveableObject> iWillProjektile) {
 		for (int i = 0; i < iWillProjektile.size(); i++) {
 			ImageView imgVProj = projektiliWillDestroyImgV.get(i);
 			imgVProj.setFitHeight(iWillProjektile.get(i).getHeight());
@@ -944,7 +968,12 @@ public class MainWindow extends Application {
 
 	}
 
-	private void updateImmunAliens(ArrayList<Alien> aliensImmun){
+	/**
+	 * updated die immunenAliens
+	 *
+	 * @param aliensImmun
+	 */
+	private void updateImmunAliens(ArrayList<Alien> aliensImmun) {
 		for (int i = 0; i < aliensImmun.size(); i++) {
 			ImageView imgVProj = immAlienImgV.get(i);
 			imgVProj.setFitHeight(aliensImmun.get(i).getHeight());
@@ -985,6 +1014,11 @@ public class MainWindow extends Application {
 		return lbl;
 	}
 
+	/**
+	 * Spielt einen Sound ab
+	 *
+	 * @param pfad
+	 */
 	public void playSound(String pfad) {
 		final URL resource = getClass().getResource(pfad);
 		final Media media = new Media(resource.toString());
@@ -992,6 +1026,11 @@ public class MainWindow extends Application {
 		mediaPlayer.play();
 	}
 
+	/**
+	 * Spielt Musik ab
+	 *
+	 * @param pfad
+	 */
 	public void playMusic(String pfad) {
 		final URL resource = getClass().getResource(pfad);
 		final Media media = new Media(resource.toString());
@@ -1005,22 +1044,33 @@ public class MainWindow extends Application {
 		});
 		musikPlayer.play();
 	}
-	public void startClient(String ip, MainWindow view){
+
+	/**
+	 * Stoppt die Musikwiedergabe
+	 */
+	public void stopMusic() {
+		musikPlayer.stop();
+	}
+
+	/**
+	 * Started die Clientview und die Threads des Clients
+	 *
+	 * @param ip
+	 * @param view
+	 */
+	public void startClient(String ip, MainWindow view) {
 		Platform.runLater(new Runnable() {
 			String g = ip;
 			MainWindow h = view;
+
 			@Override
 			public void run() {
-				new ClientThreadTCPControl(h, g).start();;
-				new ClientThreadTCPWORLD(new GameWorld(GameSettings.BREITE, GameSettings.HOEHE), h, g).start();;
-				// TODO Auto-generated method stub
-
+				new ClientThreadTCPControl(h, g).start();
+				;
+				new ClientThreadTCPWORLD(new GameWorld(GameSettings.BREITE, GameSettings.HOEHE), h, g).start();
+				;
 			}
 		});
-	}
-
-	public void stopMusic() {
-		musikPlayer.stop();
 	}
 
 	public Scene getSceneGame() {

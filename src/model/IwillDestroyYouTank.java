@@ -1,13 +1,17 @@
 package model;
 
+/**
+ *
+ * @author Julien, Till, Marco
+ *
+ */
 public class IwillDestroyYouTank extends FireableObject {
 	private boolean connected = false;
 
-
-
-	public IwillDestroyYouTank(boolean connected){
+	public IwillDestroyYouTank(boolean connected) {
 		this.connected = connected;
 	}
+
 	public boolean isConnected() {
 		return connected;
 	}

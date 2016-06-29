@@ -49,8 +49,8 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 		while (true) {
 			try {
 				/**
-				 * Es werden die booelean abgefragt ob eine Taste gedrükt wurde. Bei einer gedrückten Taste
-				 * wird dies zu dem byte addiert.
+				 * Es werden die booelean abgefragt ob eine Taste gedrükt wurde.
+				 * Bei einer gedrückten Taste wird dies zu dem byte addiert.
 				 */
 				byte send = 0;
 				if (up) {
@@ -71,7 +71,7 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 					send += 16;
 				}
 
-				if(send != 0){
+				if (send != 0) {
 					Socket socket = new Socket(this.ip, 8889);
 					BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 					out.write(send);
@@ -83,9 +83,9 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 
 				Thread.sleep(10);
 
-		 }catch (Exception e) {
+			} catch (Exception e) {
 
-		 }
+			}
 		}
 
 	}
@@ -162,6 +162,5 @@ public class ClientThreadTCPControl extends Thread implements EventList {
 		// TODO Auto-generated method stub
 
 	}
-
 
 }

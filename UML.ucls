@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.9" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="model.GameWorld" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/model/GameWorld.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="711" width="286" x="755" y="2313"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="model.IwillDestroyYouTank" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/model/IwillDestroyYouTank.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="169" x="902" y="3895"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="model.GameObject" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/model/GameObject.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="182" x="531" y="3064"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="model.FireableObject" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/model/FireableObject.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="140" x="666" y="3702"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="model.MoveableObject" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/model/MoveableObject.java" binary="false" corner="BOTTOM_LEFT">    
+    <position height="243" width="279" x="581" y="3419"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="model.Alien" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/model/Alien.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="148" x="714" y="3895"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="model.HeldenFahrzeug" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/model/HeldenFahrzeug.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="204" x="470" y="3895"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="controller.ClassMain" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/controller/ClassMain.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="113" x="346" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="controller.ServerThreadTCPWorld" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/controller/ServerThreadTCPWorld.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="204" x="42" y="1022"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="controller.GameUpdateThread" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/controller/GameUpdateThread.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="603" width="280" x="517" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="controller.ClientThreadTCPWORLD" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/controller/ClientThreadTCPWORLD.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="302" x="837" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="controller.ServerThreadTCPControl" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/controller/ServerThreadTCPControl.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="448" x="286" y="1022"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="13" language="java" name="controller.GameSettings" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/controller/GameSettings.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="945" width="229" x="59" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="14" language="java" name="controller.ClientThreadTCPControl" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/controller/ClientThreadTCPControl.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="333" width="239" x="1179" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="15" language="java" name="view.EventList" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/view/EventList.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1246" y="2396"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="16" language="java" name="view.MainWindow" project="newKNEEDEEPINTHEBLUE" 
+    file="/newKNEEDEEPINTHEBLUE/src/view/MainWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1251" width="403" x="837" y="1022"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <realization id="17">    
+    <bendpoint x="1270" y="1022"/>    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <association id="18">    
+    <bendpoint x="819" y="3148"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="19" name="projektileFriendly"/>      
+      <multiplicity id="20" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="21">    
+    <bendpoint x="890" y="3064"/>    
+    <bendpoint x="890" y="3419"/>    
+    <bendpoint x="866" y="3681"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="22" name="aliens"/>      
+      <multiplicity id="23" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="24">    
+    <bendpoint x="761" y="1071"/>    
+    <bendpoint x="744" y="1281"/>    
+    <bendpoint x="697" y="1477"/>    
+    <bendpoint x="731" y="2090"/>    
+    <bendpoint x="734" y="2206"/>    
+    <bendpoint x="743" y="2274"/>    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="25" name="gameWorld"/>      
+      <multiplicity id="26" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="27">    
+    <bendpoint x="911" y="3064"/>    
+    <bendpoint x="970" y="3419"/>    
+    <bendpoint x="1003" y="3704"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="28" name="iwillDestroyYouTank"/>      
+      <multiplicity id="29" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="30">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="31" name="items"/>      
+      <multiplicity id="32" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="33">    
+    <bendpoint x="479" y="3064"/>    
+    <bendpoint x="479" y="3419"/>    
+    <bendpoint x="479" y="3702"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="34" name="heldenfahrzeug"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="36">    
+    <bendpoint x="359" y="937"/>    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="37" name="stw"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="39">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <association id="40">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="41" name="stc"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="43">    
+    <bendpoint x="442" y="1803"/>    
+    <bendpoint x="512" y="2209"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="44" name="world"/>      
+      <multiplicity id="45" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="46">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="47" name="view"/>      
+      <multiplicity id="48" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="49">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <generalization id="50">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <association id="51">    
+    <bendpoint x="869" y="3453"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="52" name="projektileClient"/>      
+      <multiplicity id="53" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="54">    
+    <bendpoint x="806" y="1022"/>    
+    <bendpoint x="721" y="1677"/>    
+    <bendpoint x="777" y="2146"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="55" name="world"/>      
+      <multiplicity id="56" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="57">    
+    <bendpoint x="832" y="3406"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="58" name="projektile"/>      
+      <multiplicity id="59" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="60">    
+    <bendpoint x="582" y="1786"/>    
+    <bendpoint x="627" y="2119"/>    
+    <bendpoint x="676" y="2295"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="61" name="gameWorld"/>      
+      <multiplicity id="62" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="63">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="64" name="listener"/>      
+      <multiplicity id="65" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="66">    
+    <bendpoint x="1303" y="1019"/>    
+    <bendpoint x="1337" y="1677"/>    
+    <bendpoint x="1365" y="1998"/>    
+    <bendpoint x="1345" y="2304"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <association id="67">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="68" name="view"/>      
+      <multiplicity id="69" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="70">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="71" name="window"/>      
+      <multiplicity id="72" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="73">    
+    <bendpoint x="500" y="3064"/>    
+    <bendpoint x="500" y="3419"/>    
+    <bendpoint x="500" y="3702"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="74" name="immunAliens"/>      
+      <multiplicity id="75" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="76">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="77">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
