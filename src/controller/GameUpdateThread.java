@@ -132,6 +132,7 @@ public class GameUpdateThread extends Thread implements EventList {
 	private void createStartModel() {
 		synchronized (gameWorld) {
 
+<<<<<<< HEAD
 			gameWorld.setLeben(GameSettings.HELDENSTARTLEBEN);
 			gameWorld.setAliensSlain(0);
 			gameWorld.setThreadTicks(0);
@@ -152,6 +153,44 @@ public class GameUpdateThread extends Thread implements EventList {
 				alien.setSpeed(GameSettings.ALIENSPEED);
 				gameWorld.getAliens().add(alien);
 			}
+=======
+		gameWorld.setLeben(GameSettings.HELDENSTARTLEBEN);
+		gameWorld.setAliensSlain(0);
+		gameWorld.setThreadTicks(0);
+
+		gameWorld.getAliens().clear();
+		gameWorld.getProjektile().clear();
+		gameWorld.getProjektileFriendly().clear();
+		gameWorld.setHeldenfahrzeug(null);
+
+		// Create some aliens:
+		Alien alien;
+		for (int i = 0; i < GameSettings.ALIENMAXANZAHL; i++) {
+			alien = new Alien(false);
+			float x = (float) Math.random() * (GameSettings.BREITE - GameSettings.ALIENBREITE);
+			float y = (float) Math.random() * (GameSettings.HÖHE - GameSettings.ALIENHÖHE);
+			alien.setPosition(x, y, GameSettings.ALIENBREITE, GameSettings.ALIENHÖHE);
+			alien.setSpeed(GameSettings.ALIENSPEED);
+			gameWorld.getAliens().add(alien);
+		}
+
+		// Create the 'HeldenFahrzeug':
+		HeldenFahrzeug heldenFahrzeug = new HeldenFahrzeug(false);
+		// genau in der Mitte:
+		heldenFahrzeug.setPosition((GameSettings.BREITE - (GameSettings.HELDENBREITE / 2)) / 2,
+				(GameSettings.HÖHE - (GameSettings.HELDENHÖHE / 2)) / 2, GameSettings.HELDENBREITE,
+				GameSettings.HELDENHÖHE);
+		heldenFahrzeug.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
+		gameWorld.setHeldenfahrzeug(heldenFahrzeug);
+
+		// Create the 'IwillDestroyYouTaon'
+		IwillDestroyYouTank iwillDestroyYouTank = new IwillDestroyYouTank(false);
+		iwillDestroyYouTank.setPosition((GameSettings.BREITE - (GameSettings.HELDENBREITE / 2)) / 2,
+				(GameSettings.HÖHE - (GameSettings.HELDENHÖHE / 2)) / 2, GameSettings.HELDENBREITE,
+				GameSettings.HELDENHÖHE);
+		iwillDestroyYouTank.setSpeed(GameSettings.HELDENFAHRZEUGSPEED);
+		gameWorld.setIwillDestroyYouTank(iwillDestroyYouTank);
+>>>>>>> origin/master
 
 			// Create the 'HeldenFahrzeug':
 			HeldenFahrzeug heldenFahrzeug = new HeldenFahrzeug(false);
@@ -182,11 +221,19 @@ public class GameUpdateThread extends Thread implements EventList {
 			// pruefen, ob die zeit um ist.
 			if (gameWorld.getThreadTicks() > (gameWorld.getMinutesToWin() * 60 * 1000 / GameSettings.THREADTICKTIME)) {
 
+<<<<<<< HEAD
 				Platform.runLater(new Runnable() {
+=======
+		// prüfen, ob die zeit um ist.
+		if (gameWorld.getThreadTicks() > (gameWorld.getMinutesToWin() * 60 * 1000 / GameSettings.THREADTICKTIME)) {
+
+			Platform.runLater(new Runnable() {
+>>>>>>> origin/master
 
 					@Override
 					public void run() {
 
+<<<<<<< HEAD
 						Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
 						alert.setTitle("Spiel zu Ende");
 						alert.setHeaderText("Herzlichen Glückwunsch! Sie haben das Spiel gewonnen.");
@@ -198,6 +245,19 @@ public class GameUpdateThread extends Thread implements EventList {
 						} else if (alert.getResult() == ButtonType.NO) {
 							view.switchScene(view.getSceneMainMenu());
 						}
+=======
+					Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+					alert.setTitle("Spiel zu Ende");
+					alert.setHeaderText("Herzlichen Glückwunsch! Sie haben das Spiel gewonnen.");
+					alert.setContentText("Möchten sie nocheinmal spielen?");
+					gameIsRunning = false;
+					alert.showAndWait();
+					if (alert.getResult() == ButtonType.YES) {
+						view.switchScene(view.getSceneNewGame());
+					} else if (alert.getResult() == ButtonType.NO) {
+						view.switchScene(view.getSceneMainMenu());
+					}
+>>>>>>> origin/master
 
 					};
 				});
@@ -236,6 +296,7 @@ public class GameUpdateThread extends Thread implements EventList {
 
 				aktAlien.erhoeheLastShot();
 
+<<<<<<< HEAD
 				if (aktAlien.getLastShot() >= GameSettings.ALIENFEUERRATE) {
 					MoveableObject movObj = new MoveableObject();
 					movObj.setPosition(aktAlien.getX(), aktAlien.getY(), GameSettings.PROJEKTILBREITE,
@@ -249,6 +310,22 @@ public class GameUpdateThread extends Thread implements EventList {
 				// pruefen, dass die Aliens nicht ausserhalb des Fensters sind:
 				korrigierePosition(aktAlien, false);
 			}
+=======
+			aktAlien.erhöheLastShot();
+
+			if (aktAlien.getLastShot() >= GameSettings.ALIENFEUERRATE) {
+				MoveableObject movObj = new MoveableObject();
+				movObj.setPosition(aktAlien.getX(), aktAlien.getY(), GameSettings.PROJEKTILBREITE,
+						GameSettings.PROJEKTILHÖHE);
+				movObj.setSpeed(GameSettings.PROJEKTILENEMYSPEED);
+				movObj.setWinkel((float) (360 * Math.random()));
+				gameWorld.getProjektile().add(movObj);
+				aktAlien.setLastShot(0);
+			}
+
+			// prüfen, dass die Aliens nicht ausserhalb des Fensters sind:
+			korrigierePosition(aktAlien, false);
+>>>>>>> origin/master
 		}
 	}
 
@@ -273,9 +350,14 @@ public class GameUpdateThread extends Thread implements EventList {
 
 				aktProjektil.move(false);
 
+<<<<<<< HEAD
 				// pruefen, dass die Projektile nicht ausserhalb des Fensters
 				// sind:
 				korrigierePosition(aktProjektil, true);
+=======
+			// prüfen, dass die Projektile nicht ausserhalb des Fensters sind:
+			korrigierePosition(aktProjektil, true);
+>>>>>>> origin/master
 
 			}
 		}
@@ -292,26 +374,42 @@ public class GameUpdateThread extends Thread implements EventList {
 
 				aktProjektil.move(false);
 
+<<<<<<< HEAD
 				// pruefen, dass die Projektile nicht ausserhalb des Fensters
 				// sind:
 				korrigierePosition(aktProjektil, true);
+=======
+			// prüfen, dass die Projektile nicht ausserhalb des Fensters sind:
+			korrigierePosition(aktProjektil, true);
+>>>>>>> origin/master
 
 			}
 		}
+<<<<<<< HEAD
 	}
 
 	/**
 	 * updated die Projektile des IwillDestoryYouTank
 	 */
 	private void updateiWillProjektile() {
+=======
+	/**
+	 * updated die Projektile des Clients
+	 */
+	private void updateiWillProjektile(){
+>>>>>>> origin/master
 		synchronized (gameWorld) {
 			for (int i = 0; i < gameWorld.getProjektileClient().size(); i++) {
 				MoveableObject aktProjektil = gameWorld.getProjektileClient().get(i);
 
 				aktProjektil.move(false);
 
+<<<<<<< HEAD
 				// pruefen, dass die Projektile nicht ausserhalb des Fensters
 				// sind:
+=======
+				// prüfen, dass die Projektile nicht ausserhalb des Fensters sind:
+>>>>>>> origin/master
 				korrigierePosition(aktProjektil, true);
 
 			}
@@ -337,6 +435,7 @@ public class GameUpdateThread extends Thread implements EventList {
 				gameWorld.getHeldenfahrzeug()
 						.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
 
+<<<<<<< HEAD
 			gameWorld.getHeldenfahrzeug().erhoeheLastShot();
 
 			if (spacePressed && gameWorld.getHeldenfahrzeug().getLastShot() >= GameSettings.HELDENFEUERRATE) {
@@ -356,10 +455,43 @@ public class GameUpdateThread extends Thread implements EventList {
 		}
 
 		// pruefen, dass das Heldenfahrezeug nicht ausserhalb des Fensters ist
+=======
+		if (topPressed) {
+			gameWorld.getHeldenfahrzeug().move(false);
+		}
+		if (bottomPressed) {
+			gameWorld.getHeldenfahrzeug().move(true);
+		}
+		if (leftPressed)
+			gameWorld.getHeldenfahrzeug()
+					.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel() - GameSettings.HELDENWINKELCHANGESPEED);
+		if (rightPressed)
+			gameWorld.getHeldenfahrzeug()
+					.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel() + GameSettings.HELDENWINKELCHANGESPEED);
+
+		gameWorld.getHeldenfahrzeug().erhöheLastShot();
+
+		if (spacePressed && gameWorld.getHeldenfahrzeug().getLastShot() >= GameSettings.HELDENFEUERRATE) {
+			if (enableSounds) {
+				view.playSound(GameSettings.SFXSHOTFIRED);
+			}
+			MoveableObject movObj = new MoveableObject();
+			movObj.setPosition(gameWorld.getHeldenfahrzeug().getX() + (gameWorld.getHeldenfahrzeug().getWidth() / 2),
+					gameWorld.getHeldenfahrzeug().getY() + (gameWorld.getHeldenfahrzeug().getHeight() / 2),
+					GameSettings.PROJEKTILBREITE, GameSettings.PROJEKTILHÖHE);
+			movObj.setSpeed(GameSettings.PROJEKTILFRIENDLYSPEED);
+			movObj.setWinkel(gameWorld.getHeldenfahrzeug().getWinkel());
+			gameWorld.getProjektileFriendly().add(movObj);
+			gameWorld.getHeldenfahrzeug().setLastShot(0);
+		}}
+
+		// prüfen, dass das Heldenfahrezeug nicht ausserhalb des Fensters ist
+>>>>>>> origin/master
 		// und ggf. position korrigieren:
 		korrigierePosition(gameWorld.getHeldenfahrzeug(), false);
 
 	}
+<<<<<<< HEAD
 
 	/**
 	 * spawnt m�gliche Items
@@ -380,6 +512,26 @@ public class GameUpdateThread extends Thread implements EventList {
 
 	/**
 	 * diese Methode ueberprueft alle moeglichen Kollisionen und behandelt diese
+=======
+	/**
+	 * updated die Items auf der GameWorld.
+	 */
+	private void updateItems(){
+		if(gameWorld.getItems().size() < 1){
+		Random rand = new Random();
+		int randint = rand.nextInt(10000);
+		if(randint <= 50){
+			int x = rand.nextInt(GameSettings.BREITE);
+			int y = rand.nextInt(GameSettings.HÖHE);
+			GameObject bfg = new GameObject();
+			bfg.setPosition(x, y, 20, 20);
+			gameWorld.getItems().add(bfg);
+		}}
+	}
+
+	/**
+	 * diese Methode überprüft alle möglichen Kollisionen und behandelt diese
+>>>>>>> origin/master
 	 * ggf.
 	 */
 	private void checkCollisions() {
@@ -424,12 +576,25 @@ public class GameUpdateThread extends Thread implements EventList {
 			for (int i = 0; i < gameWorld.getProjektileFriendly().size(); i++) {
 				for (int j = 0; j < gameWorld.getAliens().size(); j++) {
 
+<<<<<<< HEAD
 					try {
 						MoveableObject aktProjektil = gameWorld.getProjektileFriendly().get(i);
 						Alien aktAlien = gameWorld.getAliens().get(j);
 						if (checkForCollision(aktProjektil, aktAlien)) {
 							if (enableSounds) {
 								view.playSound(GameSettings.SFXALIENHIT);
+=======
+							Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+							alert.setTitle("Spiel zu Ende");
+							alert.setHeaderText("Sie wurden leider zu oft getroffen und haben verloren.");
+							alert.setContentText("Möchten sie nocheinmal spielen?");
+							gameIsRunning = false;
+							alert.showAndWait();
+							if (alert.getResult() == ButtonType.YES) {
+								view.switchScene(view.getSceneNewGame());
+							} else if (alert.getResult() == ButtonType.NO) {
+								view.switchScene(view.getSceneMainMenu());
+>>>>>>> origin/master
 							}
 							gameWorld.getProjektileFriendly().remove(i);
 							gameWorld.getAliens().remove(j);
@@ -526,7 +691,11 @@ public class GameUpdateThread extends Thread implements EventList {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * diese Methode ueberprueft, ob ein neues Alien spawnen soll und kann
+=======
+	 * diese Methode überprüft, ob ein neues Alien spawnen soll und kann
+>>>>>>> origin/master
 	 */
 	private void checkForNewSpawn() {
 		synchronized (gameWorld) {
@@ -551,7 +720,18 @@ public class GameUpdateThread extends Thread implements EventList {
 					gameWorld.setTicksSinceLastSpwan(0);
 				}
 
+<<<<<<< HEAD
 			}
+=======
+		if ((gameWorld.getTicksSinceLastSpwan() > GameSettings.ALIENRESPAWNRATE)
+				&& gameWorld.getAliens().size() < GameSettings.ALIENMAXANZAHL) {
+			Alien newAlien = new Alien(false);
+			newAlien.setPosition((float) (Math.random() * GameSettings.BREITE),
+					(float) (Math.random() * GameSettings.HÖHE), GameSettings.ALIENBREITE, GameSettings.ALIENHÖHE);
+			newAlien.setSpeed(GameSettings.ALIENSPEED);
+			gameWorld.getAliens().add(newAlien);
+			gameWorld.setTicksSinceLastSpwan(0);
+>>>>>>> origin/master
 		}
 	}
 
@@ -574,7 +754,7 @@ public class GameUpdateThread extends Thread implements EventList {
 			gameIsRunning = false;
 			Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
 			alert.setTitle("Spiel beenden");
-			alert.setHeaderText("M�chten sie das Spiel wirklich beenden?");
+			alert.setHeaderText("Möchten sie das Spiel wirklich beenden?");
 			alert.setContentText("Der Spielstand geht verloren.");
 			alert.showAndWait();
 			if (alert.getResult() == ButtonType.YES) {
@@ -606,13 +786,22 @@ public class GameUpdateThread extends Thread implements EventList {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Methode prueft, ob das Spielfeldobject ausserhalb des Spielfeldes ist,
 	 * und setzt das Object dann ggf. wieder ins Spielfeld.
+=======
+	 * Methode prüft, ob das Spielfeldobject ausserhalb des Spielfeldes ist, und
+	 * setzt das Object dann ggf. wieder ins Spielfeld.
+>>>>>>> origin/master
 	 *
 	 * @param gameObject
 	 *            Das Spielfeldobjekt
 	 * @param deleteObj
+<<<<<<< HEAD
 	 *            true, wenn es geloescht werden soll, false wenn es zurueck ins
+=======
+	 *            true, wenn es gelöscht werden soll, false wenn es zurück ins
+>>>>>>> origin/master
 	 *            Spielfeld gesetzt werden soll
 	 */
 	private void korrigierePosition(GameObject gameObject, boolean deleteObj) {
@@ -623,9 +812,15 @@ public class GameUpdateThread extends Thread implements EventList {
 			else
 				ausserhalb = true;
 		}
+<<<<<<< HEAD
 		if (gameObject.getY() > (GameSettings.HOEHE - gameObject.getHeight())) {
 			if (!deleteObj)
 				gameObject.setY(GameSettings.HOEHE - gameObject.getHeight());
+=======
+		if (gameObject.getY() > (GameSettings.HÖHE - gameObject.getHeight())) {
+			if (!deleteObj)
+				gameObject.setY(GameSettings.HÖHE - gameObject.getHeight());
+>>>>>>> origin/master
 			else
 				ausserhalb = true;
 		}
@@ -649,7 +844,11 @@ public class GameUpdateThread extends Thread implements EventList {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Funktion prueft, ob zwei Spielfeldobjekte kollidieren
+=======
+	 * Funktion prüft, ob zwei Spielfeldobjekte kollidieren
+>>>>>>> origin/master
 	 *
 	 * @param gameObjectA
 	 *            Das erste Spielfeldobjekt
@@ -668,7 +867,11 @@ public class GameUpdateThread extends Thread implements EventList {
 		float height2 = gameObjectB.getHeight();
 		float width1 = gameObjectA.getWidth();
 		float width2 = gameObjectB.getWidth();
+<<<<<<< HEAD
 		// Formel fuer die Kollisionsberechnung
+=======
+		// Formel für die Kollisionsberechnung
+>>>>>>> origin/master
 		return position1[0] < position2[0] + width2 && position2[0] < position1[0] + width1
 				&& position1[1] < position2[1] + height2 && position2[1] < position1[1] + height1;
 	}

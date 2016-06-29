@@ -8,7 +8,7 @@ import model.GameWorld;
 import view.MainWindow;
 
 /**
- * Diese Klasse empf‰ngt die gesendete GameWorld von dem Server und updatet mit
+ * Diese Klasse empf√§ngt die gesendete GameWorld von dem Server und updatet mit
  * ihr die View des Clients.
  *
  * @author til
@@ -20,8 +20,12 @@ public class ClientThreadTCPWORLD extends Thread {
 	String ip = null;
 
 	/**
+<<<<<<< HEAD
 	 * Innerhalb des Konstruktors wird eine gameworld ,die View und die IP des
 	 * Servers ¸bergeben.
+=======
+	 * Innerhalb des Konstruktors wird eine gameworld ,die View und die IP des Servers √ºbergeben.
+>>>>>>> origin/master
 	 *
 	 * @param gameworld
 	 * @param view
@@ -36,10 +40,15 @@ public class ClientThreadTCPWORLD extends Thread {
 	public void run() {
 		while (true) {
 			try {
+<<<<<<< HEAD
 				// Verbindung zu Port 13003 aufbauen:
 				Socket socket = new Socket(this.ip, 13003);
+=======
+				// Verbindung zu Port 13002 aufbauen:
+				Socket socket = new Socket(this.ip, 13002);
+>>>>>>> origin/master
 				/**
-				 * Der Thread empf‰ngt die Gesendete GameWorld von dem Server
+				 * Der Thread empf√§ngt die Gesendete GameWorld von dem Server
 				 * und updatet mit ihr die View des Clients.
 				 */
 				if (socket.isConnected()) {
@@ -67,7 +76,10 @@ public class ClientThreadTCPWORLD extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 		}
 	}
 }
